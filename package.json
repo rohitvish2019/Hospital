@@ -1,0 +1,16 @@
+{
+  "name": "hospital",
+  "version": "1.0.0",
+  "description": "Hospital management system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rohit Vishwakarma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.3"
+  }
+}
