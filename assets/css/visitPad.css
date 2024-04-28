@@ -1,0 +1,106 @@
+body{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.main-container{
+    height: 99.7%;
+    width: 99.8%;
+}
+
+header{
+    height: 7%;
+    border-bottom: 1px solid green;
+    min-height: 40px;
+}
+
+.patient-info{
+    height: 9%;
+    border-bottom: 1px solid green;
+    min-height: 40px;
+    display: flex;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.body-container{
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.left-panel{
+    width:55%;
+    border: 1px solid gray;
+}
+.mid-panel{
+    width: 40%;
+    border: 1px solid gray;
+}
+.right-panel{
+    
+    width: 25%;
+    border: 1px solid gray;
+}
+.panel{
+    margin-top: 2%;
+    height: 90%;
+    -webkit-box-shadow: 0 0 10px gray;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border-radius: 1.5rem;
+    overflow-y: auto;
+}
+textarea{
+    margin-left: 2.3%;
+    margin-right: 2.3%;
+    margin-top: 1%;
+}
+
+.examinations-actions{
+    height: 9%;
+    
+}
+
+
+.patient-data{
+    width: 15%;
+}
+.patient-data label{
+    display: block;
+    font-size: large;
+    padding: 1%;
+}
+
+.patient-address label{
+    display: block;
+    font-size: large;
+    padding: 1%;
+}
+
+.patient-data small{
+    padding: 1%;
+}
+.patient-address small{
+    padding: 1%;
+}
+.patient-address{
+    width: 40%;
+}
+#examinationsBox, #testsBox{
+    display: none;
+}
+.testLabel{
+    width: 30%;
+    display: inline-block;
+}
+
+.testInput{
+    width: 60%;
+    display: inline;
+}
+
+
+.test-data{
+    margin-left: 1%;
+}
+

@@ -1,0 +1,22 @@
+patients : patientID, firstName, Lastname, sex, address, age, prescriptions(Array of prescriptionIDs);
+prescriptions : prescriptionID, Date, drugname, labelname, doseperday, timesperday, totaldays;
+examinations : examineId, examineDate, patientID, Swelling, Tenderness, BonyCrepts, DNV, ROM, PO2%, BP, xray, Other
+visitData : patientID,advise.
+
+alter table prescriptions add patientID int;
+CREATE TABLE visitData (
+    visitId int,
+    visitDate Date,
+    patientID int,
+    examineId int,
+    prescriptions
+    Swelling varchar(600),
+    Tenderness varchar(600),
+    BonyCrepts varchar(600),
+    DNV varchar(600),
+    ROM varchar(600),
+    PO2 varchar(600),
+    BP varchar(600),
+    xRayReport varchar(150),
+    xRayInOut varchar(50)
+);
