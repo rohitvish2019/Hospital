@@ -8,21 +8,23 @@ function closeExamminationsBox(){
     document.getElementById('examinationsBox').style.display='none';
     document.removeEventListener('keydown',)
 }
-
+let examinationsInputs = ['Swelling','Tenderness','Bony-Crepts','DNV','ROM','PO2%','BP','XRAY'];
 function addNewExaminations(){
     let child = document.createElement('div');
     let pholder = document.getElementById('newExamination').value
     let textValue = document.getElementById('newExaminationsValue').value
     child.innerHTML=
     `
-        <input type="email" class="form-control" id="floatingInput" value="${textValue}" placeholder=''>
-        <label for="floatingInput">${pholder}</label>
+        <input type="email" class="form-control" id="${pholder}" value="${textValue}" placeholder=''>
+        <label for="${pholder}">${pholder}</label>
     `
     child.classList.add("form-floating")
     child.classList.add("test-data")
     child.classList.add("mb2");
-    let parent = document.getElementById('examintionsList')
+    child.style.marginBottom = '1.2%'
+    let parent = document.getElementById('examintionsList');
     parent.insertBefore(child, parent.children[0]);
+    examinationsInputs.push(pholder);
     document.getElementById('examinationsBox').style.display='none'
 }
 
@@ -89,6 +91,22 @@ document.onkeydown = function(evt) {
     if (evt.altKey && evt.key === 't') {
         opentestsBox()
     }
+}
+
+function saveExaminations(){
+    let data = {};
+    let patientId = document.getElementById('patientId').innerText;
+    for(let i=0;i<examinationsInputs.length;i++){
+        if(document.getElementById(examinationsInputs[i])){
+            data[examinationsInputs[i]] = document.getElementById(examinationsInputs[i]).value
+        }
+    }
+    $.ajax({
+        type:'POST',
+        url:'/patients/add/Examinations/'+patientId,
+        data:data,
+    })
+    console.log(data)
 }
 
 
