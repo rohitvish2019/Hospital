@@ -60,13 +60,13 @@ module.exports.newVisit =async   function(req, res){
       let patient = await Patients.findById(req.params.id)
       let properties = propertiesReader('./properties/UIdata.properties');
       console.log(req.params.id);
-      let OESaved = await Visits.findOne({
+      let SavedData = await Visits.findOne({
             PatientId:req.params.id,
             Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
       });
-      console.log(OESaved);
+      
       let OE = properties.get('OnExaminations').split(',');
-      return res.render('visitPad',{OE, patient, OESaved})
+      return res.render('visitPad',{OE, patient, SavedData});
 }
 
 module.exports.patientRegistration = function(req, res){
@@ -120,20 +120,20 @@ module.exports.addTests = async function(req, res){
             if(savedData){
                   console.log(savedData)
                   console.log("Here we go")
-                  await savedData.updateOne({OEs:dataInArray});
+                  await savedData.updateOne({Tests:dataInArray});
             }else{
                   let visit = await Visits.create({
                         PatientId:req.params.patientId,
-                        OEs:dataInArray
+                        Tests:dataInArray
                   });
                   await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
             }
             return res.status(200).json({
-                  message:'OEs Updated'
+                  message:'Tests Updated'
             })
       }catch(err){
             return res.status(500).json({
-                  message:'Unable to update OEs'
+                  message:'Unable to update Tests'
             })
       }
 
@@ -157,4 +157,27 @@ module.exports.getPatientById = async function(req, res){
             })
       }
       
+}
+
+
+module.exports.getSavedData = async function(req, res){
+      try{
+            let savedData = await Visits.findOne({
+                  PatientId:req.query.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            });
+            return res.status(200).json({
+                  savedData
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to fetch saved information'
+            })
+      }
+}
+
+module.exports.getPriscriptionForm =async function(req, res){
+      let patient = await Patients.findById(req.params.patientId);
+      return res.render('prescriptionForm',{patient});
 }

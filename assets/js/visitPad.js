@@ -9,13 +9,22 @@ function closeExamminationsBox(){
     document.removeEventListener('keydown',)
 }
 let examinationsInputs = ['Swelling','Tenderness','Bony-Crepts','DNV','ROM','PO2%','BP','XRAY'];
-function addNewExaminations(){
+function addNewExaminations(isComingfromServer, title, text){
+    console.log(isComingfromServer);
+    let pholder, textValue, bgColor;
     let child = document.createElement('div');
-    let pholder = document.getElementById('newExamination').value
-    let textValue = document.getElementById('newExaminationsValue').value
+    if(isComingfromServer != true){
+        pholder = document.getElementById('newExamination').value;
+        textValue = document.getElementById('newExaminationsValue').value;
+        bgColor = '#fd84561c'
+    }else{
+        pholder = title;
+        textValue = text;
+        bgColor = '#71fbaf1c'
+    }
     child.innerHTML=
     `
-        <input type="email" class="form-control" id="${pholder}" value="${textValue}" placeholder=''>
+        <input style="background-color:${bgColor};" type="email" class="form-control" id="${pholder}" value="${textValue}" placeholder=''>
         <label for="${pholder}">${pholder}</label>
     `
     child.classList.add("form-floating")
@@ -38,20 +47,30 @@ function opentestsBox(){
 function closetestsBox(){
     document.getElementById('testsBox').style.display='none'
 }
-
-function addNewtests(){
+let testInputs = [];
+function addNewtests(isComingfromServer, label, value){
     let child = document.createElement('div');
-    let title = document.getElementById('newTest').value
-    let result = document.getElementById('newTestValue').value
+    let title, result, bgColor;
+    if(isComingfromServer != true){
+        title = document.getElementById('newTest').value
+        result = document.getElementById('newTestValue').value
+        bgColor = '#fd84561c'
+    }else{
+        title = label
+        result = value
+        bgColor = '#71fbaf1c'
+    }
+    
     child.innerHTML=
     `
-        <span style="width: 35%;" class="input-group-text" id="basic-addon3">${title}</span>
-        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="${result}">
+        <span style="width: 35%; background-color:${bgColor};" class="input-group-text" id="basic-addon3">${title}</span>
+        <input style="background-color:${bgColor};" type="text" class="form-control" id="${title}" aria-describedby="basic-addon3 basic-addon4" value="${result}">
     `
     child.classList.add('input-group');
     child.style.marginTop='2%'
     let parent = document.getElementById('testsList')
     parent.insertBefore(child, parent.children[0]);
+    testInputs.push(title);
     document.getElementById('testsBox').style.display='none'
 }
 
@@ -105,8 +124,97 @@ function saveExaminations(){
         type:'POST',
         url:'/patients/add/Examinations/'+patientId,
         data:data,
+        success:function(data){
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            getSavedData();
+        },
+        error: function(err){
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
     })
-    console.log(data)
 }
 
+function saveTests(){
+    let data = {};
+    let patientId = document.getElementById('patientId').innerText;
+    for(let i=0;i<testInputs.length;i++){
+        if(document.getElementById(testInputs[i])){
+            data[testInputs[i]] = document.getElementById(testInputs[i]).value
+        }
+    }
+    $.ajax({
+        type:'POST',
+        url:'/patients/add/Tests/'+patientId,
+        data:data,
+        success:function(data){
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            getSavedData();
+        },
+        error: function(err){
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
+    })
+}
+function setSavedDataOnUI(data){
+    if(data.OEs.length > 0){
+        document.getElementById('examintionsList').innerHTML = ``;
+        for(let i=0;i<data.OEs.length;i++){
+            let title = data.OEs[i].split(':')[0]
+            let value = data.OEs[i].split(':')[1]
+            addNewExaminations(true, title, value);
+        }
+    }
 
+    if(data.Tests.length > 0){
+        document.getElementById('testsList').innerHTML = ``;
+        for(let i=0;i<data.Tests.length;i++){
+            let title = data.Tests[i].split(':')[0]
+            let value = data.Tests[i].split(':')[1]
+            addNewtests(true, title, value);
+        }
+    }   
+}
+function getSavedData(){
+    $.ajax({
+        url:'/patients/getSavedData',
+        type:'Get',
+        data:{
+            patientId:document.getElementById('patientId').innerText,
+        },
+        success:function(data){setSavedDataOnUI(data.savedData)},
+        error:function(err){
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
+    })
+}
+getSavedData();
