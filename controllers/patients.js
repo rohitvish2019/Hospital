@@ -236,7 +236,14 @@ module.exports.savePrescriptions = async function(req,res){
                   PatientId:req.params.patientId,
                   Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
             });
-            await savedData.updateOne({Prescriptions:req.body.prescriptions});
+            let receivedPres = req.body.prescriptions;
+            let preparedPres = []
+            for(let i=0;i<receivedPres.length;i++){
+                  if(receivedPres[i].length > 0){
+                        preparedPres.push(receivedPres[i])
+                  }
+            }
+            await savedData.updateOne({Prescriptions:preparedPres});
             return res.status(200).json({
                   message:'Prescriptions added',
                   visitId : savedData._id

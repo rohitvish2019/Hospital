@@ -5,21 +5,22 @@ body{
     width: 99%;
 }
 
-.main-body{
+.main-body-1, .main-body-2{
     display: flex;
     flex-direction: column;
     width: 99.5%;
-    height: 1040px;
-    overflow-x: hidden;
+    height: 50%;
+    overflow-y: visible;
+    border: 1px solid green;
 }
 .medical-name{
-    height: 7%;
+    height: 14%;
     display: flex;
     justify-content: space-between;
 }
 
 .patient-info{
-    height: 6%;
+    height: 12%;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -56,10 +57,7 @@ body{
 .drug-table{
     height: 34%;
 }
-.totals{
-    height: 3%;
-    border: 1px solid red;
-}
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -67,11 +65,13 @@ table {
 thead,th{
     position: sticky;
     top: 0;
+    
 }
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size: 12px;
 }
 th {
     background-color: #f2f2f2;

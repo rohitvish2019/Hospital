@@ -14,6 +14,7 @@ th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size: small;
 }
 th {
     background-color: #f2f2f2;
@@ -26,7 +27,7 @@ th {
 
 .prescription-form{
     border: 1px solid red;
-    width: 27%;
+    width: 23%;
     margin-top: 3%;
 }
 
@@ -64,4 +65,24 @@ th {
 }
 .patient-address{
     width: 40%;
+}
+.test-data label, .test-data input{
+    font-size: small;
+}
+
+.form-floating{
+    height: 30px !important;
+}
+
+.input-group-text{
+    width: 80px;
+}
+.input-group-sm{
+    width: 100%;
+}
+.input-group-prepend span{
+    font-size: small;
+}
+.delButton:hover{
+    background-color: rgb(160, 206, 206);
 }

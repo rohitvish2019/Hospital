@@ -1,7 +1,7 @@
 let itemsCount = 0
 let prescriptions = []
 function addMedications(isComingFromServer, data){
-    let medicine,when,frequency,duration,notes,dosage;
+    let medicine,when,frequency,duration,notes,dosage,price,qty,batch,exp;
     if(isComingFromServer == true){
         let thisPrescription = data.split(':');
         medicine = thisPrescription[0]
@@ -10,6 +10,10 @@ function addMedications(isComingFromServer, data){
         duration = thisPrescription[3]
         dosage = thisPrescription[4]
         notes = thisPrescription[5]
+        price = thisPrescription[6]
+        qty = thisPrescription[7]
+        batch = thisPrescription[8]
+        exp = thisPrescription[9]
     }else{
         medicine = document.getElementById('Medicine').value
         when = document.getElementById('When').value
@@ -17,6 +21,10 @@ function addMedications(isComingFromServer, data){
         duration = document.getElementById('Duration').value
         notes = document.getElementById('Notes').value
         dosage = document.getElementById('Dosage').value
+        price = document.getElementById('Price').value
+        qty = document.getElementById('Qty').value
+        batch = document.getElementById('Batch').value
+        exp = document.getElementById('Exp').value
     }
     
     let child = document.createElement('tr');
@@ -81,11 +89,21 @@ function addMedications(isComingFromServer, data){
         <td>${when}</td>
         <td>${frequency}</td>
         <td>${duration}</td>
+        <td>${price}</td>
+        <td>${qty}</td>
+        <td>${batch}</td>
+        <td>${exp}</td>
         <td>${notes}</td>
-        
+        <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount})" alt=""></td>
     `
+    child.id='medRow_'+itemsCount
     parent.appendChild(child);
-    prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes);
+    prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes+':'+price+':'+qty+':'+batch+':'+exp);
+}
+ 
+function deleteMed(id){
+    document.getElementById('medRow_'+id).remove();
+    prescriptions[id-1]=''
 }
 
 function savePrescriptions(){

@@ -36,7 +36,7 @@
         </div>
     </div>
     <div style="display: flex; justify-content: space-between;">
-        <div style="width: 70%;">
+        <div style="width: 76%;">
             <div style="overflow-y: auto; height: 500px;">
                 <h2>Prescription Tracker</h2>
                 <table>
@@ -48,7 +48,12 @@
                             <th>When</th>
                             <th>Frequency</th>
                             <th>Duration</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Batch No</th>
+                            <th>Exp. Date</th>
                             <th>Notes</th>
+                            <th>Del.</th>
                         </tr>
                     </thead>
                     <tbody id="prescriptionTableBody">
@@ -60,6 +65,10 @@
                                 <td>${when}</td>
                                 <td>${frequency}</td>
                                 <td>${duration}</td>
+                                <td>${price}</td>
+                                <td>${qty}</td>
+                                <td>${batch}</td>
+                                <td>${Exp}</td>
                                 <td>${notes is a big line of comment and check whether its very long}</td>
                             </tr>
                         <%}%>
@@ -73,9 +82,11 @@
         </div>
         
         <div class="prescription-form">
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="Medicine" class="form-control" placeholder="name@example.com"  list="medicineList">
-                <label for="Medicine">Medicine</label>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Medicine</span>
+                </div>
+                <input type="text" id="Medicine" class="form-control" list="medicineList">
                 <datalist id="medicineList">
                     <option value="CHYMORAL AP"></option>
                     <option value="SERADIC AP TABLET"></option>
@@ -84,9 +95,12 @@
                     <option value=""></option>
                 </datalist>
             </div>
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="Dosage" class="form-control" placeholder="name@example.com"  list="dosageList">
-                <label for="Dosage">Dosage</label>
+
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Dosage</span>
+                </div>
+                <input type="text" id="Dosage" class="form-control"  list="dosageList">
                 <datalist id="dosageList">
                     <option value="1-0-0"></option>
                     <option value="0-1-0"></option>
@@ -98,42 +112,76 @@
                     <option value="before-sleep"></option>
                 </datalist>
             </div>
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="When" class="form-control" placeholder="name@example.com" list="whenList">
-                <label for="When">When</label>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">When</span>
+                </div>
+                <input type="text" id="When" class="form-control" list="whenList">
                 <datalist id="whenList">
-                    <option value="After Food"></option>
-                    <option value="Before Food"></option>
-                    <option value="After Breakfast"></option>
-                    <option value=""></option>
+                      <option value="After Food"></option>
+                      <option value="Before Food"></option>
+                      <option value="After Breakfast"></option>
+                      <option value=""></option>
                 </datalist>
             </div>
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="Frequency" class="form-control" placeholder="name@example.com" list="freqList">
-                <label for="Frequency">Frequency</label>
+            
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Frequency</span>
+                </div>
+                <input type="text" id="Frequency" class="form-control" list="freqList">
                 <datalist id="freqList">
                     <option value="Daily"></option>
                     <option value="Weekly"></option>
                     <option value="Alternate-Day"></option>
                 </datalist>
             </div>
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="Duration" class="form-control" placeholder="name@example.com" list="durationList">
-                <label for="Duration">Duration</label>
+
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Duration</span>
+                </div>
+                <input type="text" id="Duration" class="form-control" list="durationList">
                 <datalist id="durationList">
-                    <option value="7 days"></option>
-                    <option value="5 days"></option>
-                    <option value="10 days"></option>
-                    <option value="15 days"></option>
-                    <option value="1 month"></option>
-                    <option value="2 Months"></option>
-                    <option value="3 Months"></option>
-                    <option value="6 Monts"></option>
+                      <option value="7 days"></option>
+                      <option value="5 days"></option>
+                      <option value="10 days"></option>
+                      <option value="15 days"></option>
+                      <option value="1 month"></option>
+                      <option value="2 Months"></option>
+                      <option value="3 Months"></option>
+                      <option value="6 Monts"></option>
                 </datalist>
             </div>
-            <div class="form-floating mb-2 test-data">
-                <input type="text" id="Notes" class="form-control" placeholder="name@example.com" >
-                <label for="Notes">Notes</label>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Price</span>
+                </div>
+                <input type="text" id="Price" class="form-control" >
+            </div>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
+                </div>
+                <input type="text" id="Qty" class="form-control" >
+            </div>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Exp.Date</span>
+                </div>
+                <input type="date" id="Exp" class="form-control" >
+            </div>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Batch</span>
+                </div>
+                <input type="text" id="Batch" class="form-control" >
+            </div>
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Notes</span>
+                </div>
+                <input type="text" id="Notes" class="form-control" >
             </div>
             <div style="width: 100%;">
                 <button style="width: 60%; margin-left: 21%; margin-right: 19%;" class="btn btn-success" onclick="addMedications(false,null)">Add</button>
