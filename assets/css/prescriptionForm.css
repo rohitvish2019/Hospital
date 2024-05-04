@@ -8,9 +8,9 @@ body{
 .main-body{
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
+    border: 1px solid rgb(7, 6, 6);
     width: 99.5%;
-    height: 1100px;
+    height: 1040px;
     overflow-x: hidden;
 }
 
@@ -104,7 +104,6 @@ body{
 
 .footer{
     height: 5%;
-    border: 1px solid green;
     width: 99.9%;
 }
 

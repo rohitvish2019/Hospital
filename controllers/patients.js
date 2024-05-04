@@ -86,7 +86,6 @@ module.exports.addExaminations = async function(req, res){
             });
             if(savedData){
                   console.log(savedData)
-                  console.log("Here we go")
                   await savedData.updateOne({OEs:dataInArray});
             }else{
                   let visit = await Visits.create({
@@ -95,6 +94,12 @@ module.exports.addExaminations = async function(req, res){
                   });
                   await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
             }
+            await Appointments.findOneAndUpdate({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            },{
+                  isVisited:true
+            })
             return res.status(200).json({
                   message:'OEs Updated'
             })
@@ -128,6 +133,12 @@ module.exports.addTests = async function(req, res){
                   });
                   await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
             }
+            await Appointments.findOneAndUpdate({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            },{
+                  isVisited:true
+            })
             return res.status(200).json({
                   message:'Tests Updated'
             })
@@ -137,6 +148,38 @@ module.exports.addTests = async function(req, res){
             })
       }
 
+}
+
+module.exports.addComplaint = async function(req, res){
+      try{
+            let savedData = await Visits.findOne({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            });
+            if(savedData){
+                  await savedData.updateOne({Complaint:req.body.Complaint});
+            }else{
+                  let visit = await Visits.create({
+                        PatientId:req.params.patientId,
+                        Complaint:req.body.Complaint,
+                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                  });
+            }
+            await Appointments.findOneAndUpdate({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            },{
+                  isVisited:true
+            })
+            return res.status(200).json({
+                  message:'Complaint Updated'
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to update complaint'
+            })
+      }
 }
 module.exports.getPatientById = async function(req, res){
       try{
@@ -180,4 +223,49 @@ module.exports.getSavedData = async function(req, res){
 module.exports.getPriscriptionForm =async function(req, res){
       let patient = await Patients.findById(req.params.patientId);
       return res.render('prescriptionForm',{patient});
+}
+
+module.exports.medicationsPage = async function(req, res){
+      let patient = await Patients.findById(req.params.patientId);
+      return res.render('medications',{patient})
+}
+
+module.exports.savePrescriptions = async function(req,res){
+      try{
+            let savedData = await Visits.findOne({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            });
+            await savedData.updateOne({Prescriptions:req.body.prescriptions});
+            return res.status(200).json({
+                  message:'Prescriptions added',
+                  visitId : savedData._id
+            })
+      }catch(err){
+            return res.status(500).json({
+                  message:'Unable to add prescriptions'
+            })
+      }
+}
+
+module.exports.getPrescriptions = async function(req, res){
+      try{
+            let savedData = await Visits.findOne({
+                  PatientId:req.query.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            });
+            if(!savedData){
+                  return res.status(404).json({
+                        message:'Visit not completed yet'
+                  })
+            }
+            return res.status(200).json({
+                  savedData : savedData.Prescriptions,
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to fetch saved information'
+            })
+      }
 }

@@ -11,7 +11,10 @@ const Visit = new mongoose.Schema({
     NumericPatientId:{
         type:Number
     },
-    Prescritions :{
+    Complaint:{
+        type:String
+    },
+    Prescriptions :{
         type:Array,
     },
     Tests:{

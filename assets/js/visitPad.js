@@ -1,4 +1,3 @@
-
 function openExamminationsBox(){
     console.log("Got here")
     document.getElementById('examinationsBox').style.display='block'
@@ -146,6 +145,34 @@ function saveExaminations(){
     })
 }
 
+function saveComplaint(){
+    let patientId = document.getElementById('patientId').innerText;
+    $.ajax({
+        type:'POST',
+        url:'/patients/add/Complaint/'+patientId,
+        data:{Complaint:document.getElementById('complaintBox').value},
+        success:function(data){
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            getSavedData();
+        },
+        error: function(err){
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
+    })
+}
+
 function saveTests(){
     let data = {};
     let patientId = document.getElementById('patientId').innerText;
@@ -179,6 +206,8 @@ function saveTests(){
         }
     })
 }
+
+
 function setSavedDataOnUI(data){
     if(data.OEs.length > 0){
         document.getElementById('examintionsList').innerHTML = ``;
@@ -196,7 +225,8 @@ function setSavedDataOnUI(data){
             let value = data.Tests[i].split(':')[1]
             addNewtests(true, title, value);
         }
-    }   
+    } 
+    document.getElementById('complaintBox').innerText= data.Complaint; 
 }
 function getSavedData(){
     $.ajax({
@@ -218,3 +248,11 @@ function getSavedData(){
     })
 }
 getSavedData();
+
+
+async function saveAll(patientId){
+    await saveComplaint();
+    await saveExaminations();
+    await saveTests();
+    window.location.href='/patients/getPrescriptionForm/'+patientId;
+}

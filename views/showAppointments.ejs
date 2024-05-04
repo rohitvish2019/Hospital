@@ -9,7 +9,9 @@
 
 </head>
 <body>
-    
+    <header>
+      <%-include('_header')%>
+    </header>
     <table class="table">
         <thead>
           <tr>
@@ -19,6 +21,7 @@
             <th scope="col">Gender</th>
             <th scope="col">Address</th>
             <th>Open</th>
+            <th>Medications</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -32,13 +35,26 @@
                     <td><%=appointments[i].PatientId.Gender%></td>
                     <td><%=appointments[i].PatientId.Address%></td>
                     <td><a href="/patients/newVisit/<%=appointments[i].PatientId._id%>"><%=appointments[i].PatientId.Name%></a></td>
-                    <td><button>Close</button></td>
+                    <td><a href="/patients/medications/<%=appointments[i].PatientId._id%>"><%=appointments[i].PatientId.Name%></a></td>
+                    <td id="<%=appointments[i]._id%>" style="display: flex;">
+                      <button id="<%=appointments[i]._id%>_koh" onclick="keepOnHold('<%=appointments[i]._id%>')">keep on Hold</button>
+                      <button id="<%=appointments[i]._id%>_rea" onclick="reActivate('<%=appointments[i]._id%>')">Re - Activate</button>
+                    </td>
                 </tr>
                 
             <%}%>
-          
-          
         </tbody>
       </table>
+      <script>
+        function keepOnHold(id){
+          document.getElementById(id +'rea').style.display='block'
+          document.getElementById(id+'koh').style.display='none'
+        }
+        
+        function reActivate(){
+          document.getElementById(id+'rea').style.display='none'
+          document.getElementById(id +'koh').style.display='block'
+        }
+      </script>
 </body>
 </html>

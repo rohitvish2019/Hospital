@@ -49,6 +49,12 @@ function setSavedDataOnUI(data){
         child.style.marginTop='1%'
         Testscontainer.appendChild(child);
     }
+
+    document.getElementById('complaint').innerHTML=
+    `
+        <h5>Complaint</h5>
+        <label>${data.Complaint}</label>
+    `
 }
 
 getSavedData();
