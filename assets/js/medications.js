@@ -118,7 +118,17 @@ function savePrescriptions(){
         success:function(data){
             window.location.href='/visits/getMedicalBill/'+data.visitId
         },
-        error:function(err){console.log(err.responseText)}
+        error:function(err){
+            console.log(err.responseText);
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            return;
+        }
     })
 }
 

@@ -236,6 +236,11 @@ module.exports.savePrescriptions = async function(req,res){
                   PatientId:req.params.patientId,
                   Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
             });
+            if(!savedData){
+                  return res.status(403).json({
+                        message:'Visit not completed'
+                  })
+            }
             let receivedPres = req.body.prescriptions;
             let preparedPres = []
             for(let i=0;i<receivedPres.length;i++){
@@ -249,6 +254,7 @@ module.exports.savePrescriptions = async function(req,res){
                   visitId : savedData._id
             })
       }catch(err){
+            console.log(err)
             return res.status(500).json({
                   message:'Unable to add prescriptions'
             })

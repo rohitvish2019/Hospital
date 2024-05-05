@@ -26,9 +26,17 @@ th {
 
 
 .prescription-form{
-    border: 1px solid red;
+    border-left: 2px dotted black;
     width: 23%;
     margin-top: 3%;
+}
+
+.prescription-form .input-group{
+    margin-left: 3%;
+}
+
+.input-group-prepend span{
+    font-weight: bold;
 }
 
 .patient-info{
