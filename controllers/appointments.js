@@ -41,3 +41,17 @@ module.exports.showTodaysAppointments = async function(req, res){
         return res.render('showAppointments',{error:'Unable to find appointments'});
     }
 }
+
+module.exports.showOld = function(req, res){
+    return res.render('oldAppointments.ejs')
+}
+
+module.exports.getOldAppointments = async function(req, res){
+    let d = req.query.selectedDate.split('-');
+    let modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+    console.log(modifiedDate)
+    let appointments = await Appointments.find({Date:modifiedDate}).populate('PatientId');
+    return res.status(200).json({
+        appointments
+    })
+}

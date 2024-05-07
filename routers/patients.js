@@ -13,4 +13,5 @@ router.get('/getPrescriptionForm/:patientId', patientsController.getPriscription
 router.get('/medications/:patientId',patientsController.medicationsPage)
 router.post('/add/Prescriptions/:patientId', patientsController.savePrescriptions);
 router.get('/getPrescriptions', patientsController.getPrescriptions);
+router.get('/getOldPrescription/:patientId', patientsController.getOldPrescriptionForm);
 module.exports = router;

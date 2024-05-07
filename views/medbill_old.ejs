@@ -1,0 +1,184 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Bill</title>
+    <link rel="stylesheet" href="/css/medbill.css">
+ </head>
+ <body>
+      <div class="main-body-1">
+         <div class="medical-name">
+            <div style="width: 25%; padding-top: 2.3%; margin-left: 1%;">
+               <small style="display: block;">GST No:</small>
+               <small>GSTIN23AAGHN3205GIZO</small>
+            </div>
+            <div style="width: 49%;text-align: center; padding-top: .5%;">
+               <label style="display: block;font-size: 19px;font-weight: bold;">SHREE BALA JI MEDICAL STORES</label>
+               <small style="display: block;margin-top: 1%;">OM FRACTURE AND TRAUMA HOSPITAL</small>
+               <small style="display: block;">Near railway station Damoh, Mobile : 8103242475</small>
+            </div>
+            <div style="width: 25%;padding-top: 2.3%; margin-left: 1%;">
+               <small style="display: block;">DL No.:</small>
+               <small>20/77/39/2016 - 21/78/39/2016</small>
+            </div>
+        </div>
+        <div class="patient-info">
+         
+            <label hidden for="" id="patientId"><%=patient._id%></label>
+            <div class="patient-data">
+                <small for=""><b>ID</b></small>
+                <label for="" id=""><%=patient.PatientId%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Name</b></small>
+                <label for=""><%=patient.Name%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Gender</b></small>
+                <label for=""><%=patient.Gender%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Age</b></small>
+                <label for=""><%=patient.Age%></label>
+            </div>
+            <div class="patient-address">
+                <small for=""><b>Address</b></small>
+                <label for=""><%=patient.Address%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Date</b></small>
+                <%let months= ['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']%>
+                <label for=""><%=new Date().getDate() +'-'+ months[(Number(new Date().getMonth()))] +'-'+new Date().getFullYear() %></label>
+            </div>
+            <div class="patient-data">
+               <small style="display: block;"><b>Prescribed By</b></small>
+               <small for="">Dr. Navin Soni</small>
+           </div>
+        </div>
+        <div class="drug-table">
+         <table style="width: 100%;">
+            <thead>
+               <tr>
+                  <th>#</th>
+                  <th>Description</th>
+                  <th>Batch No</th>
+                  <th>Rate * Qty</th>
+                  <th>Exp. Date</th>
+                  <th>Usage</th>
+                  <th>Duration</th>
+                  <th>Total</th>
+               </tr>
+            </thead>
+            <tbody>
+               <%let amount = 0%>
+               <%for(let i=0;i<prescriptions.length;i++){%>
+                  <%let drugs = prescriptions[i].split(':')%>
+                  <tr>
+                     <td><%=i+1%></td>
+                     <td><%=drugs[0]%></td>
+                     <td><%=drugs[8]%></td>
+                     <td><%=drugs[6]%> * <%=drugs[7]%></td>
+                     <td><%=drugs[9]%></td>
+                     <td><%=drugs[2]%> <%=drugs[4]%>, <%=drugs[1]%></td>
+                     <td><%=drugs[3]%></td>
+                     <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
+                     <td><%=Number(drugs[6])*Number(drugs[7])%></td>
+                  </tr>
+               <%}%>
+               <tr>
+                  <td colspan="5">Total Payable amount</td>
+                  <td colspan="3" style="font-size: medium; font-weight: bold;"><%=amount%></td>
+               </tr>
+            </tbody>
+         </table>
+        </div>
+        
+      </div>
+      <div class="main-body-1">
+         <div class="medical-name">
+            <div style="width: 25%; padding-top: 2.3%; margin-left: 1%;">
+               <small style="display: block;">GST No:</small>
+               <small>GSTIN23AAGHN3205GIZO</small>
+            </div>
+            <div style="width: 49%;text-align: center; padding-top: .5%;">
+               <label style="display: block;font-size: 19px;font-weight: bold;">SHREE BALA JI MEDICAL STORES</label>
+               <small style="display: block;margin-top: 1%;">OM FRACTURE AND TRAUMA HOSPITAL</small>
+               <small style="display: block;">Near railway station Damoh, Mobile : 8103242475</small>
+            </div>
+            <div style="width: 25%;padding-top: 2.3%; margin-left: 1%;">
+               <small style="display: block;">DL No.:</small>
+               <small>20/77/39/2016 - 21/78/39/2016</small>
+            </div>
+        </div>
+        <div class="patient-info">
+         
+            <label hidden for="" id="patientId"><%=patient._id%></label>
+            <div class="patient-data">
+                <small for=""><b>ID</b></small>
+                <label for="" id=""><%=patient.PatientId%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Name</b></small>
+                <label for=""><%=patient.Name%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Gender</b></small>
+                <label for=""><%=patient.Gender%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Age</b></small>
+                <label for=""><%=patient.Age%></label>
+            </div>
+            <div class="patient-address">
+                <small for=""><b>Address</b></small>
+                <label for=""><%=patient.Address%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Date</b></small>
+                <label for=""><%=new Date().getDate() +'-'+ months[(Number(new Date().getMonth()))] +'-'+new Date().getFullYear() %></label>
+            </div>
+            <div class="patient-data">
+               <small style="display: block;"><b>Prescribed By</b></small>
+               <small for="">Dr. Navin Soni</small>
+           </div>
+        </div>
+        <div class="drug-table">
+         <table style="width: 100%;">
+            <thead>
+               <tr>
+                  <th>#</th>
+                  <th>Description</th>
+                  <th>Batch No</th>
+                  <th>Rate * Qty</th>
+                  <th>Exp. Date</th>
+                  <th>Usage</th>
+                  <th>Duration</th>
+                  <th>Total</th>
+               </tr>
+            </thead>
+            <tbody>
+               
+               <%for(let i=0;i<prescriptions.length;i++){%>
+                  <%let drugs = prescriptions[i].split(':')%>
+                  <tr>
+                     <td><%=i+1%></td>
+                     <td><%=drugs[0]%></td>
+                     <td><%=drugs[8]%></td>
+                     <td><%=drugs[6]%> * <%=drugs[7]%></td>
+                     <td><%=drugs[9]%></td>
+                     <td><%=drugs[2]%> <%=drugs[4]%>, <%=drugs[1]%></td>
+                     <td><%=drugs[3]%></td>
+                     <td><%=Number(drugs[6])*Number(drugs[7])%></td>
+                  </tr>
+               <%}%>
+               <tr>
+                  <td colspan="5">Total Payable amount</td>
+                  <td colspan="3" style="font-size: medium; font-weight: bold;"><%=amount%></td>
+               </tr>
+            </tbody>
+         </table>
+        </div>
+      </div>
+ </body>
+ </html>

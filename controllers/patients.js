@@ -19,9 +19,9 @@ module.exports.addNewPatient = async function(req, res){
             }
 
             try{  
-                  console.log("Id : "+req.body.bookAppointment)
+                  
                   if(req.body.bookAppointment == 'true'){
-                        console.log("Creating appointments")
+                        
                         await Appointments.create({
                               PatientId:patient._id,
                               Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
@@ -59,12 +59,22 @@ module.exports.updatePatientData = function(req, res){
 module.exports.newVisit =async   function(req, res){
       let patient = await Patients.findById(req.params.id)
       let properties = propertiesReader('./properties/UIdata.properties');
-      console.log(req.params.id);
+      let date = req.query.date
+      let modifiedDate;
+      
+      if(date != null && date.length > 0){
+            console.log('using req date '+ req.query.date);
+            let d = date.split('-');
+            modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+      }else{
+            modifiedDate = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+      }
       let SavedData = await Visits.findOne({
             PatientId:req.params.id,
-            Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            Date:modifiedDate
       });
-      
+      console.log('abc')
+      console.log(SavedData);
       let OE = properties.get('OnExaminations').split(',');
       return res.render('visitPad',{OE, patient, SavedData});
 }
@@ -85,7 +95,7 @@ module.exports.addExaminations = async function(req, res){
                   Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
             });
             if(savedData){
-                  console.log(savedData)
+                  
                   await savedData.updateOne({OEs:dataInArray});
             }else{
                   let visit = await Visits.create({
@@ -123,8 +133,7 @@ module.exports.addTests = async function(req, res){
                   Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
             });
             if(savedData){
-                  console.log(savedData)
-                  console.log("Here we go")
+                  
                   await savedData.updateOne({Tests:dataInArray});
             }else{
                   let visit = await Visits.create({
@@ -224,7 +233,19 @@ module.exports.getPriscriptionForm =async function(req, res){
       let patient = await Patients.findById(req.params.patientId);
       return res.render('prescriptionForm',{patient});
 }
-
+module.exports.getOldPrescriptionForm = async function(req, res){
+      console.log(req.params);
+      console.log(req.query);
+      let d = req.query.date.split('-');
+      let modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+      let visit = await Visits.findOne({PatientId:req.params.patientId, Date:modifiedDate }).populate('PatientId');
+      console.log(visit);
+      return res.render('prescriptionForm_old', {visit})
+      return res.status(200).json({
+            message:'Success',
+            visit
+      })
+}
 module.exports.medicationsPage = async function(req, res){
       let patient = await Patients.findById(req.params.patientId);
       return res.render('medications',{patient})
@@ -263,9 +284,20 @@ module.exports.savePrescriptions = async function(req,res){
 
 module.exports.getPrescriptions = async function(req, res){
       try{
+            let date = req.query.date
+            let modifiedDate;
+            console.log(req.body);
+            if(date != null){
+                  console.log('using req date '+ req.query.date);
+                  let d = date.split('-');
+                  modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+            }else{
+                  modifiedDate = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            }
+            console.log(modifiedDate)
             let savedData = await Visits.findOne({
                   PatientId:req.query.patientId,
-                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                  Date:modifiedDate
             });
             if(!savedData){
                   return res.status(404).json({
@@ -282,3 +314,4 @@ module.exports.getPrescriptions = async function(req, res){
             })
       }
 }
+
