@@ -1,7 +1,8 @@
 let itemsCount = 0
 let prescriptions = []
-function addMedications(isComingFromServer, data){
-    let medicine,when,frequency,duration,notes,dosage,price,qty,batch,exp;
+async function addMedications(isComingFromServer, data){
+    let medicine,when,frequency,duration,notes,dosage,price,qty,batch,exp, CurrentQty;
+    let medInfo;
     if(isComingFromServer == true){
         let thisPrescription = data.split(':');
         medicine = thisPrescription[0]
@@ -21,12 +22,29 @@ function addMedications(isComingFromServer, data){
         duration = document.getElementById('Duration').value
         notes = document.getElementById('Notes').value
         dosage = document.getElementById('Dosage').value
-        price = document.getElementById('Price').value
+        //price = document.getElementById('Price').value
         qty = document.getElementById('Qty').value
-        batch = document.getElementById('Batch').value
-        exp = document.getElementById('Exp').value
+        //batch = document.getElementById('Batch').value
+        //exp = document.getElementById('Exp').value
+        console.log('Getting q info')
+        await $.ajax({
+            url:'/purchases/getMedInfo',
+            data:{
+                Medicine:document.getElementById('Medicine').value
+            },
+            type:'GET',
+            success:function(data){
+                console.log("QTY!"+data.totalQty)
+                price = data.medInfo.Price,
+                batch = data.medInfo.Batch
+                exp = data.medInfo.ExpiryDate.split('T')[0]
+                CurrentQty = Number(data.totalQty);
+            },
+            error:function(err){console.log(err.responseText)}
+        })
+
     }
-    
+    console.log
     let child = document.createElement('tr');
     let parent = document.getElementById('prescriptionTableBody');
     
@@ -97,6 +115,9 @@ function addMedications(isComingFromServer, data){
         <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount})" alt=""></td>
     `
     child.id='medRow_'+itemsCount
+    if(CurrentQty < qty){
+        child.style.backgroundColor='#f3cdcdde'
+    }
     parent.appendChild(child);
     prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes+':'+price+':'+qty+':'+batch+':'+exp);
 }

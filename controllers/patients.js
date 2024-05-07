@@ -2,7 +2,8 @@ const propertiesReader = require('properties-reader');
 const Patients = require('../models/patients');
 const Appointments = require('../models/appointments');
 const Visits = require('../models/visits');
-const Tracker = require('../models/tracker')
+const Tracker = require('../models/tracker');
+const Inventories = require('../models/inventory');
 module.exports.addNewPatient = async function(req, res){
       try{
             let patient = await Patients.create(req.body);
@@ -241,14 +242,13 @@ module.exports.getOldPrescriptionForm = async function(req, res){
       let visit = await Visits.findOne({PatientId:req.params.patientId, Date:modifiedDate }).populate('PatientId');
       console.log(visit);
       return res.render('prescriptionForm_old', {visit})
-      return res.status(200).json({
-            message:'Success',
-            visit
-      })
+      
 }
 module.exports.medicationsPage = async function(req, res){
       let patient = await Patients.findById(req.params.patientId);
-      return res.render('medications',{patient})
+      let inventory = await Inventories.find({}).distinct('Medicine');
+      console.log(inventory)
+      return res.render('medications',{patient, inventory})
 }
 
 module.exports.savePrescriptions = async function(req,res){
@@ -263,11 +263,40 @@ module.exports.savePrescriptions = async function(req,res){
                   })
             }
             let receivedPres = req.body.prescriptions;
+            
             let preparedPres = []
             for(let i=0;i<receivedPres.length;i++){
                   if(receivedPres[i].length > 0){
                         preparedPres.push(receivedPres[i])
+                        splittedArray = receivedPres[i].split(':');
+                        let deductableQty = Number(splittedArray[7]);
+                        let inventory = await Inventories.find({Medicine:splittedArray[0]}).sort('ExpiryDate');
+                        let totalAvailableQty = 0
+                        for(let i=0;i<inventory.length;i++){
+                              totalAvailableQty = totalAvailableQty + Number(inventory[i].CurrentQty);
+                        }
+                        console.log("QDY "+deductableQty)
+                        if(totalAvailableQty > deductableQty){
+                              for(let i=0;i<inventory.length;i++){
+                                    console.log("deductable qty is "+deductableQty)
+                                    if(inventory[i].CurrentQty >= deductableQty){
+                                          let newQty = inventory[i].CurrentQty - deductableQty
+                                          await inventory[i].updateOne({CurrentQty:newQty})
+                                          break
+                                    }else{
+                                          deductableQty = deductableQty - inventory[i].CurrentQty
+                                          await inventory[i].updateOne({CurrentQty:0});
+                                    }
+                                    
+                              }
+                        }else{
+                              return res.status(200).json({
+                                    message:'Quantity over',
+                                    visitId : savedData._id
+                              })
+                        }
                   }
+
             }
             await savedData.updateOne({Prescriptions:preparedPres});
             return res.status(200).json({
