@@ -15,7 +15,7 @@
     <div style="display: flex; justify-content: space-between;">
         <div style="width: 76%;">
             <div style="overflow-y: auto; height: 500px;">
-                <h2>Prescription Tracker</h2>
+                <h2>Inventory Management</h2>
                 <table>
                     <thead>
                         <tr>
@@ -28,7 +28,9 @@
                             <th>Box size</th>
                             <th>Box Count</th>
                             <th>Total Price</th>
+                            <!--
                             <th>Del.</th>
+                            -->
                         </tr>
                     </thead>
                     <tbody id="prescriptionTableBody">
@@ -51,24 +53,22 @@
                 </table>
             </div>
             <div style="display: flex; justify-content: center;">
-                <button onclick="savePurchases()" style="width: 30%;" class="btn btn-success">Save & Print</button>
+                <button onclick="savePurchases()" style="width: 30%;" class="btn btn-success">Save</button>
             </div>
             
         </div>
         
         <div class="prescription-form">
-            <h4 style="text-align: center; font-weight: bold;">Add Prescriptions</h4>
+            <h4 style="text-align: center; font-weight: bold;">Add New Inventory</h4>
             <div class="input-group input-group-sm mb-1">
                 <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Medicine</span>
+                <span class="input-group-text" id="inputGroup-sizing-sm" >Medicine</span>
                 </div>
-                <input type="text" id="Medicine" class="form-control" list="medicineList">
+                <input style="text-transform: uppercase;" type="text" id="Medicine" class="form-control" list="medicineList">
                 <datalist id="medicineList">
-                    <option value="CHYMORAL AP"></option>
-                    <option value="SERADIC AP TABLET"></option>
-                    <option value="MACPRED 8MG TABLET"></option>
-                    <option value="PANTEC DSR CAP"></option>
-                    <option value=""></option>
+                    <%for(let i=0;i<inventory.length;i++){%>
+                        <option value="<%=inventory[i]%>"></option>
+                    <%}%>
                 </datalist>
             </div>
 

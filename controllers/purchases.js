@@ -1,7 +1,8 @@
 const Purchases = require('../models/purchases')
 const Inventories = require('../models/inventory')
-module.exports.purchaseHome = function(req, res){
-    return res.render('purchases');
+module.exports.purchaseHome =async function(req, res){
+    let inventory = await Inventories.find({}).distinct('Medicine');
+    return res.render('purchases', {inventory});
 }
 
 module.exports.addPurchases = async function(req, res){
