@@ -28,7 +28,7 @@ async function addMedications(isComingFromServer, data){
         //exp = document.getElementById('Exp').value
         console.log('Getting q info')
         await $.ajax({
-            url:'/purchases/getMedInfo',
+            url:'/purchases/getMeds',
             data:{
                 Medicine:document.getElementById('Medicine').value
             },

@@ -89,7 +89,7 @@ function populateTable(pageNumber) {
     var startIndex = (pageNumber - 1) * pageSize;
     var endIndex = startIndex + pageSize;
     var tableBody = document.getElementById("medicines");
-    tableBody.innerHTML = "";
+    tableBody.innerHTML = ``;
 
     for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
         var row = document.createElement("tr");

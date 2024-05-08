@@ -34,7 +34,7 @@ module.exports.addPurchases = async function(req, res){
 }
 
 
-module.exports.getMedInfo = async function(req, res){
+module.exports.getMedInfoPrescriptions = async function(req, res){
     let medInfo = await Inventories.find({Medicine:req.query.Medicine}).sort('ExpiryDate');
     let totalQty = 0;
     let returnableInfo;
@@ -62,5 +62,24 @@ module.exports.getPurchaseHistory = async function (req, res){
     let purchases = await Purchases.find({createdAt :{$gte : req.query.startDate}, createdAt:{$lte : req.query.endDate}}).sort('Medicine');
     return res.status(200).json({
         purchases
+    })
+}
+
+module.exports.invertoryManagerHome = async function(req, res){
+    let inventory = await Inventories.find({}).distinct('Medicine');
+    return res.render('invetoryManager',{inventory});
+}
+
+module.exports.getMedInfo = async function(req, res){
+    let meds = await Inventories.find({Medicine:req.query.Medicine, CurrentQty: {$gt : 0}});
+    return res.status(200).json({
+        meds
+    })
+}
+
+module.exports.updateInventory = async function(req, res){
+    await Inventories.findByIdAndUpdate(req.body.id, {CurrentQty:req.body.qty});
+    return res.status(200).json({
+        message:'Updated inventories'
     })
 }

@@ -58,7 +58,7 @@ function addMedications(isComingFromServer, data){
     `
     child.id='medRow_'+itemsCount
     parent.appendChild(child);
-    let thisItem = medicine+':'+batch+':'+pprice+':'+sprice+':'+expDate+':'+boxSize+':'+boxCount
+    let thisItem = String(medicine).toUpperCase()+':'+batch+':'+pprice+':'+sprice+':'+expDate+':'+boxSize+':'+boxCount
     items.push(thisItem);
     clearMedForm();
 }
