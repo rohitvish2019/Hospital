@@ -90,6 +90,7 @@ function savePurchases(){
                 timeout: 1500
             }).show();
             document.getElementById('prescriptionTableBody').innerHTML=``;
+            items = []
             return;
         },
         error: function(err){console.log(err.responseText)}
@@ -99,5 +100,4 @@ function savePurchases(){
 function deleteMed(id){
     document.getElementById('medRow_'+id).remove();
     items.splice(id-1,1)
-    
 }

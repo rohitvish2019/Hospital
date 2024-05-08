@@ -51,3 +51,16 @@ module.exports.getMedInfo = async function(req, res){
         totalQty
     })
 }
+
+module.exports.purchaseHistoryHome = async function(req, res){
+    let purchases = await Purchases.find({});
+    return res.render('purchaseHistory', {purchases})
+}
+
+
+module.exports.getPurchaseHistory = async function (req, res){
+    let purchases = await Purchases.find({createdAt :{$gte : req.query.startDate}, createdAt:{$lte : req.query.endDate}}).sort('Medicine');
+    return res.status(200).json({
+        purchases
+    })
+}
