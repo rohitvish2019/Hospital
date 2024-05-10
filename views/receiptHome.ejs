@@ -3,175 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prescription Tracker</title>
+    <title>Receipts</title>
+    <link rel="stylesheet" href="/css/receiptHome.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" type="text/css" href="/css/medications.css">
 </head>
 <body>
-    <div class="patient-info">
-        <label hidden for="" id="patientId"><%=patient._id%></label>
-        <div class="patient-data">
-            <small for=""><b>ID</b></small>
-            <label for="" id=""><%=patient.PatientId%></label>
+    <div class="main-container">
+        <div class="header"></div>
+
+        <div class="searchBar">
+            <div>
+                <input onchange="changePatientDataInputs()" type="radio" name="searchType" id="searchType_id" checked> Search by Id
+                <input onchange="changePatientDataInputs()" style="margin-left: 10%;" type="radio" name="searchType" id="searchType_fill"> Manual Fill
+            </div>
+            
+            <div>
+                <input type="text" name="" id="idToSearch">
+                <button class="btn btn-info" id="searchButton" onclick="searchById()">Search</button>
+            </div>
+            
         </div>
-        <div class="patient-data">
-            <small for=""><b>Name</b></small>
-            <label for=""><%=patient.Name%></label>
+        <div class="patientData">
+            <div class="patient-data">
+                <div class="form-floating mb-2 test-data">
+                    <input type="text" id="Pname" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                    <label for="">Patient Name</label>
+                </div>
+            </div>
+            <div class="patient-data">
+                <div class="form-floating mb-2 test-data">
+                    <input type="Number" id="Age" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                    <label for="">Age</label>
+                </div>
+            </div>
+            <div class="patient-data">
+                <div class="form-floating mb-2 test-data">
+                    <input type="text" id="Gender" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                    <label for="">Gender</label>
+                </div>
+            </div>
+            <div class="patient-data">
+                <div class="form-floating mb-2 test-data">
+                    <input type="text" id="Address" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                    <label for="">Address</label>
+                </div>
+            </div>
+            <div class="patient-data">
+                <div class="form-floating mb-2 test-data">
+                    <input type="text" id="mob" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                    <label for="">Mobile No</label>
+                </div>
+            </div>
         </div>
-        <div class="patient-data">
-            <small for=""><b>Gender</b></small>
-            <label for=""><%=patient.Gender%></label>
-        </div>
-        <div class="patient-data">
-            <small for=""><b>Age</b></small>
-            <label for=""><%=patient.Age%></label>
-        </div>
-        <div class="patient-address">
-            <small for=""><b>Address</b></small>
-            <label for=""><%=patient.Address%></label>
-        </div>
-    </div>
-    <div style="display: flex; justify-content: space-between;">
-        <div style="width: 76%;">
-            <div style="overflow-y: auto; height: 500px;">
-                <h2>Prescription Tracker</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Medicine</th>
-                            <th>Dosage</th>
-                            <th>When</th>
-                            <th>Frequency</th>
-                            <th>Duration</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Batch No</th>
-                            <th>Exp. Date</th>
-                            <th>Notes</th>
-                            <th>Del.</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prescriptionTableBody">
-                        <%for(let i=0;i<0;i++){%>
+        <div class="medContainer">
+            <div class="medItems">
+                <label style="font-size: 26px;font-weight: bold;">Receipt Items</label>
+                <div style="height: 90%;overflow: auto;">
+                    <table >
+                        <thead>
                             <tr>
-                                <td>${++itemsCount}</td>
-                                <td>${medicine}</td>
-                                <td>${dosage}</td>
-                                <td>${when}</td>
-                                <td>${frequency}</td>
-                                <td>${duration}</td>
-                                <td>${price}</td>
-                                <td>${qty}</td>
-                                <td>${batch}</td>
-                                <td>${Exp}</td>
-                                <td>${notes is a big line of comment and check whether its very long}</td>
+                                <th>#</th>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Purchase Date</th>
+                                <th>Expiry Date</th>
+                                <th>Total</th>
+                                
                             </tr>
-                        <%}%>
-                    </tbody>
-                </table>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <button onclick="savePrescriptions()" style="width: 30%;" class="btn btn-success">Save & Print</button>
-            </div>
-            
-        </div>
-        
-        <div class="prescription-form">
-            <h4 style="text-align: center; font-weight: bold;">Add Prescriptions</h4>
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Medicine</span>
+                        </thead>
+                        <tbody id="itemsTableBody">
+                            <%for(let i=0;i<0;i++){%>
+                                <tr>
+                                    <td>${++itemsCount}</td>
+                                    <td>${medicine}</td>
+                                    <td>${dosage}</td>
+                                    <td>${when}</td>
+                                    <td>${frequency}</td>
+                                    <td>${frequency}</td>
+                                    <td>${notes is a big line of comment and check whether its very long}</td>
+                                </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
                 </div>
-                <input type="text" id="Medicine" class="form-control" list="medicineList">
-                <datalist id="medicineList">
-                    <%for(let i=0;i<inventory.length;i++){%>
-                        <option value="<%=inventory[i]%>"></option>
-                    <%}%>
-                </datalist>
+                
+                <div class="actionButtons">
+                    <button class="btn btn-success" onclick="saveReceiptData()">Save & Generate Receipt</button>
+                </div>
             </div>
+            <div class="medForm">
+                <label style="font-size: 26px;font-weight: bold;border-bottom: 2px dotted black;">Add Items</label>
 
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-sm">Dosage</span>
+                <div class="input-group input-group-sm mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Item</span>
+                    </div>
+                    <input type="text" id="Item" class="form-control" >
                 </div>
-                <input type="text" id="Dosage" class="form-control"  list="dosageList">
-                <datalist id="dosageList">
-                    <option value="1-0-0"></option>
-                    <option value="0-1-0"></option>
-                    <option value="0-0-1"></option>
-                    <option value="1-0-1"></option>
-                    <option value="0-1-0"></option>
-                    <option value="1-1-1"></option>
-                    <option value="early-morning"></option>
-                    <option value="before-sleep"></option>
-                </datalist>
-            </div>
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">When</span>
-                </div>
-                <input type="text" id="When" class="form-control" list="whenList">
-                <datalist id="whenList">
-                      <option value="After Food"></option>
-                      <option value="Before Food"></option>
-                      <option value="After Breakfast"></option>
-                      <option value=""></option>
-                </datalist>
-            </div>
-            
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Frequency</span>
-                </div>
-                <input type="text" id="Frequency" class="form-control" list="freqList">
-                <datalist id="freqList">
-                    <option value="Daily"></option>
-                    <option value="Weekly"></option>
-                    <option value="Alternate-Day"></option>
-                </datalist>
-            </div>
 
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Duration</span>
+                <div class="input-group input-group-sm mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">price</span>
+                    </div>
+                    <input type="text" id="price" class="form-control" >
                 </div>
-                <input type="text" id="Duration" class="form-control" list="durationList">
-                <datalist id="durationList">
-                      <option value="7 days"></option>
-                      <option value="5 days"></option>
-                      <option value="10 days"></option>
-                      <option value="15 days"></option>
-                      <option value="1 month"></option>
-                      <option value="2 Months"></option>
-                      <option value="3 Months"></option>
-                      <option value="6 Monts"></option>
-                </datalist>
-            </div>
-            
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Qty</span>
+
+                <div class="input-group input-group-sm mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Quantity</span>
+                    </div>
+                    <input type="text" id="Qty" class="form-control" >
                 </div>
-                <input type="text" id="Qty" class="form-control" >
-            </div>
-            
-            
-            <div class="input-group input-group-sm mb-1">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Notes</span>
+
+                <div class="input-group input-group-sm mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Purchase date</span>
+                    </div>
+                    <input type="date" id="Pdate" class="form-control" >
                 </div>
-                <input type="text" id="Notes" class="form-control" >
-            </div>
-            <div style="width: 100%; margin-top: 10%;">
-                <button style="width: 60%; margin-left: 21%; margin-right: 19%;" class="btn btn-success" onclick="addMedications(false,null)">Add</button>
+
+                <div class="input-group input-group-sm mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Expiry Date</span>
+                    </div>
+                    <input type="date" id="Edate" class="form-control" >
+                </div>
+                <div class="mt-4" >
+                    <button style="width: 60%;" class="btn btn-primary ml-2 mr-2" onclick="addItem()">Add Item</button>
+                </div>
             </div>
         </div>
     </div>
-    <script src="/js/medications.js"></script>
+    <script src="/js/receiptHome.js"></script>
 </body>
 </html>

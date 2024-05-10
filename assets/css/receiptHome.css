@@ -1,0 +1,82 @@
+body{
+    height: 99vh;
+    padding: 0;
+    margin: 0;
+}
+
+.main-container{
+    height: 100%;
+    width: 99.7%;
+
+}
+.header{
+    height: 10%;
+}
+.searchBar{
+    height:5%;
+    display: flex;
+    padding-left: 2%;
+}
+.searchBar div{
+    width: 25%;
+}
+
+.patientData{
+    height:9%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+    border-bottom: 2px dotted black;
+    padding-bottom: 5%;
+}
+
+.medContainer{
+    height:69%;
+    display: flex;
+}
+.medItems{
+    width: 70%;
+    text-align: center;
+}
+
+.medForm{
+    width: 30%;
+    text-align: center;
+    border-left: 1px dotted black;
+    padding-left: 1%;
+}
+.actionButtons{
+    height:7%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-group-text{
+    width: 120px;
+}
+.input-group{
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 98% !important;
+}
+.patient-data{
+    width: 18%;
+    height: 100%;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+thead,th{
+    position: sticky;
+    top: 0;
+}
+th, td {
+    border: 1px solid #ddd !important;
+    padding: 6px;
+    text-align: left;
+    font-size: small;
+}
+th {
+    background-color: #f2f2f2;
+}
