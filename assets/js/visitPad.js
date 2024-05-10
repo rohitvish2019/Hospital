@@ -254,5 +254,6 @@ async function saveAll(patientId){
     await saveComplaint();
     await saveExaminations();
     await saveTests();
-    window.location.href='/patients/getPrescriptionForm/'+patientId;
+    setTimeout(function(){window.location.href='/patients/getPrescriptionForm/'+patientId;}, 2000)
+    
 }

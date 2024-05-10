@@ -34,17 +34,22 @@ async function addMedications(isComingFromServer, data){
             },
             type:'GET',
             success:function(data){
-                console.log("QTY!"+data.totalQty)
-                price = data.medInfo.Price,
-                batch = data.medInfo.Batch
-                exp = data.medInfo.ExpiryDate.split('T')[0]
+                if(!data.medInfo || data.medInfo == null){
+                    price = 'NA',
+                    batch = 'NA'
+                    exp = 'NA'
+                }else{
+                    price = data.medInfo.Price,
+                    batch = data.medInfo.Batch
+                    exp = data.medInfo.ExpiryDate.split('T')[0]
+                }
+                
                 CurrentQty = Number(data.totalQty);
             },
             error:function(err){console.log(err.responseText)}
         })
 
     }
-    console.log
     let child = document.createElement('tr');
     let parent = document.getElementById('prescriptionTableBody');
     
@@ -115,6 +120,7 @@ async function addMedications(isComingFromServer, data){
         <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount})" alt=""></td>
     `
     child.id='medRow_'+itemsCount
+    console.log('Current quantity is '+CurrentQty+ ' and ordered is '+qty)
     if(CurrentQty < qty){
         child.style.backgroundColor='#f3cdcdde'
     }

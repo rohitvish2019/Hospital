@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const patientsController = require('../controllers/patients')
 router.get('/newVisit/:id', patientsController.newVisit);
+router.get('/history/:id', patientsController.patientHistoryHome);
 router.get('/new', patientsController.patientRegistration);
 router.post('/register', patientsController.addNewPatient);
 router.post('/add/Examinations/:patientId', patientsController.addExaminations);
@@ -14,4 +15,5 @@ router.get('/medications/:patientId',patientsController.medicationsPage)
 router.post('/add/Prescriptions/:patientId', patientsController.savePrescriptions);
 router.get('/getPrescriptions', patientsController.getPrescriptions);
 router.get('/getOldPrescription/:patientId', patientsController.getOldPrescriptionForm);
+router.get('/getHistory/:id', patientsController.getPatientHistory)
 module.exports = router;

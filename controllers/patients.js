@@ -276,7 +276,7 @@ module.exports.savePrescriptions = async function(req,res){
                               totalAvailableQty = totalAvailableQty + Number(inventory[i].CurrentQty);
                         }
                         console.log("QDY "+deductableQty)
-                        if(totalAvailableQty > deductableQty){
+                        if(totalAvailableQty >= deductableQty){
                               for(let i=0;i<inventory.length;i++){
                                     console.log("deductable qty is "+deductableQty)
                                     if(inventory[i].CurrentQty >= deductableQty){
@@ -287,7 +287,6 @@ module.exports.savePrescriptions = async function(req,res){
                                           deductableQty = deductableQty - inventory[i].CurrentQty
                                           await inventory[i].updateOne({CurrentQty:0});
                                     }
-                                    
                               }
                         }else{
                               return res.status(200).json({
@@ -344,3 +343,15 @@ module.exports.getPrescriptions = async function(req, res){
       }
 }
 
+
+module.exports.patientHistoryHome = async function(req, res){
+      let patient = await Patients.findById(req.params.id)
+      return res.render('patientHistory', {patient});
+}
+
+module.exports.getPatientHistory = async function(req, res){
+      let history = await Visits.find({PatientId:req.params.id}).sort({createdAt:-1});
+      return res.status(200).json({
+            history
+      })
+}
