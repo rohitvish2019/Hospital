@@ -6,4 +6,5 @@ router.get('/show/today', passport.checkAuthentication, appointmentsController.s
 router.post('/bookToday', passport.checkAuthentication, appointmentsController.addAppointment);
 router.get('/show/old', passport.checkAuthentication, appointmentsController.showOld);
 router.get('/getByDate', passport.checkAuthentication, appointmentsController.getOldAppointments);
+router.get('/receipt/:id', passport.checkAuthentication, appointmentsController.getRegistrationReceipt)
 module.exports = router;

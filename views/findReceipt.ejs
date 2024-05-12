@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <style>
+    body{
+        height: 100vh;
+    }
     table {
     border-collapse: collapse;
     width: 100%;
@@ -15,7 +20,7 @@ thead,th{
     top: 0;
 }
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
     padding: 8px;
     text-align: left;
     font-size: small;
@@ -23,20 +28,39 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
-
+.searchBar{
+    padding-top: 1%;
+    height: 10%;
+    border-bottom: 2px dashed black;
+    padding-left: 2%;
+}
+.main-body{
+    height: 100%;
+}
+.receiptsTable{
+    margin-top: 1%;
+    height: 73%;
+    overflow: auto;
+}
+.loader{
+    position: fixed;
+    top: 40%;
+    left: 45%;
+    display: none
+}
 </style>
 <body>
-    <header>
-        <%-include('_header')%>
-    </header>
-    <div>
+    <div class="main-body">
+        <header>
+            <%-include('_header')%>
+        </header>
         <div class="searchBar">
-            <input class="checkItems" type="radio" name="searchType" id="search_id" onchange="changeInputs()"> &nbsp;&nbsp;<b>Search By Receipt No</b>
+            <input type="radio" name="searchType" id="search_id" onchange="changeInputs()"> &nbsp;&nbsp;<b>Search By Receipt No</b>
             <input type="radio" name="searchType" id="search_name" onchange="changeInputs()" checked> &nbsp;&nbsp;<b>Search By Date</b>
             <input type="text" name="" id="searchValue">
             <b>Start Date : </b><input type="date" name="" id="startDate">
             <b>End date : </b><input type="date" name="" id="endDate">
-            <input type="submit" value="Search" onclick="getReceipts()">
+            <input class="btn btn-success" type="submit" value="Search" onclick="getReceipts()">
         </div>
         <div class="receiptsTable">
             <table>
@@ -49,22 +73,12 @@ th {
                         <th>Get Receipt</th>
                     </tr>
                 </thead>
+                <%-include('_loader')%>
                 <tbody id="receiptsTableBody">
-                    <%for(let i=0;i<0;i++){%>
-                        <tr>
-                            <td>${++itemsCount}</td>
-                            <td>${medicine}</td>
-                            <td>${dosage}</td>
-                            <td>${when}</td>
-                            <td>${frequency}</td>
-                            <td>${duration}</td>
-                            
-                        </tr>
-                    <%}%>
+                    
                 </tbody>
             </table>
         </div>
-        <div></div>
     </div>
     <script src="/js/findReceipt.js"></script>
 </body>

@@ -1,4 +1,5 @@
 function getAppointments(){
+    document.getElementById('loader').style.display='block'
     $.ajax({
         url:'/appointments/getByDate/',
         type:'Get',
@@ -6,10 +7,15 @@ function getAppointments(){
             selectedDate:document.getElementById('selectedDate').value,
         },
         success:function(data){console.log(data.appointments)
+            document.getElementById('loader').style.display='none'
             setAppointmentsOnUi(data.appointments)
+            
         },
-        error:function(data){console.log}
+        error:function(data){console.log
+            document.getElementById('loader').style.display='none'
+        }
     })
+    
 }
 
 function setAppointmentsOnUi(appointments){

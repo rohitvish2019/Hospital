@@ -16,7 +16,8 @@ const Appointment = new mongoose.Schema({
     isEmergency:{
         type:Boolean,
         default:false
-    }
+    },
+    Fees:Number
 },
 {
     timestamps:true

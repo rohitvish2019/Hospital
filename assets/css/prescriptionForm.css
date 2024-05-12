@@ -40,6 +40,7 @@ body{
     height: 67%;
     width: 99.9%;
     display: flex;
+    border-bottom: 1px dotted black;
 }
 
 .doc-info-left{
@@ -135,4 +136,9 @@ body{
 .special-services-list li{
     margin-bottom: 2%;
     font-size: 12px;
+}
+p{
+    font-size: 12px;
+    padding-left: 5%;
+    padding-right: 5%;
 }

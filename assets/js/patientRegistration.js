@@ -1,4 +1,4 @@
-let inputData = ['Name','Gender','Age','Address','Mobile',];
+let inputData = ['Name','Gender','Age','Address','Mobile','Fees'];
 function registerPatient(){
     console.log("Registering patient");
     let data = {}
@@ -31,7 +31,7 @@ function registerPatient(){
             for(let i=0;i<inputData.length;i++){
                 document.getElementById(inputData[i]).value=''
             }
-            window.open('/patients/receipt/'+data.patientId)
+            window.open('/appointments/receipt/'+data.appointment._id)
         },
         error:function(err){console.log(err.responseText)}
     });
@@ -85,7 +85,8 @@ function bookAppointmentWithId(){
         type:'Post',
         data:{
             PatientId:document.getElementById('patientID').value,
-            date:null
+            date:null,
+            Fees: document.getElementById('Fees').value
         },
         success:function(data){
             new Noty({
@@ -95,7 +96,7 @@ function bookAppointmentWithId(){
                 layout: 'topRight',
                 timeout: 1500
             }).show();
-            window.open('/patients/receipt/'+data.patientId)
+            window.open('/appointments/receipt/'+data.appointment._id)
         },
         error: function(err){
             new Noty({

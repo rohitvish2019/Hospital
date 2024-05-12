@@ -17,3 +17,10 @@ body{
     background-color: #374752 !important;
     color: white !important;
 }
+
+.loader{
+    position: fixed;
+    top:45%;
+    left: 45%;
+    display: none;
+}

@@ -5,6 +5,7 @@ const Visits = require('../models/visits');
 const Tracker = require('../models/tracker');
 const Inventories = require('../models/inventory');
 module.exports.addNewPatient = async function(req, res){
+      let bookedAppointment = null;
       try{
             let patient = await Patients.create(req.body);
             let pd = await Tracker.findOne({});
@@ -20,11 +21,11 @@ module.exports.addNewPatient = async function(req, res){
             }
             try{  
                   if(req.body.bookAppointment == 'true'){
-                        
-                        await Appointments.create({
+                        bookedAppointment = await Appointments.create({
                               PatientId:patient._id,
                               Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
-                              isVisited:false
+                              isVisited:false,
+                              Fees: req.body.Fees
                         })
                   }
                   
@@ -37,6 +38,7 @@ module.exports.addNewPatient = async function(req, res){
             
             return res.status(200).json({
                   patientId:patient._id,
+                  appointment:bookedAppointment,
                   message:'Patient created'
             })
       }catch(err){

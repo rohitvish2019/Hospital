@@ -1,4 +1,5 @@
 function getMedInventoryInfo(){
+    document.getElementById('loader').style.display='block'
     $.ajax({
         url:'/purchases/getMedInfo',
         data:{
@@ -7,9 +8,12 @@ function getMedInventoryInfo(){
         type:'Get',
         success:function(data){
             console.log(data)
+            document.getElementById('loader').style.display='none'
             setInventoryOnUi(data.meds)
         },
-        error:function(err){console.log(err)}
+        error:function(err){
+            document.getElementById('loader').style.display='none'
+            console.log(err)}
     })
 }
 

@@ -29,6 +29,7 @@ module.exports.addAppointment = async function(req, res){
                 PatientId:patient._id,
                 Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                 isVisited:false,
+                Fees:req.body.Fees
             });
         }catch(err){
             console.log(err)
@@ -36,9 +37,10 @@ module.exports.addAppointment = async function(req, res){
                 message:'Unable to create appointment'
             })
         }
-        
+        let thisAppointment = Appointments.findById(appointment._id).populate('PatientId')
         return res.status(200).json({
             patientId: patient._id,
+            appointment,
             message:'Appointment added'
         })
     }catch(err){
@@ -79,4 +81,14 @@ module.exports.getOldAppointments = async function(req, res){
             message:'Unable to get old appointments'
         })
     }
+}
+
+module.exports.getRegistrationReceipt = async function(req, res){
+    try{
+          let appointment = await Appointments.findById(req.params.id).populate('PatientId');
+          return res.render('registrationReceipt',{appointment})
+    }catch(err){
+          return res.redirect('back')
+    }
+    
 }

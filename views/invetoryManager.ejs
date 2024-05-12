@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+<style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+}
+thead,th{
+    position: sticky;
+    top: 0;
+}
+th, td {
+    border: 1px solid #ddd !important;
+    padding: 8px;
+    text-align: left;
+    font-size: small;
+}
+th {
+    background-color: #f2f2f2;
+}
+    .loader{
+        position: fixed;
+        left:45%;
+        top:50%;
+        display: none;
+    }
+</style>
 <body>
     <header>
         <%-include('_header')%>
@@ -46,6 +71,7 @@
                     <th>Update</th>
                 </tr>
             </thead>
+            <%-include('_loader')%>
             <tbody id="medicine-list">
                 
             </tbody>

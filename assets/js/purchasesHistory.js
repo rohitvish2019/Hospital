@@ -44,7 +44,7 @@ function getPurchaseHistory(){
         }).show();
         return
     }
-    
+    document.getElementById('loader').style.display='block'
     $.ajax({
         url:'/purchases/getHistory',
         type:'Get',
@@ -53,7 +53,7 @@ function getPurchaseHistory(){
             endDate
         },
         success:function(data){
-            console.log(data.purchases);
+            document.getElementById('loader').style.display='none'
             if(data.purchases.length < 1){
                 document.getElementById("medicines").innerHTML=
                 `
@@ -72,7 +72,9 @@ function getPurchaseHistory(){
             populatePagination();
         
         },
-        error:function(err){console.log(err)}
+        error:function(err){
+            document.getElementById('loader').style.display='none'
+            console.log(err)}
     })
 }
 /*

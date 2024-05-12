@@ -24,23 +24,23 @@
             <div class="patient-info">
                 <div style="width: 32%;" class="patient-data">
                     <label class="p-head">Name</label>
-                    <label class="p-value"><%=patient.Name%></label>
+                    <label class="p-value"><%=appointment.PatientId.Name%></label>
                 </div>
                 <div style="width: 7%;" class="patient-data">
                     <label class="p-head">Age</label>
-                    <label class="p-value"><%=patient.Age%></label>
+                    <label class="p-value"><%=appointment.PatientId.Age%></label>
                 </div>
                 <div style="width: 7%;" class="patient-data">
                     <label class="p-head">Gender</label>
-                    <label class="p-value"><%=patient.Gender%></label>
+                    <label class="p-value"><%=appointment.PatientId.Gender%></label>
                 </div>
                 <div style="width: 15%;" class="patient-data">
                     <label class="p-head">Mobile</label>
-                    <label class="p-value"><%=patient.Mobile%></label>
+                    <label class="p-value"><%=appointment.PatientId.Mobile%></label>
                 </div>
                 <div style="width: 39%;" class="patient-data">
                     <label class="p-head">Address</label>
-                    <label class="p-value"><%=patient.Address%></label>
+                    <label class="p-value"><%=appointment.PatientId.Address%></label>
                 </div>
             </div>
             <div class="itemsList">
@@ -58,18 +58,18 @@
                     <tbody>
                         <tr>
                             <td>Appointment</td>
-                            <td>₹ 200</td>
+                            <td>₹ <%=appointment.Fees%></td>
                             <td>1</td>
                             <td><%= String(new Date().getDate()).padStart(2,'0')+'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+new Date().getFullYear() %></td>
                             <td><%= String(new Date().getDate()).padStart(2,'0')+'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+new Date().getFullYear() %></td>
-                            <td>₹ 200</td>
+                            <td>₹ <%=appointment.Fees%></td>
                         </tr>                       
                     <!-- Add more rows for additional items if needed -->
                     </tbody>
                     <tfoot>
                         <tr class="subtotal">
                             <td colspan="5">Subtotal</td>
-                            <td>₹ 200</td>
+                            <td>₹ <%=appointment.Fees%></td>
                         </tr>
                     </tfoot>
                 </table>

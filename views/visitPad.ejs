@@ -37,6 +37,11 @@
                 <small for=""><b>Address</b></small>
                 <label for=""><%=patient.Address%></label>
             </div>
+            <div class="patient-data" style="width: 8%;">
+                <small for=""><b>Visit Time</b></small>
+                <label for=""><%=String(patient.createdAt).slice(16,24)%></label>
+            </div>
+
             <div class="patient-data" style="width: 15%; display: flex; justify-content: flex-end; margin-top: .5%;">
                 <label for=""><a class="btn btn-primary" target="_blank" href="/patients/history/<%=patient._id%>">Check History</a></label>
             </div>
@@ -65,7 +70,7 @@
                         
                             <%for(let i=0;i<OE.length;i++){%>
                                 <div class="form-floating mb-2 test-data">
-                                    <input type="text" id="<%=OE[i]%>" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                                    <input type="text" id="<%=OE[i]%>" class="form-control" id="floatingInput" >
                                     <label for="<%=OE[i]%>"><%=OE[i]%></label>
                                 </div>
                             <%}%>
