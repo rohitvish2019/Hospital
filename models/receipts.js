@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Receipt = new mongoose.Schema({
+    ReceiptNo:Number,
     Medicine:String,
     Price:Number,
     ExpiryDate:Date,

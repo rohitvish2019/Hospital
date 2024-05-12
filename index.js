@@ -1,22 +1,22 @@
 const express = require('express');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const expressLayouts = require('express')
 const mongoose = require('mongoose');
 const db = require('./configs/dbConnection');
 
-//const session = require('express-session');
-//const passport = require('passport');
-//const passportLocal = require('./config/passport-local-strategy');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./configs/passport-local-strategy');
 const ejs = require('ejs');
-//const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo')
 //const { request, urlencoded } = require('express');
 const port = 3000;
 
 //const flash = require('connect-flash');
 //const customMiddleWare = require('./config/middleware');
 
-//app.use(cookieParser());
+app.use(cookieParser());
 
 
 app.set('view engine', 'ejs');
@@ -33,9 +33,9 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 */
 
-/*
+
 app.use(session({
-    name: 'EmployeeReview',
+    name: 'HospiSession',
     // TODO change the secret before deployment in production mode
     secret: 'getitDone',
     saveUninitialized: false,
@@ -45,7 +45,7 @@ app.use(session({
     },
     store:MongoStore.create(
         {
-            mongoUrl: 'mongodb+srv://rohitvish288:Xlk34Onf2NbyjjZR@mongotest2.fceehoa.mongodb.net/employee_reviews',
+            mongoUrl: 'mongodb+srv://rohitvish288:Xlk34Onf2NbyjjZR@mongotest2.fceehoa.mongodb.net/HospiSession',
             autoRemove: 'disabled'
         
         },
@@ -54,13 +54,13 @@ app.use(session({
         }
     )
 }));
-*/
+
 //app.use(flash());
 //app.use(customMiddleWare.setFlash);
 
-//app.use(passport.initialize());
-//app.use(passport.session());
-//app.use(passportLocal.setAuthenticatedUser);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passportLocal.setAuthenticatedUser);
 
 
 

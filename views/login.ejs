@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<style>
+    body{
+        height: 100vh;
+        width: 100%;
+    }
+    .main-body{
+        margin-left: 25%;
+        width: 50%;
+        margin-right: 25%;
+        border: 1px solid red;
+    }
+</style>
+<body>
+    <div class="main-body">
+        <form action="/user/authenticate" method="POST">
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="email" name="email" placeholder="name@example.com">
+                <label for="Name">Mobile / Username<span>*</span></label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="password" class="form-control" id="password" name="password" placeholder="name@example.com">
+                <label for="Name">Password<span>*</span></label>
+            </div>
+            <div style="width: 100%;">
+                <button type="submit" style="width: 100%;" class="btn btn-success">Login</button>
+            </div>
+        </form>
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
