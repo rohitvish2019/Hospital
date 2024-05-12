@@ -17,4 +17,5 @@ router.post('/add/Prescriptions/:patientId', passport.checkAuthentication, patie
 router.get('/getPrescriptions', passport.checkAuthentication, patientsController.getPrescriptions);
 router.get('/getOldPrescription/:patientId', passport.checkAuthentication, patientsController.getOldPrescriptionForm);
 router.get('/getHistory/:id', passport.checkAuthentication, patientsController.getPatientHistory)
+router.get('/receipt/:id', passport.checkAuthentication, patientsController.getRegistrationReceipt)
 module.exports = router;

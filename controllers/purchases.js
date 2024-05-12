@@ -83,8 +83,14 @@ module.exports.purchaseHistoryHome = async function(req, res){
 
 
 module.exports.getPurchaseHistory = async function (req, res){
+    console.log(req.query)
     try{
-        let purchases = await Purchases.find({createdAt :{$gte : req.query.startDate}, createdAt:{$lte : req.query.endDate}}).sort('Medicine');
+        let purchases = await Purchases.find({
+            $and: [
+                {createdAt:{$gte :new Date(req.query.startDate)}},
+                {createdAt: {$lte : new Date(req.query.endDate)}}
+            ]
+        }).sort('Medicine');
         return res.status(200).json({
             purchases
         })

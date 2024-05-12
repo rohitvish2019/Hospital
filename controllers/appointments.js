@@ -38,6 +38,7 @@ module.exports.addAppointment = async function(req, res){
         }
         
         return res.status(200).json({
+            patientId: patient._id,
             message:'Appointment added'
         })
     }catch(err){

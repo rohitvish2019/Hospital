@@ -46,3 +46,40 @@ module.exports.getReceipt = async function(req, res){
         return res.redirect('back')
     }
 }
+
+module.exports.finReceiptHome = function(req, res){
+    return res.render('findReceipt')
+}
+
+module.exports.findReceiptById = async function(req, res){
+    try{
+        let receipt = await Receipts.find({ReceiptNo:req.query.ReceiptNo});
+        return res.status(200).json({
+            receipt
+        })
+    }catch(err){
+        return res.status(500).json({
+            message:'Unable to find receipts'
+        })
+    }
+}
+
+module.exports.findReceiptByName = async function(req, res){
+    console.log(req.query)
+    try{
+        let receipts = await Receipts.find({
+            $and: [
+                {createdAt:{$gte :new Date(req.query.startDate)}},
+                {createdAt: {$lte : new Date(req.query.endDate)}},
+            ]
+        });
+        return res.status(200).json({
+            receipts
+        })
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({
+            message:'Unable to find receipts'
+        })
+    }
+}

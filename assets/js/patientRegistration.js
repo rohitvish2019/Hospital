@@ -31,6 +31,7 @@ function registerPatient(){
             for(let i=0;i<inputData.length;i++){
                 document.getElementById(inputData[i]).value=''
             }
+            window.open('/patients/receipt/'+data.patientId)
         },
         error:function(err){console.log(err.responseText)}
     });
@@ -94,6 +95,7 @@ function bookAppointmentWithId(){
                 layout: 'topRight',
                 timeout: 1500
             }).show();
+            window.open('/patients/receipt/'+data.patientId)
         },
         error: function(err){
             new Noty({

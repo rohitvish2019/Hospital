@@ -36,6 +36,7 @@ module.exports.addNewPatient = async function(req, res){
             }
             
             return res.status(200).json({
+                  patientId:patient._id,
                   message:'Patient created'
             })
       }catch(err){
@@ -456,6 +457,15 @@ module.exports.getPatientHistory = async function(req, res){
       }
       return res.status(200).json({
             history
-      })
+      })     
+}
+
+module.exports.getRegistrationReceipt = async function(req, res){
+      try{
+            let patient = await Patients.findById(req.params.id)
+            return res.render('registrationReceipt',{patient})
+      }catch(err){
+            return res.redirect('back')
+      }
       
 }
