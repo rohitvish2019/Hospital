@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Tracker = new mongoose.Schema({
     PatientId : {
         type:Number
+    },
+    ReceiptNo:{
+        type:Number,
+        default:1
     }
 },
 {

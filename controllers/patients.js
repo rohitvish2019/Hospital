@@ -18,7 +18,6 @@ module.exports.addNewPatient = async function(req, res){
                   await patient.updateOne({PatientId:lastPatientId+1});
                   await pd.updateOne({PatientId:lastPatientId+1});
             }
-
             try{  
                   
                   if(req.body.bookAppointment == 'true'){
@@ -240,9 +239,10 @@ module.exports.getOldPrescriptionForm = async function(req, res){
       let d = req.query.date.split('-');
       let modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
       let visit = await Visits.findOne({PatientId:req.params.patientId, Date:modifiedDate }).populate('PatientId');
+      console.log('Abc')
       console.log(visit);
+      console.log('xyz')
       return res.render('prescriptionForm_old', {visit})
-      
 }
 module.exports.medicationsPage = async function(req, res){
       let patient = await Patients.findById(req.params.patientId);

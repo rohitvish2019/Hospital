@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    width: 99%;
+    border: 1px solid black;
+    height: 1040px;
+}
+
+.main-body{
+    height: 50%;
+    width: 100%;
+}
+.pdf1{
+    height: 100%;
+    width: 100%;
+}
+.patient-info{
+    height: 8%;
+    width: 100%;
+    border-top: 2px dotted black;
+    display: flex;
+}
+
+.patient-data{
+    padding-left: 1%;
+}
+
+.p-head{
+    display: block;
+    font-size: small;
+}
+.p-value{
+    font-weight: bold;
+}
+
+.itemsList{
+    width: 100%;
+    height: 80%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #dddddd;
+    padding: 4px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+.subtotal {
+    font-weight: bold;
+}
+.header{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}

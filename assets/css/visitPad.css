@@ -60,18 +60,16 @@ textarea{
 }
 
 
-.patient-data{
-    width: 15%;
-}
+
 .patient-data label{
     display: block;
-    font-size: large;
+    font-size: medium;
     padding: 1%;
 }
 
 .patient-address label{
     display: block;
-    font-size: large;
+    font-size: medium;
     padding: 1%;
 }
 
@@ -81,9 +79,7 @@ textarea{
 .patient-address small{
     padding: 1%;
 }
-.patient-address{
-    width: 40%;
-}
+
 #examinationsBox, #testsBox{
     display: none;
 }

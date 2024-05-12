@@ -5,13 +5,15 @@ body{
 .search-div{
     height: 12%;
     padding: 2%;
-    border-top: 2px dotted black;
-    padding-top: 2%;
-    margin-top: 1%;
     padding-bottom: 1%;
     border-bottom: 2px dotted black;
 }
 
 .search-div input{
     margin-right: 4%;
+}
+
+.bg th{
+    background-color: #374752 !important;
+    color: white !important;
 }

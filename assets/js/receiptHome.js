@@ -131,21 +131,74 @@ function searchById(){
 changePatientDataInputs()
 
 function saveReceiptData(){
+    let id, Name, Age, Gender, Address, Mobile
+    id = document.getElementById('idToSearch').value
+    Name = document.getElementById('Pname').value
+    Age = document.getElementById('Age').value
+    Gender = document.getElementById('Gender').value
+    Address = document.getElementById('Address').value
+    Mobile = document.getElementById('mob').value
+    if(!Name || Name == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Patient name is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return
+    }
+    if( !Age || Age == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Age is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return
+    }
+    if(!Gender || Gender == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Gender is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return
+    }
+    if(!items || items.length < 1){
+        new Noty({
+            theme: 'relax',
+            text: 'No items to generate bill',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return
+    }
     $.ajax({
         url:'/receipts/save',
         type:'Post',
         data:{
             patient:{
-                id:document.getElementById('idToSearch').value,
-                Name :document.getElementById('Pname').value,
-                Age : document.getElementById('Age').value,
-                Gender: document.getElementById('Gender').value,
-                Address: document.getElementById('Address').value,
-                Mobile : document.getElementById('mob').value,
+                id, 
+                Name, 
+                Age, 
+                Gender, 
+                Address, 
+                Mobile
             },
             items
         },
-        success:function(data){console.log(data)},
+        success:function(data){
+            console.log(data)
+            setTimeout(function(err){
+                window.location.href='/receipts/gerenate/'+data.receipt
+            }, 1000)
+
+        },
         error:function(err){console.log(err.responseText)}
     })
 }

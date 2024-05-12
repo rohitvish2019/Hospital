@@ -2,8 +2,7 @@ body{
     height: 100vh;
 }
 .main-body{
-    height: 100%;
-
+    height: 75%;
 }
 .heading{
     height: 8%;
@@ -11,15 +10,15 @@ body{
 
 }
 .searchElements{
-    height: 7%;
+    height: 9%;
 }
 
 .table-body{
-    height: 74%;
+    height: 90%;
     border-bottom: 2px dotted black;
 }
 .pagination-box{
-    height: 8%;
+    height: 7%;
 }
 
 table {
@@ -27,7 +26,7 @@ table {
     border-collapse: collapse;
 }
 th, td {
-    padding: 8px;
+    padding: 6px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }

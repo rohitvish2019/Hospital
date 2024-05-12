@@ -13,12 +13,14 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="header"></div>
+        <header>
+            <%-include('_header')%>
+        </header>
 
         <div class="searchBar">
             <div>
-                <input onchange="changePatientDataInputs()" type="radio" name="searchType" id="searchType_id" checked> Search by Id
-                <input onchange="changePatientDataInputs()" style="margin-left: 10%;" type="radio" name="searchType" id="searchType_fill"> Manual Fill
+                <input onchange="changePatientDataInputs()" type="radio" name="searchType" id="searchType_id" checked> <b>Search by Id</b>
+                <input onchange="changePatientDataInputs()" style="margin-left: 10%;" type="radio" name="searchType" id="searchType_fill"> <b>Manual Fill</b>
             </div>
             
             <div>

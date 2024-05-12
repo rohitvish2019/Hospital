@@ -31,7 +31,7 @@ body{
 }
 
 .medContainer{
-    height:69%;
+    height:64%;
     display: flex;
 }
 .medItems{
@@ -46,9 +46,10 @@ body{
     padding-left: 1%;
 }
 .actionButtons{
-    height:7%;
+    height:8%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .input-group-text{

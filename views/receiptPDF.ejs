@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/receiptPDF.css">
+</head>
+<body>
+    <div class="main-body">
+        <div class="pdf1">
+            <div class="header">
+                <label style="font-size: 26px; font-weight: bold; text-align: center !important">Om Fracture and Trauma Hospital</label>
+                <label>Teen Gulli, Station Road Damoh, Mob : 8103242475</label>
+            </div>
+            <div class="patient-info">
+                <div style="width: 32%;" class="patient-data">
+                    <label class="p-head">Name</label>
+                    <label class="p-value"><%=receipt.Name%></label>
+                </div>
+                <div style="width: 7%;" class="patient-data">
+                    <label class="p-head">Age</label>
+                    <label class="p-value"><%=receipt.Age%></label>
+                </div>
+                <div style="width: 7%;" class="patient-data">
+                    <label class="p-head">Gender</label>
+                    <label class="p-value"><%=receipt.Gender%></label>
+                </div>
+                <div style="width: 15%;" class="patient-data">
+                    <label class="p-head">Mobile</label>
+                    <label class="p-value"><%=receipt.Mobile%></label>
+                </div>
+                <div style="width: 39%;" class="patient-data">
+                    <label class="p-head">Address</label>
+                    <label class="p-value"><%=receipt.Address%></label>
+                </div>
+            </div>
+            <div class="itemsList">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Purchase Date</th>
+                            <th>Expiry Date</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%let subtotal = 0%>
+                        <%for(let i=0;i<receipt.Items.length;i++){%>
+                            
+                            <%let thisItem = receipt.Items[i].split(':')%>
+                            <tr>
+                                <td><%=thisItem[0]%></td>
+                                <td>₹ <%=thisItem[1]%></td>
+                                <td><%=thisItem[2]%></td>
+                                <td><%=thisItem[3]%></td>
+                                <td><%=thisItem[4]%></td>
+                                <td>₹ <%=thisItem[1]*thisItem[2]%></td>
+                                <% subtotal = subtotal + (thisItem[1]*thisItem[2])%>
+                            </tr>
+                        <%}%>
+                        
+                        
+                        <!-- Add more rows for additional items if needed -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="subtotal">
+                            <td colspan="5">Subtotal</td>
+                            <td>₹ <%=subtotal%></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

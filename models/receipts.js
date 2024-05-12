@@ -5,6 +5,15 @@ const Receipt = new mongoose.Schema({
     ExpiryDate:Date,
     Qty:Number,
     ReceiptDate:Date,
+    PatientId:Number,
+    Name:String,
+    Age:String,
+    Gender:String,
+    Address:String,
+    Mobile:String,
+    Items:{
+        type:Array
+    }
 },
 {
     timestamps:true
