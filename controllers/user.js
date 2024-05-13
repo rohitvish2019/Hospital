@@ -82,34 +82,62 @@ module.exports.logout = function(req, res){
         return res.redirect('back')
     }
 }
-/*
+
+module.exports.showUsersUI = async function(req, res){
+    try{
+        if(req.user.role === 'Admin'){
+            let users = await UserSchema.find({},'full_name role email');
+            return res.render('manageUsers',{role:req.user.role, users})
+        }else{
+            console.log('403')
+            return res.render('Error_403');
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
+
 module.exports.addNewUser = async function(req, res){
     try{
         if(req.user.role === 'Admin'){
             let user  = await UserSchema.create(
                 req.body
             );
-            if(req.user.isAdmin == true){
-                if(req.body.makesuperadmin === 'on'){
-                    await user.updateOne({isAdmin:true});
-                    await user.save();
-                }
-                return res.redirect('back');
-            }
-            await user.updateOne({SchoolCode:req.user.SchoolCode});
-            await user.save();
-            return res.redirect('back');   
+            return res.status(200).json({
+                message:'user created'
+            })   
         }else{
-            return res.render('Error_403');        
+            return res.status(403).json({
+                message:'You are not authorized to create new user'
+            })        
         }
     }catch(err){
-        logger.error(err.toString());
-        return res.redirect('back')
+        return res.status(500).json({
+            message:'Unable to created user'
+        })
     }
 
     
 }
 
+module.exports.deleteUser = async function(req, res){
+    try{
+        if(req.user.role == 'Admin'){
+            await UserSchema.findByIdAndDelete(req.params.user_id);
+            return res.status(200).json({
+                message:'User deleted'
+            })
+        }else{
+            return res.render('Error_403')
+        }
+        
+    }catch(err){
+        return res.status(500).json({
+            message:'Error deleting user'
+        })
+    }
+}
+/*
 module.exports.addUserPage = function(req, res){
     if(req.user.role === 'Admin'){
         return res.render('addUser',{role:req.user.role, isAdmin:req.user.isAdmin});
@@ -167,19 +195,7 @@ module.exports.updatePassword = async function(req, res){
     }
 }
 
-module.exports.showUsersUI = async function(req, res){
-    try{
-        if(req.user.role === 'Admin'){
-            return res.render('showAppUsers',{role:req.user.role})
-        }else{
-            logger.error('Unautorized user : '+req.user.email)
-            return res.render('Error_403');
-        }
-    }catch(err){
-        logger.error('Error fetching users list from DB : ')
-        logger.error(err.toString());
-    }
-}
+
 
 module.exports.getUsers = async function(req, res){
     try{
@@ -242,18 +258,7 @@ module.exports.getClassList = function(req, res){
 }
 
 
-module.exports.deleteUser = async function(req, res){
-    try{
-        await User.findByIdAndDelete(req.params.user_id);
-        return res.status(200).json({
-            message:'User deleted'
-        })
-    }catch(err){
-        return res.status(500).json({
-            message:'Error deleting user'
-        })
-    }
-}
+
 
 
 module.exports.registerSchool = async function(req, res){
