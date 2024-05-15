@@ -4,8 +4,9 @@ const app = express();
 const expressLayouts = require('express')
 const mongoose = require('mongoose');
 const db = require('./configs/dbConnection');
-
+let propertiesReader = require('properties-reader');
 const session = require('express-session');
+const properties = propertiesReader('./configs/database.properties')
 const passport = require('passport');
 const passportLocal = require('./configs/passport-local-strategy');
 const ejs = require('ejs');
