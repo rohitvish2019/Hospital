@@ -16,7 +16,9 @@ const port = 3000;
 
 //const flash = require('connect-flash');
 //const customMiddleWare = require('./config/middleware');
-
+let session_db_name = properties.get('session_db_name');
+let session_seceret_key = properties.get('session_key');
+let db_url = properties.get('url')
 app.use(cookieParser());
 
 
@@ -36,9 +38,9 @@ app.set('layout extractScripts', true);
 
 
 app.use(session({
-    name: 'HospiSession',
+    name: session_db_name,
     // TODO change the secret before deployment in production mode
-    secret: 'getitDone',
+    secret: session_seceret_key,
     saveUninitialized: false,
     resave: false,
     rolling:true,
@@ -47,8 +49,9 @@ app.use(session({
     },
     store:MongoStore.create(
         {
-            mongoUrl: 'mongodb+srv://rohitvish288:Xlk34Onf2NbyjjZR@mongotest2.fceehoa.mongodb.net/HospiSession',
-            autoRemove: 'disabled'
+            mongoUrl: db_url+session_db_name,
+            autoRemove: 'disabled',
+            rolling:true
         
         },
         function(err){

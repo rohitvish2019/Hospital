@@ -33,7 +33,7 @@ module.exports.addAppointment = async function(req, res){
             });
         }catch(err){
             console.log(err)
-            return res.status(200).json({
+            return res.status(500).json({
                 message:'Unable to create appointment'
             })
         }
