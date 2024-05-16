@@ -63,7 +63,7 @@ function setSavedDataOnUI(data){
     for(let i=0;i<prescriptions.length;i++){
         let item = prescriptions[i].split(':');
         let child = document.createElement('label');
-        child.style.fontSize='medium'
+        child.style.fontSize='small'
         child.style.marginBottom='2%'
         child.innerHTML=`${i+1} .<b>  ${item[0]} </b> ${item[4]} ${item[2]} for next ${item[3]}`;
         prescriptionsContainer.appendChild(child)

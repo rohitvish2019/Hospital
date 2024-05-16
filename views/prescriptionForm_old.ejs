@@ -71,7 +71,7 @@
             <div class="patient-data">
                 <small for=""><b>Date</b></small>
                 <%let months= ['','Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']%>
-                <label for="">
+                <label style="font-size: small;" for="">
                     <%=String(visit.Date.split('-')[2]).padStart(2,'0')%>-
                     <%=months[Number(String(visit.Date.split('-')[1]).padStart(2,'0'))]%>-
                     <%=String(visit.Date.split('-')[0]).padStart(2,'0')%>
@@ -134,12 +134,12 @@
                     <%}%>
                 </div>
             </div>
-            <div class="prescriptions" id="prescriptions">
+            <div class="prescriptions" id="prescriptions" style="padding-left: 1%;">
                 <h4 style="text-align: center; border-bottom: 2px dotted black; font-weight: bold;">Prescriptions</h4>
                 <%let pres = visit.Prescriptions%>
                 <%for(let i=0;i<pres.length;i++){%>
                     <%let item = pres[i].split(':')%>
-                    <label style="font-size: medium;margin-bottom: 2%;">
+                    <label style="font-size: small;margin-bottom: 2%;">
                         <%=i+1%>. <b><%=item[0]%></b> <%=item[4]%> <%=item[2]%> for next <%=item[3]%>
                     </label>
                 <%}%>
