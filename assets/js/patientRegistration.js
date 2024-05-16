@@ -40,6 +40,7 @@ function registerPatient(){
 
 function searchById(){
     let id = document.getElementById('patientID').value;
+    
     $.ajax({
         url:'/patients/get/'+id,
         type:'Get',
@@ -80,6 +81,17 @@ function searchById(){
 
 
 function bookAppointmentWithId(){
+    let fees = document.getElementById('Fees').value;
+    if(!fees || fees == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Fees is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return
+    }
     $.ajax({
         url:'/appointments/bookToday',
         type:'Post',

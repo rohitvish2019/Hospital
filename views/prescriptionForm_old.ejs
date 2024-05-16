@@ -108,15 +108,15 @@
                 </p>
             </div>
             <div class="tests">
-                <h4 style="text-align: center; border-bottom: 2px dotted black;">Tests & O/Es</h4>
-                <div id="complaint" style="margin-bottom: 5%;border-bottom: 2px dotted black;">
+                <h6>Complaint & History</h6>
+                <div id="complaint" style="padding-bottom: 3%;margin-bottom: 2%; border-bottom: 2px dotted black; font-size: smaller;">
                     <%=visit.Complaint%>
                 </div>
                 <div id="OEs" style="margin-bottom: 5%;border-bottom: 2px dotted black;">
-                    <h5 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">O/Es</h5>
+                    <h6 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">O/Es</h6>
                     <%let OEs = visit.OEs%>
                     <%for(let i=0;i<OEs.length;i++){%>
-                        <div style="margin-top: 1%;">
+                        <div style="margin-top: 1%; font-size: small;">
                             <label><%=OEs[i].split(':')[0]%> :</label>
                             <label><%=OEs[i].split(':')[1]%></label>
                         </div>
@@ -124,10 +124,10 @@
                     
                 </div>
                 <div id="tests">
-                    <h5 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">Tests & Advise</h5>
+                    <h6 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%;">Tests & Advise</h6>
                     <%let Tests = visit.Tests%>
                     <%for(let i=0;i<Tests.length;i++){%>
-                        <div style="margin-top: 1%;">
+                        <div style="margin-top: 1%; font-size: small;">
                             <label><%=Tests[i].split(':')[0]%> :</label>
                             <label><%=Tests[i].split(':')[1]%></label>
                         </div>

@@ -24,21 +24,26 @@ function setSavedDataOnUI(data){
     let prescriptions = data.Prescriptions
     console.log("lengt is "+prescriptions.length)
     let Oescontainer = document.getElementById('OEs');
-    Oescontainer.innerHTML = `<h5 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">O/Es</h5>`;
+    Oescontainer.innerHTML = `<h6 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">O/Es</h6>`;
     for(let i=0;i<OEs.length;i++){
         let child = document.createElement('div');
         let testName = OEs[i].split(':')[0]
         let value = OEs[i].split(':')[1]
-        child.innerHTML=
+        if(!value || value == ''){
+            continue;
+        }else{
+            child.innerHTML=
         `
             <label>${testName} :</label>
             <label>${value}</label>
         `
         child.style.marginTop='1%'
         Oescontainer.appendChild(child);
+        }
+        
     }
     let Testscontainer = document.getElementById('tests');
-    Testscontainer.innerHTML = `<h5 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">Requested Tests</h5>`;
+    Testscontainer.innerHTML = `<h6 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">Requested Tests</h6>`;
     for(let i=0;i<Tests.length;i++){
         let child = document.createElement('div');
         let testName = Tests[i].split(':')[0]
@@ -67,7 +72,7 @@ function setSavedDataOnUI(data){
 
     document.getElementById('complaint').innerHTML=
     `
-        <h5>Complaint</h5>
+        <h6>Complaint & History</h6>
         <label>${data.Complaint}</label>
     `
 }
