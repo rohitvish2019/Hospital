@@ -14,7 +14,7 @@ ul{
     padding-bottom: 1%;
   }
   .dropdown-menu.show{
-    background-color: azure;
+    background-color: rgb(235, 238, 238);
   }
   .logo{
     height: 90px;

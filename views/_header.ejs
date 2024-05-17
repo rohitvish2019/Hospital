@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/css/header.css">
 </head>
 <style>
+  li a{
+    font-weight: bold !important;
+    color: rgb(11, 80, 42) !important;
+  }
 </style>
 <header>
   <div style="display: flex;justify-content: space-between;">
@@ -16,7 +20,7 @@
     <div>
       <h3 style="font-weight: bolder !important;text-align: center;color: rgb(194, 9, 9); ">Om Fracture and Trauma Hospital</h3>
       <div class="menu-items">
-        <div class="dropdown" style="margin-right: 1%; margin-left: 1%;">
+        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Patients
           </button>
@@ -26,7 +30,7 @@
             <li><a class="dropdown-item" href="/appointments/show/old">Old appointments</a></li>
           </ul>
         </div>
-        <div class="dropdown" style="margin-right: 1%; margin-left: 1%;">
+        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Purchases
           </button>
@@ -36,7 +40,7 @@
             <li></li>
           </ul>
         </div>
-        <div class="dropdown" style="margin-right: 1%; margin-left: 1%;">
+        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Receipts
           </button>
@@ -46,8 +50,16 @@
           </ul>
         </div>
 
-        <div class="dropdown" style="margin-right: 1%; margin-left: 4%; margin-top: 1.5%;">
-          <a class=" btn dropdown-item" href="/purchases/invetoryManager">Inventory</a>
+        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
+          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Inventories
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/purchases/invetoryManager">Inventory Manager</a></li>
+            <li><a class="dropdown-item" href="/purchases/inventories/all">Returns/Exp check</a></li>
+            <li><a class="dropdown-item" href="/purchases/returnHistory/home">Returns History</a></li>
+            
+          </ul>
         </div>
         
         <div class="dropdown" style="margin-right: 1%; margin-left: 6%; margin-top: 1.4%;">

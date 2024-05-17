@@ -1,5 +1,6 @@
 const Purchases = require('../models/purchases')
 const Inventories = require('../models/inventory')
+const Returns = require('../models/returns')
 module.exports.purchaseHome =async function(req, res){
     let inventory = await Inventories.find({}).distinct('Medicine');
     return res.render('purchases', {inventory});
@@ -81,6 +82,12 @@ module.exports.purchaseHistoryHome = async function(req, res){
     return res.render('purchaseHistory')
 }
 
+module.exports.allInventoriesHome = async function(req, res){
+    return res.render('allInventories')
+}
+module.exports.returnsHome = async function(req, res){
+    return res.render('returnHistory')
+}
 
 module.exports.getPurchaseHistory = async function (req, res){
     console.log(req.query)
@@ -100,7 +107,44 @@ module.exports.getPurchaseHistory = async function (req, res){
             message:'Unable to fetch purchase history'
         })
     }
-    
+}
+module.exports.getReturnsHistory = async function (req, res){
+    console.log(req.query)
+    try{
+        let returnsData = await Returns.find({
+            $and: [
+                {createdAt:{$gte :new Date(req.query.startDate)}},
+                {createdAt: {$lte : new Date(req.query.endDate)}}
+            ]
+        }).sort('createdAt');
+        return res.status(200).json({
+            returnsData
+        })
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({
+            message:'Unable to fetch returns history'
+        })
+    }
+}
+module.exports.getActiveInventories = async function(req, res){
+    try{
+        let inventories = await Inventories.find({
+            $and: [
+                {ExpiryDate:{$gte :new Date(req.query.startDate)}},
+                {ExpiryDate: {$lte : new Date(req.query.endDate)}},
+                {CurrentQty : {$gt : 0}}
+            ]
+        }).sort('ExpiryDate');
+        return res.status(200).json({
+            inventories
+        })
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({
+            message:'Unable to fetch Inventories history'
+        })
+    }
 }
 
 module.exports.invertoryManagerHome = async function(req, res){
@@ -140,4 +184,45 @@ module.exports.updateInventory = async function(req, res){
             message:'Unable to update inventories'
         })
     }
+}
+
+module.exports.returnPurchases = async function(req, res){
+    let inventory;
+    try{
+        try{
+            inventory = await Inventories.findById(req.body.id);
+        }catch(err){
+            return res.status(500).json({
+                message:'Error fetching stock'
+            })
+        }
+    
+        try{
+            await Returns.create({
+                Medicine:inventory.Medicine,
+                Qty:inventory.CurrentQty,
+                ExpiryDate:inventory.ExpiryDate,
+                Batch:inventory.Batch,
+                Price:inventory.Price
+            })
+        }catch(err){
+            return res.status(500).json({
+                message:'Error creating return'
+            })
+        }
+        try{
+            await inventory.updateOne({CurrentQty:0});
+        }catch(err){
+            return res.status(500).json({
+                message:'Error updating inventories'
+            })
+        }
+    }catch(err){
+        return res.status(500).json({
+            message:'Unable to create return with this inventory'
+        })
+    }
+    return res.status(200).json({
+        message:'Return saved'
+    })
 }

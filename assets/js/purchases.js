@@ -53,7 +53,7 @@ function addMedications(isComingFromServer, data){
         <td>${expDate}</td>
         <td>${boxSize}</td>
         <td>${boxCount}</td>
-        <td>${pprice*boxCount}</td>
+        <td>${pprice*boxCount*boxSize}</td>
        <!-- <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount})" alt=""></td> -->
     `
     child.id='medRow_'+itemsCount
