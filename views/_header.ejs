@@ -30,16 +30,20 @@
             <li><a class="dropdown-item" href="/appointments/show/old">Old appointments</a></li>
           </ul>
         </div>
-        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
-          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Purchases
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/purchases/home">New Purchase</a></li>
-            <li><a class="dropdown-item" href="/purchases/history">Purchase History</a></li>
-            <li></li>
-          </ul>
-        </div>
+        
+        <%if(role == 'Admin'){%>
+          <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Purchases
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/purchases/home">New Purchase</a></li>
+              <li><a class="dropdown-item" href="/purchases/history">Purchase History</a></li>
+              <li></li>
+            </ul>
+          </div>
+        <%}%>
+        
         <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Receipts
@@ -49,28 +53,33 @@
             <li><a class="dropdown-item" href="/receipts/find">Find Receipt</a></li>
           </ul>
         </div>
-
-        <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
-          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Inventories
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/purchases/invetoryManager">Inventory Manager</a></li>
-            <li><a class="dropdown-item" href="/purchases/inventories/all">Returns/Exp check</a></li>
-            <li><a class="dropdown-item" href="/purchases/returnHistory/home">Returns History</a></li>
-            <li><a class="dropdown-item" href="/sales/History/home">Sales History</a></li>
-          </ul>
-        </div>
+        <%if(role == 'Admin'){%>
+          <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Inventories
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/purchases/invetoryManager">Inventory Manager</a></li>
+              <li><a class="dropdown-item" href="/purchases/inventories/all">Returns/Exp check</a></li>
+              <li><a class="dropdown-item" href="/purchases/returnHistory/home">Returns History</a></li>
+              <li><a class="dropdown-item" href="/sales/History/home">Sales History</a></li>
+            </ul>
+          </div>
+        
+          <%}%>
         <div class="dropdown" style="margin-right: .5%; margin-left: .5%;">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Users
           </button>
           <ul class="dropdown-menu">
+            <%if(role == 'Admin'){%>
             <li><a class="dropdown-item" href="/user/showAll">Manage Users</a></li>
+            <%}%>
             <li><a class="dropdown-item" href="/user/myprofile">Change password</a></li>          
           </ul>
         </div>
-        <div style="margin-left: 33%;">
+        
+        <div style="margin-left: 30%;">
           <a href="/user/logout" class="btn btn-warning">Logout</a>
         </div>
       </div>

@@ -65,15 +65,15 @@ module.exports.showTodaysAppointments = async function(req, res){
             dateSelected = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate();
         }
         let appointments = await Appointments.find({Date:dateSelected}).populate('PatientId').sort({createdAt: 1});
-        return res.render('showAppointments',{appointments});
+        return res.render('showAppointments',{appointments, role:req.user.role});
     }catch(err){
         console.log(err)
-        return res.render('showAppointments',{error:'Unable to find appointments'});
+        return res.render('showAppointments',{error:'Unable to find appointments',role:req.user.role});
     }
 }
 
 module.exports.showOld = function(req, res){
-    return res.render('oldAppointments.ejs')
+    return res.render('oldAppointments.ejs',{role:req.user.role})
 }
 
 module.exports.getOldAppointments = async function(req, res){
@@ -94,7 +94,7 @@ module.exports.getOldAppointments = async function(req, res){
 module.exports.getRegistrationReceipt = async function(req, res){
     try{
           let appointment = await Appointments.findById(req.params.id).populate('PatientId');
-          return res.render('registrationReceipt',{appointment})
+          return res.render('registrationReceipt',{appointment,role:req.user.role})
     }catch(err){
           return res.redirect('back')
     }

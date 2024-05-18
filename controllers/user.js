@@ -84,56 +84,71 @@ module.exports.logout = function(req, res){
 }
 
 module.exports.showUsersUI = async function(req, res){
-    try{
-        if(req.user.role === 'Admin'){
-            let users = await UserSchema.find({},'full_name role email');
-            return res.render('manageUsers',{role:req.user.role, users})
-        }else{
-            console.log('403')
-            return res.render('Error_403');
+    if(req.user.role == 'Admin'){
+        try{
+            if(req.user.role === 'Admin'){
+                let users = await UserSchema.find({},'full_name role email');
+                return res.render('manageUsers',{role:req.user.role, users})
+            }else{
+                console.log('403')
+                return res.render('Error_403');
+            }
+        }catch(err){
+            console.log(err)
         }
-    }catch(err){
-        console.log(err)
+    }else{
+        return res.render('Error_403')
     }
+    
 }
 
 module.exports.addNewUser = async function(req, res){
-    try{
-        if(req.user.role === 'Admin'){
-            let user  = await UserSchema.create(
-                req.body
-            );
-            return res.status(200).json({
-                message:'user created'
-            })   
-        }else{
-            return res.status(403).json({
-                message:'You are not authorized to create new user'
-            })        
+    if(req.user.role == 'Admin'){
+        try{
+            if(req.user.role === 'Admin'){
+                let user  = await UserSchema.create(
+                    req.body
+                );
+                return res.status(200).json({
+                    message:'user created'
+                })   
+            }else{
+                return res.status(403).json({
+                    message:'You are not authorized to create new user'
+                })        
+            }
+        }catch(err){
+            return res.status(500).json({
+                message:'Unable to created user'
+            })
         }
-    }catch(err){
-        return res.status(500).json({
-            message:'Unable to created user'
-        })
+    }else{
+        return res.render('Error_403')
     }
+    
 }
 
 module.exports.deleteUser = async function(req, res){
-    try{
-        if(req.user.role == 'Admin'){
-            await UserSchema.findByIdAndDelete(req.params.user_id);
-            return res.status(200).json({
-                message:'User deleted'
+    if(req.user.role == 'Admin'){
+        try{
+            if(req.user.role == 'Admin'){
+                await UserSchema.findByIdAndDelete(req.params.user_id);
+                return res.status(200).json({
+                    message:'User deleted'
+                })
+            }else{
+                return res.render('Error_403')
+            }
+            
+        }catch(err){
+            return res.status(500).json({
+                message:'Error deleting user'
             })
-        }else{
-            return res.render('Error_403')
         }
-        
-    }catch(err){
-        return res.status(500).json({
-            message:'Error deleting user'
-        })
+    }else{
+        return res.render('Error_403')
     }
+    
 }
 
 module.exports.myProfile = function(req, res){
@@ -142,7 +157,7 @@ module.exports.myProfile = function(req, res){
         username: req.user.email,
         role:req.user.role
     }
-    return res.render('profile', {user})
+    return res.render('profile', {user,role:req.user.role})
 }
 
 module.exports.updatePassword = async function(req, res){
@@ -168,113 +183,3 @@ module.exports.updatePassword = async function(req, res){
         })
     }
 }
-/*
-module.exports.addUserPage = function(req, res){
-    if(req.user.role === 'Admin'){
-        return res.render('addUser',{role:req.user.role, isAdmin:req.user.isAdmin});
-    }else{
-        return res.render('Error_403')
-    }
-}
-
-module.exports.addStudentUser = async function(req, res){
-    try{
-        let student = await Students.findOne({AdmissionNo:req.body.AdmissionNo, isThisCurrentRecord:true, Mob:req.body.email, SchoolCode: req.body.SchoolCode});
-        if(student){
-            await UserSchema.create({
-                full_name:req.body.full_name,
-                email:req.body.email,
-                SchoolCode: req.body.SchoolCode,
-                password: req.body.password,
-                role:'Student'
-            });
-            console.log('User reigstered')
-            return res.redirect('/user/login')
-        }else{
-            console.log('No student registered with given information')
-            return res.redirect('back')
-        }
-    }catch(err){
-        console.log(err);
-        return res.redirect('back')
-    }
-}
-
-
-
-
-
-
-module.exports.getUsers = async function(req, res){
-    try{
-        if(req.user.role === 'Admin'){
-            logger.info('Finding users ...')
-            let users = await UserSchema.find({SchoolCode:req.user.SchoolCode},'full_name email role mobile address');
-            return res.status(200).json({
-                message:'Users fetched',
-                users
-            })
-        }else{
-            return res.render('Error_403')
-        }
-    }catch(err){
-        logger.error('Unable to fetch users from DB');
-        logger.error(err.toString());
-        return res.status(500).json({
-            message:'Unable to fetch users from DB'
-        })
-    }
-}
-
-
-module.exports.getSchoolProperties = function(req, res){
-    let properties = propertiesReader('../School/config/properties/'+req.user.SchoolCode+'.properties');
-    try{
-        let schoolProperties = new Object()
-        let code = req.user.SchoolCode;
-        school_name = properties.get(code+'.NAME');
-        mono = properties.get(code+'.MONO');
-        imgdir = properties.get(code+'.IMAGES');
-        address = properties.get(code+'.ADDRESS');
-        schoolProperties={school_name,mono,imgdir,address}
-        return res.status(200).json({
-            schoolProperties,
-            message:'Properties fetched'
-        })
-    }catch(err){
-        logger.error(err)
-        return res.status(500).json({
-            message:'Unable to get properties'
-        })
-    }
-}
-
-
-module.exports.getClassList = function(req, res){
-    let properties = propertiesReader('../School/config/properties/'+req.user.SchoolCode+'.properties');
-    try{
-        let classes = properties.get(req.user.SchoolCode+'.CLASSES_LIST').split(',');
-        return res.status(200).json({
-            classes
-        })
-    }catch(err){
-        logger.error(err)
-        return res.status(500).json({
-            message:'Unable to fetch class list'
-        })
-    }
-}
-
-
-
-
-
-module.exports.registerSchool = async function(req, res){
-    try{
-        await RegisteredSchools.create(req.body);
-        return res.redirect('/')
-    }catch(err){
-        return res.render('Error_403')
-    }
-}
-*/

@@ -67,205 +67,224 @@ module.exports.updatePatientData = function(req, res){
 */
 
 module.exports.newVisit = async function(req, res){
-      let patient, properties, date, modifiedDate
-      try{
-            properties = propertiesReader('./properties/UIdata.properties');
-      }catch(err){
-            console.log('Unable to load properties : /projectloaction/properties/UIdata.properties')
-            return res.redirect('back')
-      }
-      try{
-            patient = await Patients.findById(req.params.id)
-            date = req.query.date
-      }catch(err){
-            console.log(err)
-            console.log('DB error : Unable to find patient')
-            return res.redirect('back')
-      }
-      
-      
-      if(date != null && date.length > 0){
-            let d = date.split('-');
-            modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+      if(req.user.role == 'Admin'){
+            let patient, properties, date, modifiedDate
+            try{
+                  properties = propertiesReader('./properties/UIdata.properties');
+            }catch(err){
+                  console.log('Unable to load properties : /projectloaction/properties/UIdata.properties')
+                  return res.redirect('back')
+            }
+            try{
+                  patient = await Patients.findById(req.params.id)
+                  date = req.query.date
+            }catch(err){
+                  console.log(err)
+                  console.log('DB error : Unable to find patient')
+                  return res.redirect('back')
+            }
+            
+            
+            if(date != null && date.length > 0){
+                  let d = date.split('-');
+                  modifiedDate =  d[0]+'-'+String(Number(d[1]))+'-'+String(Number(d[2]));
+            }else{
+                  modifiedDate = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            }
+            let SavedData;
+            try{
+                  SavedData = await Visits.findOne({
+                        PatientId:req.params.id,
+                        Date:modifiedDate
+                  });
+            }catch(err){
+                  console.log("DB Error : Error fetching saved data")
+                  console.log(err)
+            }
+            let OE = properties.get('OnExaminations').split(',');
+            return res.render('visitPad',{OE, patient, SavedData,role:req.user.role});
       }else{
-            modifiedDate = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-      }
-      let SavedData;
-      try{
-            SavedData = await Visits.findOne({
-                  PatientId:req.params.id,
-                  Date:modifiedDate
-            });
-      }catch(err){
-            console.log("DB Error : Error fetching saved data")
-            console.log(err)
-      }
-      let OE = properties.get('OnExaminations').split(',');
-      return res.render('visitPad',{OE, patient, SavedData});
+            return res.render('Error_403')
+      }     
 }
 
 module.exports.patientRegistration = function(req, res){
-      return res.render('patientRegistration');
+      return res.render('patientRegistration',{role:req.user.role});
 }
 
 module.exports.addExaminations = async function(req, res){
-      try{
-            let keys = Object.keys(req.body);
-            let dataInArray = [];
-            for(let i=0;i<keys.length;i++){
-                  dataInArray.push(keys[i]+":"+req.body[keys[i]]);
-            }
-            let savedData;
+      if(req.user.role == 'Admin'){
             try{
-                  savedData = await Visits.findOne({
-                        PatientId:req.params.patientId,
-                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                  });
-            }catch(err){
-                  console.log("DB error : Unable to fetch saved data for patient")
-                  console.log(err)
-            }
-            try{
-                  if(savedData){
-                        console.log('Updating in saved data')
-                        await savedData.updateOne({OEs:dataInArray});
-                  }else{
-                        console.log('No old visits found : Creating new Visit')
-                        let visit = await Visits.create({
-                              PatientId:req.params.patientId,
-                              OEs:dataInArray
-                        });
-                        await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
+                  let keys = Object.keys(req.body);
+                  let dataInArray = [];
+                  for(let i=0;i<keys.length;i++){
+                        dataInArray.push(keys[i]+":"+req.body[keys[i]]);
                   }
+                  let savedData;
+                  try{
+                        savedData = await Visits.findOne({
+                              PatientId:req.params.patientId,
+                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                        });
+                  }catch(err){
+                        console.log("DB error : Unable to fetch saved data for patient")
+                        console.log(err)
+                  }
+                  try{
+                        if(savedData){
+                              console.log('Updating in saved data')
+                              await savedData.updateOne({OEs:dataInArray});
+                        }else{
+                              console.log('No old visits found : Creating new Visit')
+                              let visit = await Visits.create({
+                                    PatientId:req.params.patientId,
+                                    OEs:dataInArray
+                              });
+                              await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
+                        }
+                  }catch(err){
+                        console.log(err);
+                        return res.status(500).json({
+                              message:'Unable to save data'
+                        })
+                  }
+                  try{
+                        await Appointments.findOneAndUpdate({
+                              PatientId:req.params.patientId,
+                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                        },{
+                              isVisited:true
+                        })
+                  }catch(err){
+                        console.log('DB error : Unable to update appointment status')
+                  }
+                  
+                  return res.status(200).json({
+                        message:'OEs Updated'
+                  })
             }catch(err){
-                  console.log(err);
                   return res.status(500).json({
-                        message:'Unable to save data'
+                        message:'Unable to update OEs'
                   })
             }
-            try{
-                  await Appointments.findOneAndUpdate({
-                        PatientId:req.params.patientId,
-                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                  },{
-                        isVisited:true
-                  })
-            }catch(err){
-                  console.log('DB error : Unable to update appointment status')
-            }
-            
-            return res.status(200).json({
-                  message:'OEs Updated'
-            })
-      }catch(err){
-            return res.status(500).json({
-                  message:'Unable to update OEs'
-            })
+      }else{
+            return res.render('Error_403')
       }
+      
       
 }
 
 module.exports.addTests = async function(req, res){
-      try{
-            let keys = Object.keys(req.body);
-            let dataInArray = [];
-            let savedData
-            for(let i=0;i<keys.length;i++){
-                  dataInArray.push(keys[i]+":"+req.body[keys[i]]);
-            }
+      if(req.user.role == 'Admin'){
             try{
-                  savedData = await Visits.findOne({
-                        PatientId:req.params.patientId,
-                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                  });
-            }catch(err){
-                  console.log("DB error : Unable to find old data for patient")
-            }
-            try{
-                  if(savedData){
-                        console.log("Saving is old data")
-                        await savedData.updateOne({Tests:dataInArray});
-                  }else{
-                        console.log("Creating new visit record")
-                        let visit = await Visits.create({
-                              PatientId:req.params.patientId,
-                              Tests:dataInArray
-                        });
-                        await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
+                  let keys = Object.keys(req.body);
+                  let dataInArray = [];
+                  let savedData
+                  for(let i=0;i<keys.length;i++){
+                        dataInArray.push(keys[i]+":"+req.body[keys[i]]);
                   }
+                  try{
+                        savedData = await Visits.findOne({
+                              PatientId:req.params.patientId,
+                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                        });
+                  }catch(err){
+                        console.log("DB error : Unable to find old data for patient")
+                  }
+                  try{
+                        if(savedData){
+                              console.log("Saving is old data")
+                              await savedData.updateOne({Tests:dataInArray});
+                        }else{
+                              console.log("Creating new visit record")
+                              let visit = await Visits.create({
+                                    PatientId:req.params.patientId,
+                                    Tests:dataInArray
+                              });
+                              await visit.updateOne({Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()});
+                        }
+                  }catch(err){
+                        console.log(err)
+                        return res.status(500).json({
+                              message:'Unable to add data'
+                        })
+                  }
+                  try{
+                        await Appointments.findOneAndUpdate({
+                              PatientId:req.params.patientId,
+                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                        },{
+                              isVisited:true
+                        })
+                  }catch(err){
+                        console.log("Unable to update appointment status")
+                  }
+                  
+                  return res.status(200).json({
+                        message:'Tests Updated'
+                  })
             }catch(err){
-                  console.log(err)
                   return res.status(500).json({
-                        message:'Unable to add data'
+                        message:'Unable to update Tests'
                   })
             }
-            try{
-                  await Appointments.findOneAndUpdate({
-                        PatientId:req.params.patientId,
-                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                  },{
-                        isVisited:true
-                  })
-            }catch(err){
-                  console.log("Unable to update appointment status")
-            }
-            
-            return res.status(200).json({
-                  message:'Tests Updated'
-            })
-      }catch(err){
-            return res.status(500).json({
-                  message:'Unable to update Tests'
-            })
+      }else{
+            return res.render('Error_403')
       }
+      
 
 }
 
 module.exports.addComplaint = async function(req, res){
-      try{
-            let savedData = await Visits.findOne({
-                  PatientId:req.params.patientId,
-                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-            });
+      if(req.user.role == 'Admin'){
             try{
-                  if(savedData){
-                        console.log('Updating complaints in saved data')
-                        await savedData.updateOne({Complaint:req.body.Complaint});
-                  }else{
-                        console.log('creating new visit record for complaints')
-                        let visit = await Visits.create({
-                              PatientId:req.params.patientId,
-                              Complaint:req.body.Complaint,
-                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                        });
+                  let savedData = await Visits.findOne({
+                        PatientId:req.params.patientId,
+                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                  });
+                  try{
+                        if(savedData){
+                              console.log('Updating complaints in saved data')
+                              await savedData.updateOne({Complaint:req.body.Complaint});
+                        }else{
+                              console.log('creating new visit record for complaints')
+                              let visit = await Visits.create({
+                                    PatientId:req.params.patientId,
+                                    Complaint:req.body.Complaint,
+                                    Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                              });
+                        }
+                  }catch(err){
+                        console.log(err)
+                        return res.status(500).json({
+                              message:'Unable to add complaints'
+                        })
                   }
+                  try{
+                        await Appointments.findOneAndUpdate({
+                              PatientId:req.params.patientId,
+                              Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+                        },{
+                              isVisited:true
+                        })
+                  }catch(err){
+                        console.log("DB error : unable to change appointment status")
+                        console.log(err)
+                  }
+                  
+                  return res.status(200).json({
+                        message:'Complaint Updated'
+                  })
             }catch(err){
                   console.log(err)
                   return res.status(500).json({
-                        message:'Unable to add complaints'
+                        message:'Unable to update complaint'
                   })
             }
-            try{
-                  await Appointments.findOneAndUpdate({
-                        PatientId:req.params.patientId,
-                        Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
-                  },{
-                        isVisited:true
-                  })
-            }catch(err){
-                  console.log("DB error : unable to change appointment status")
-                  console.log(err)
-            }
-            
-            return res.status(200).json({
-                  message:'Complaint Updated'
-            })
-      }catch(err){
-            console.log(err)
-            return res.status(500).json({
-                  message:'Unable to update complaint'
-            })
+      }else{
+            return res.render('Error_403')
       }
+      
 }
 module.exports.getPatientById = async function(req, res){
       try{
@@ -314,7 +333,7 @@ module.exports.getPriscriptionForm =async function(req, res){
             console.log(err);
             return res.redirect('back')
       }
-      return res.render('prescriptionForm',{patient});
+      return res.render('prescriptionForm',{patient,role:req.user.role});
 }
 module.exports.getOldPrescriptionForm = async function(req, res){
       let d, modifiedDate, visit;
@@ -326,7 +345,7 @@ module.exports.getOldPrescriptionForm = async function(req, res){
             console.log(err)
             return res.redirect('back')
       }
-      return res.render('prescriptionForm_old', {visit})
+      return res.render('prescriptionForm_old', {visit,role:req.user.role})
 }
 module.exports.medicationsPage = async function(req, res){
       let patient, inventory;
@@ -341,16 +360,10 @@ module.exports.medicationsPage = async function(req, res){
       }catch(err){
             console.log("DB Error : Unable to fetch inventories")
       }
-      return res.render('medications',{patient, inventory})
+      return res.render('medications',{patient, inventory,role:req.user.role})
 }
 
 module.exports.savePrescriptions = async function(req,res){
-      console.log('Body')
-      console.log(req.body)
-      console.log('Query')
-      console.log(req.query)
-      console.log('Params')
-      console.log(req.params)
       try{
             let savedData
             try{
@@ -461,36 +474,46 @@ module.exports.getPrescriptions = async function(req, res){
 
 
 module.exports.patientHistoryHome = async function(req, res){
-      let patient
-      try{
-            patient = await Patients.findById(req.params.id)
-      }catch(err){
-            console.log('DB Error : Unable to find patient')
-            return res.redirect('back')
-      } 
-      return res.render('patientHistory', {patient});
+      if(req.user.role == 'Admin'){
+            let patient
+            try{
+                  patient = await Patients.findById(req.params.id)
+            }catch(err){
+                  console.log('DB Error : Unable to find patient')
+                  return res.redirect('back')
+            } 
+            return res.render('patientHistory', {patient,role:req.user.role});
+      }else{
+            return res.render('Error_403')
+      }
+      
 }
 
 module.exports.getPatientHistory = async function(req, res){
-      let history
-      try{
-            history = await Visits.find({PatientId:req.params.id}).sort({createdAt:-1});
-      
-      }catch(err){
-            console.log('DB Error : Unable to find patient history')
-            return res.status(500).json({
-                  message:'Unable to fetch history'
+      if(req.user.role == 'Admin'){
+            let history
+            try{
+                  history = await Visits.find({PatientId:req.params.id}).sort({createdAt:-1});
+            
+            }catch(err){
+                  console.log('DB Error : Unable to find patient history')
+                  return res.status(500).json({
+                        message:'Unable to fetch history'
+                  })
+            }
+            return res.status(200).json({
+                  history
             })
+      }else{
+            return res.render('Error_403')
       }
-      return res.status(200).json({
-            history
-      })     
+           
 }
 
 module.exports.getRegistrationReceipt = async function(req, res){
       try{
             let patient = await Patients.findById(req.params.id)
-            return res.render('registrationReceipt',{patient})
+            return res.render('registrationReceipt',{patient,role:req.user.role})
       }catch(err){
             return res.redirect('back')
       }

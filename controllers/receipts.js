@@ -3,7 +3,7 @@ const Sales = require('../models/sales')
 const Receipts = require('../models/receipts');
 const patients = require('../models/patients');
 module.exports.receiptHome = function(req, res){
-    return res.render('receiptHome')
+    return res.render('receiptHome',{role:req.user.role})
 }
 
 module.exports.addNewReceipt = async function(req, res){
@@ -58,7 +58,7 @@ module.exports.addNewReceipt = async function(req, res){
 module.exports.getReceipt = async function(req, res){
     try{
         let receipt = await Receipts.findById(req.params.id);
-        return res.render('receiptPDF',{receipt})
+        return res.render('receiptPDF',{receipt,role:req.user.role})
     }catch(err){
         console.log(err)
         return res.redirect('back')
@@ -66,7 +66,7 @@ module.exports.getReceipt = async function(req, res){
 }
 
 module.exports.finReceiptHome = function(req, res){
-    return res.render('findReceipt')
+    return res.render('findReceipt',{role:req.user.role})
 }
 
 module.exports.findReceiptById = async function(req, res){
