@@ -36,6 +36,7 @@
             <th class="bg" scope="col">Age</th>
             <th class="bg" scope="col">Gender</th>
             <th class="bg" scope="col">Address</th>
+            <th class="bg" scope="col">Fees</th>
             <th class="bg">Open</th>
             <th class="bg">Medications</th>
             <th class="bg" style="text-align: center;">Action</th>
@@ -49,6 +50,7 @@
                     <td><%=appointments[i].PatientId.Age%></td>
                     <td><%=appointments[i].PatientId.Gender%></td>
                     <td><%=appointments[i].PatientId.Address%></td>
+                    <td><%=appointments[i].Fees%></td>
                     <td><a href="/patients/newVisit/<%=appointments[i].PatientId._id%>">Open Visit</a></td>
                     <td><a href="/patients/medications/<%=appointments[i].PatientId._id%>">Medications</a></td>
                     <td style="display: flex; justify-content: center;">

@@ -4,6 +4,7 @@ const Appointments = require('../models/appointments');
 const Visits = require('../models/visits');
 const Tracker = require('../models/tracker');
 const Inventories = require('../models/inventory');
+const Sales = require('../models/sales')
 module.exports.addNewPatient = async function(req, res){
       let bookedAppointment = null;
       try{
@@ -26,6 +27,13 @@ module.exports.addNewPatient = async function(req, res){
                               Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                               isVisited:false,
                               Fees: req.body.Fees
+                        })
+                        await Sales.create({
+                              BillAmount:req.body.Fees,
+                              BillLink:'/appointments/receipt/'+bookedAppointment._id,
+                              BillType:'Registration Fees',
+                              PatientId:patient._id,
+                              SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
                         })
                   }
                   
@@ -337,6 +345,12 @@ module.exports.medicationsPage = async function(req, res){
 }
 
 module.exports.savePrescriptions = async function(req,res){
+      console.log('Body')
+      console.log(req.body)
+      console.log('Query')
+      console.log(req.query)
+      console.log('Params')
+      console.log(req.params)
       try{
             let savedData
             try{
@@ -354,21 +368,21 @@ module.exports.savePrescriptions = async function(req,res){
             }
             let receivedPres = req.body.prescriptions;
             let preparedPres = []
+            let totalAmount = 0
             try{
                   for(let i=0;i<receivedPres.length;i++){
                         if(receivedPres[i].length > 0){
                               preparedPres.push(receivedPres[i])
                               splittedArray = receivedPres[i].split(':');
+                              totalAmount = totalAmount + (Number(splittedArray[6]) * Number(splittedArray[7]));
                               let deductableQty = Number(splittedArray[7]);
                               let inventory = await Inventories.find({Medicine:splittedArray[0]}).sort('ExpiryDate');
                               let totalAvailableQty = 0
                               for(let i=0;i<inventory.length;i++){
                                     totalAvailableQty = totalAvailableQty + Number(inventory[i].CurrentQty);
                               }
-                              console.log("QDY "+deductableQty)
                               if(totalAvailableQty >= deductableQty){
                                     for(let i=0;i<inventory.length;i++){
-                                          console.log("deductable qty is "+deductableQty)
                                           if(inventory[i].CurrentQty >= deductableQty){
                                                 let newQty = inventory[i].CurrentQty - deductableQty
                                                 await inventory[i].updateOne({CurrentQty:newQty})
@@ -386,6 +400,17 @@ module.exports.savePrescriptions = async function(req,res){
                               }
                         }
       
+                  }
+                  try{
+                        await Sales.create({
+                              PatientId:req.params.patientId,
+                              BillAmount:totalAmount,
+                              BillType:'Medical Bill',
+                              BillLink:'/visits/getMedicalBill/'+savedData._id,
+                              SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
+                        })
+                  }catch(err){
+                        console.log("Unable to add in sales")
                   }
             }catch(err){
                   console.log("Unable to update inventoreis")

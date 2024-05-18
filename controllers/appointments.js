@@ -1,5 +1,6 @@
 const Appointments = require('../models/appointments');
 const Patients = require('../models/patients');
+const Sales = require('../models/sales')
 module.exports.addAppointment = async function(req, res){
     try{
         let patient, oldAppointment, appointment
@@ -31,6 +32,13 @@ module.exports.addAppointment = async function(req, res){
                 isVisited:false,
                 Fees:req.body.Fees
             });
+            await Sales.create({
+                BillAmount:req.body.Fees,
+                BillLink:'/appointments/receipt/'+appointment._id,
+                BillType:'Registration Fees',
+                PatientId:patient._id,
+                SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
+          })
         }catch(err){
             console.log(err)
             return res.status(500).json({

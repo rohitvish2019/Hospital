@@ -18,11 +18,16 @@
         <div class="heading">
             <h2>Current Inventories</h2>
         </div>
-        <div class="searchElements">
-            <label for=""><b>Expiry Date Range : </b>&nbsp;</label>
-            <input type="date" name="" id="startDate">
-            <input type="date" name="" id="endDate">
-            <button class="btn btn-success" onclick="getInventories()">Search</button>
+        <div class="searchElements" style="display: flex;justify-content: space-between;margin-right: 2%;">
+            <div>
+                <label for=""><b>Expiry Date Range : </b>&nbsp;</label>
+                <input type="date" name="" id="startDate">
+                <input type="date" name="" id="endDate">
+                <button class="btn btn-success" onclick="getInventories()">Search</button>
+            </div>
+            <div>
+                <label><b id="tprice"></b></label>
+            </div>
         </div>
         <div class="table-body" style="overflow: auto;">
             <table>
@@ -35,6 +40,7 @@
                         <th>Expiry Date</th>
                         <th>Price</th>
                         <th>Entry Date</th>
+                        <th>Total</th>
                         <th>Action</th>
                     </tr>
                 </thead>

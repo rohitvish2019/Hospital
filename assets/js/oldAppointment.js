@@ -31,6 +31,7 @@ function setAppointmentsOnUi(appointments){
             <td>${appointments[i].PatientId.Age}</td>
             <td>${appointments[i].PatientId.Gender}</td>
             <td>${appointments[i].PatientId.Address}</td>
+            <td>${appointments[i].Fees}</td>
             <td><a target="_blank" href="/patients/getOldPrescription/${appointments[i].PatientId._id}?date=${date}">Prescription</a></td>
             <td><a target="_blank" href="/visits/oldMedBill/${appointments[i].PatientId._id}?date=${date}">Medical Bill</a></td>
         `

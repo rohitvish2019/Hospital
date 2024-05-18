@@ -68,7 +68,6 @@ function getPurchaseHistory(){
             for(let i=0;i<data.purchases.length;i++){
                 pdata[i] = data.purchases[i]
             }
-            populateTable(1);
             populatePagination();
         
         },
@@ -92,7 +91,7 @@ function populateTable(pageNumber) {
     var endIndex = startIndex + pageSize;
     var tableBody = document.getElementById("medicines");
     tableBody.innerHTML = ``;
-
+    let totalValue = 0
     for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
         var row = document.createElement("tr");
         row.innerHTML = `
@@ -104,10 +103,13 @@ function populateTable(pageNumber) {
             <td>${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[2]}</td>
             <td>${pdata[i].BoxSize}</td>
             <td>${pdata[i].BoxCount}</td>
+            <td>${pdata[i].BoxSize * pdata[i].BoxCount * pdata[i].SellingPrice}</td>
             <td>${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[2]}</td>
         `;
+        totalValue = totalValue + (pdata[i].BoxSize * pdata[i].BoxCount * pdata[i].SellingPrice)
         tableBody.appendChild(row);
     }
+    document.getElementById('tvalue').innerText='Total Value : '+ totalValue
 }
 
 // Function to populate pagination
@@ -120,12 +122,16 @@ function populatePagination() {
         var li = document.createElement("li");
         var a = document.createElement("a");
         a.href = "#";
+        a.id='page_box_'+i
         a.textContent = i;
         a.onclick = function() {
             populateTable(parseInt(this.textContent));
         };
         li.appendChild(a);
         pagination.appendChild(li);
+    }
+    if(pdata.length > 0){
+        populateTable(1)
     }
 }
 

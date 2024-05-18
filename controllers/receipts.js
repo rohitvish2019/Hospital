@@ -1,5 +1,7 @@
 const Tracker = require('../models/tracker');
-const Receipts = require('../models/receipts')
+const Sales = require('../models/sales')
+const Receipts = require('../models/receipts');
+const patients = require('../models/patients');
 module.exports.receiptHome = function(req, res){
     return res.render('receiptHome')
 }
@@ -25,11 +27,27 @@ module.exports.addNewReceipt = async function(req, res){
             PatientId:req.body.patient.id
         })
         await pd.updateOne({ReceiptNo:ReceiptNo})
+        let itemsList = req.body.items
+        console.log(req.body)
+        let patient = await patients.findOne({PatientId:req.body.patient.id});
+        let billAmount = 0
+        for(let i=0;i<itemsList.length;i++){
+            let splittedArray = itemsList[i].split(':');
+            billAmount = billAmount + Number(splittedArray[1] * splittedArray[2])
+        }
+        await Sales.create({
+            BillAmount:billAmount,
+            BillType:'Generated Receipt',
+            PatientId:patient._id,
+            BillLink:'/receipts/gerenate/'+receipt._id,
+            SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
+      })
         return res.status(200).json({
             message:'Receipt created',
             receipt:receipt._id
         })
     }catch(err){
+        console.log(err)
         return res.status(500).json({
             message:'Unable to create Receipt'
         })

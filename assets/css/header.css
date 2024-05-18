@@ -18,6 +18,6 @@ ul{
   }
   .logo{
     height: 90px;
-    width: 120px;
+    width: 120px !important;
   }
   

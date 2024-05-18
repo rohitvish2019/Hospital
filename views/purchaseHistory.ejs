@@ -18,11 +18,17 @@
         <div class="heading">
             <h2>Purchase History</h2>
         </div>
-        <div class="searchElements">
-            <label for=""><b>Purchase Date Range : </b>&nbsp;</label>
-            <input type="date" name="" id="startDate">
-            <input type="date" name="" id="endDate">
-            <button class="btn btn-success" onclick="getPurchaseHistory()">Search</button>
+        <div class="searchElements" style="display: flex; justify-content: space-between;margin-right: 2%;">
+            <div>
+                <label for=""><b>Purchase Date Range : </b>&nbsp;</label>
+                <input type="date" name="" id="startDate">
+                <input type="date" name="" id="endDate">
+                <button class="btn btn-success" onclick="getPurchaseHistory()">Search</button>
+            </div>
+            <div>
+                <b id="tvalue"></b>
+            </div>
+            
         </div>
         <div class="table-body">
             <table>
@@ -36,6 +42,7 @@
                         <th>Expiry Date</th>
                         <th>Box Size</th>
                         <th>Box Count</th>
+                        <th>Total</th>
                         <th>Entry Date</th>
                     </tr>
                 </thead>

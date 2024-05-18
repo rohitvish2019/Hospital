@@ -10,7 +10,9 @@ router.get('/login', userController.login);
 router.get('/logout', userController.logout);
 router.get('/showAll', userController.showUsersUI)
 router.post('/addNew',passport.checkAuthentication, userController.addNewUser);
-router.delete('/delete/:user_id', userController.deleteUser)
+router.delete('/delete/:user_id', userController.deleteUser);
+router.get('/myprofile', passport.checkAuthentication, userController.myProfile)
+router.post('/updatePassword', passport.checkAuthentication, userController.updatePassword);
 /*
 router.get('/sign-up', userController.signUp)
 
@@ -18,7 +20,7 @@ router.get('/new',passport.checkAuthentication, userController.addUserPage);
 
 router.get('/home', passport.checkAuthentication, userController.home);
 router.post('/studentUser', userController.addStudentUser);
-router.post('/updatePassword', userController.updatePassword);
+
 
 router.get('/getAll', userController.getUsers);
 router.get('/getProperties', userController.getSchoolProperties)

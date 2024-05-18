@@ -6,5 +6,6 @@ router.use('/visits', require('./visits'))
 router.use('/purchases', require('./purchases'));
 router.use('/receipts', require('./receipt'))
 router.use('/user', require('./user'))
+router.use('/sales', require('./sales'))
 router.get('/',require('../controllers/user').createSession)
 module.exports = router;

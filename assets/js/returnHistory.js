@@ -84,7 +84,7 @@ function populateTable(pageNumber) {
     var endIndex = startIndex + pageSize;
     var tableBody = document.getElementById("medicines");
     tableBody.innerHTML = ``;
-
+    let totalValue = 0
     for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
         var row = document.createElement("tr");
         row.id=pdata[i]._id
@@ -94,17 +94,20 @@ function populateTable(pageNumber) {
             <td>${pdata[i].Batch}</td>
             <td>${pdata[i].Qty}</td>
             <td>${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[2]}</td>
+            <td>${pdata[i].Qty * pdata[i].Price}</td>
             <td>${pdata[i].Price}</td>
             <td>${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[2]}</td>
             
         `;
+        totalValue = totalValue + (pdata[i].Qty * pdata[i].Price)
         tableBody.appendChild(row);
     }
+    document.getElementById('tvalue').innerText='Total Value : '+totalValue
 }
 
 // Function to populate pagination
 function populatePagination() {
-    var totalPages = Math.ceil(pdata.length / 10); // Assuming 5 items per page
+    var totalPages = Math.ceil(pdata.length / 10); // Assuming 10 items per page
     var pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
 

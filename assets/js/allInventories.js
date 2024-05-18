@@ -52,6 +52,7 @@ function getInventories(){
             endDate
         },
         success:function(data){
+            console.log('Calling success handler')
             document.getElementById('loader').style.display='none'
             if(data.inventories.length < 1){
                 document.getElementById("medicines").innerHTML=
@@ -79,6 +80,7 @@ function getInventories(){
 
 
 function populateTable(pageNumber) {
+    let totalValue = 0
     var pageSize = 10; // Number of items per page
     var startIndex = (pageNumber - 1) * pageSize;
     var endIndex = startIndex + pageSize;
@@ -96,10 +98,13 @@ function populateTable(pageNumber) {
             <td>${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[2]}</td>
             <td>${pdata[i].Price}</td>
             <td>${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[2]}</td>
+            <td>${pdata[i].CurrentQty * pdata[i].Price}</td>
             <td ><button class = 'btn btn-warning' onclick='returnMed("${pdata[i]._id}")'>Return</button></td>
-        `;
+        `
+        totalValue = totalValue + (pdata[i].CurrentQty * pdata[i].Price)
         tableBody.appendChild(row);
     }
+    document.getElementById('tprice').innerText='Total Value : '+totalValue
 }
 
 function returnMed(id){
