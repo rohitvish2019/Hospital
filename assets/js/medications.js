@@ -134,6 +134,8 @@ function deleteMed(id){
 }
 
 function savePrescriptions(){
+    document.getElementById('savePrescriptions').setAttribute('disabled','disabled')
+    document.getElementById('loader').style.display='block'
     let patientId = document.getElementById('patientId').innerText
     console.log(prescriptions)
     $.ajax({
@@ -143,10 +145,14 @@ function savePrescriptions(){
         },
         type:'POST',
         success:function(data){
-            window.location.href='/visits/getMedicalBill/'+data.visitId
+            document.getElementById('loader').style.display='none'
+            document.getElementById('savePrescriptions').removeAttribute('disabled')
+            window.open('/visits/getMedicalBill/'+data.visitId)
+            window.location.href='/appointments/show/today'
         },
         error:function(err){
             console.log(err.responseText);
+            document.getElementById('loader').style.display='none'
             new Noty({
                 theme: 'relax',
                 text: JSON.parse(err.responseText).message,

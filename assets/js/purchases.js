@@ -74,6 +74,7 @@ function clearMedForm(){
 }
 
 function savePurchases(){
+    document.getElementById('loader').style.display='block'
     $.ajax({
         url:'/purchases/save',
         data:{
@@ -81,6 +82,7 @@ function savePurchases(){
         },
         type:'POST',
         success:function(data){
+            document.getElementById('loader').style.display='none'
             console.log(data);
             new Noty({
                 theme: 'relax',
@@ -93,7 +95,10 @@ function savePurchases(){
             items = []
             return;
         },
-        error: function(err){console.log(err.responseText)}
+        error: function(err){
+            document.getElementById('loader').style.display='none'
+            console.log(err.responseText)
+        }
     })
 }
 

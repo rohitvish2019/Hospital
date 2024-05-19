@@ -38,6 +38,10 @@
             <label for=""><%=patient.Address%></label>
         </div>
     </div>
+    <div id="loader" style="position: fixed;top:50% ;left: 35%;display: none;">
+        <%-include('_loader')%>
+    </div>
+    
     <div style="display: flex; justify-content: space-between;">
         <div style="width: 76%;">
             <div style="overflow-y: auto; height: 500px;">
@@ -79,7 +83,7 @@
                 </table>
             </div>
             <div style="display: flex; justify-content: center;">
-                <button onclick="savePrescriptions()" style="width: 30%;" class="btn btn-success">Save & Print</button>
+                <button onclick="savePrescriptions()" style="width: 30%;" class="btn btn-success" id="savePrescriptions">Save & Print</button>
             </div>
             
         </div>
