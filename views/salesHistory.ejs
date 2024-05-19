@@ -36,8 +36,16 @@
                     <label for=""><b>Sale Date : </b>&nbsp;</label>
                     <input type="date" name="" id="selectedDate">
                 </div>
-                <button style="height: 80%;" class="btn btn-success" onclick="getSalesHistory()">Search</button>
-                <b style="margin-left: 25%;" id="tvalue"></b>
+                <div>
+                    <label for=""><b>Bill type : </b>&nbsp;</label>
+                    <select name="" id="billType" onchange="changeInputs()" style="height: 70%;">
+                        <option value="Medical Bill" selected>Medical Bill</option>
+                        <option value="Registration Fees">Registration Fees</option>
+                        <option value="Generated Receipt">Other Receipts</option>
+                    </select>
+                </div>
+                <button style="height: 80%;margin-left: 2%;" class="btn btn-success" onclick="getSalesHistory()">Search</button>
+                <b style="margin-left: 20%;" id="tvalue"></b>
             
             <div>
                 <b id="tvalue"></b>

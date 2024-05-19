@@ -1,6 +1,7 @@
 function getSalesHistoryRange(){
     let startDate = document.getElementById('startDate').value
     let endDate = document.getElementById('endDate').value
+    let BillType = document.getElementById('billType').value
     if(!startDate || startDate == null || startDate == ''){
         new Noty({
             theme: 'relax',
@@ -48,7 +49,8 @@ function getSalesHistoryRange(){
         type:'Get',
         data:{
             startDate,
-            endDate
+            endDate,
+            BillType
         },
         success:function(data){
             document.getElementById('loader').style.display='none'
@@ -71,6 +73,7 @@ function getSalesHistoryRange(){
 }
 function getSalesHistoryDate(){
     let selectedDate = document.getElementById('selectedDate').value
+    let BillType = document.getElementById('billType').value
     if(!selectedDate || selectedDate == null || selectedDate == ''){
         new Noty({
             theme: 'relax',
@@ -87,6 +90,7 @@ function getSalesHistoryDate(){
         type:'Get',
         data:{
             selectedDate,
+            BillType
         },
         success:function(data){
             document.getElementById('loader').style.display='none'

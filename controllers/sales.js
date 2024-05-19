@@ -14,7 +14,8 @@ module.exports.getSalesHistoryRange = async function (req, res){
             let sales = await Sales.find({
                 $and: [
                     {createdAt:{$gte :new Date(req.query.startDate)}},
-                    {createdAt: {$lte : new Date(req.query.endDate)}}
+                    {createdAt: {$lte : new Date(req.query.endDate)}},
+                    {BillType:req.query.BillType}
                 ]
             }).populate('PatientId').sort('createdAt');
             return res.status(200).json({
@@ -35,7 +36,7 @@ module.exports.getSalesHistoryRange = async function (req, res){
 module.exports.getSalesHistoryDate = async function (req, res){
     if(req.user.role == 'Admin'){
         try{
-            let sales = await Sales.find({SaleDate:req.query.selectedDate}).populate('PatientId','Name').sort('createdAt');
+            let sales = await Sales.find({SaleDate:req.query.selectedDate, BillType:req.query.BillType}).populate('PatientId','Name').sort('createdAt');
             return res.status(200).json({
                 sales,hostname,port,protocol
             })
