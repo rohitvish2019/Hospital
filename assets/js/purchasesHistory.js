@@ -65,10 +65,8 @@ function getPurchaseHistory(){
                 pdata=[]
                 return
             }
-            for(let i=0;i<data.purchases.length;i++){
-                pdata[i] = data.purchases[i]
-            }
-            populatePagination();
+            
+            showHistoryOnUI(data.purchases);
         
         },
         error:function(err){
@@ -85,14 +83,11 @@ var data = [
 ];
 */
 // Function to populate table rows
-function populateTable(pageNumber) {
-    var pageSize = 10; // Number of items per page
-    var startIndex = (pageNumber - 1) * pageSize;
-    var endIndex = startIndex + pageSize;
+function showHistoryOnUI(pdata) {
     var tableBody = document.getElementById("medicines");
     tableBody.innerHTML = ``;
     let totalValue = 0
-    for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
+    for (var i = 0; i < pdata.length; i++) {
         var row = document.createElement("tr");
         row.innerHTML = `
             <td>${i+1}</td>

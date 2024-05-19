@@ -67,8 +67,7 @@ function getReturnsHistory(){
             for(let i=0;i<data.returnsData.length;i++){
                 pdata[i] = data.returnsData[i]
             }
-            populateTable(1);
-            populatePagination();
+            showReturnsOnUI(data.returnsData);
         
         },
         error:function(err){
@@ -78,14 +77,11 @@ function getReturnsHistory(){
 }
 
 
-function populateTable(pageNumber) {
-    var pageSize = 10; // Number of items per page
-    var startIndex = (pageNumber - 1) * pageSize;
-    var endIndex = startIndex + pageSize;
+function showReturnsOnUI(pdata) {
     var tableBody = document.getElementById("medicines");
     tableBody.innerHTML = ``;
     let totalValue = 0
-    for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
+    for (var i = 0; i < pdata.length; i++) {
         var row = document.createElement("tr");
         row.id=pdata[i]._id
         row.innerHTML = `

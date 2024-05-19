@@ -65,11 +65,7 @@ function getInventories(){
                 pdata=[]
                 return
             }
-            for(let i=0;i<data.inventories.length;i++){
-                pdata[i] = data.inventories[i]
-            }
-            populateTable(1);
-            populatePagination();
+            showInventoriesOnUI(data.inventories);
         
         },
         error:function(err){
@@ -79,15 +75,12 @@ function getInventories(){
 }
 
 
-function populateTable(pageNumber) {
+function showInventoriesOnUI(pdata) {
     let totalValue = 0
-    var pageSize = 10; // Number of items per page
-    var startIndex = (pageNumber - 1) * pageSize;
-    var endIndex = startIndex + pageSize;
     var tableBody = document.getElementById("medicines");
     tableBody.innerHTML = ``;
 
-    for (var i = startIndex; i < endIndex && i < pdata.length; i++) {
+    for (var i = 0; i < pdata.length ;i++) {
         var row = document.createElement("tr");
         row.id=pdata[i]._id
         row.innerHTML = `

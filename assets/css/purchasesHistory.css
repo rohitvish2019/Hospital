@@ -15,11 +15,12 @@ body{
 }
 
 .table-body{
-    height: 90%;
+    height: 100%;
     border-bottom: 2px dotted black;
+    overflow: auto;
 }
 .pagination-box{
-    height: 7%;
+    height: 0%;
 }
 
 table {
