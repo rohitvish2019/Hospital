@@ -4,6 +4,7 @@ const Sale = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:'Patients'
     },
+    PatientName:String,
     BillAmount:Number,
     BillType:String,
     BillLink:String,

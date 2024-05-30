@@ -193,3 +193,43 @@ function setSavedPrescriptionsOnUI(data){
 }
 
 getPrescriptions()
+
+
+
+function savePrescriptionsExternal(){
+    document.getElementById('savePrescriptions').setAttribute('disabled','disabled')
+    document.getElementById('loader').style.display='block'
+    console.log(prescriptions)
+    $.ajax({
+        url:'/receipts/medbill/ext',
+        data:{
+            prescriptions,
+            discount:document.getElementById('discount').value,
+            patient:{
+                Name:document.getElementById('name').value,
+                Gender:document.getElementById('gender').value,
+                Address:document.getElementById('address').value,
+                Age:document.getElementById('age').value
+            }
+        },
+        type:'POST',
+        success:function(data){
+            document.getElementById('loader').style.display='none'
+            document.getElementById('savePrescriptions').removeAttribute('disabled')
+            window.open('/receipts/extMedBill/'+data.receipt)
+            //window.location.href='/appointments/show/today'
+        },
+        error:function(err){
+            console.log(err.responseText);
+            document.getElementById('loader').style.display='none'
+            new Noty({
+                theme: 'relax',
+                text: JSON.parse(err.responseText).message,
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            return;
+        }
+    })
+}

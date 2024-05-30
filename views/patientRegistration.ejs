@@ -21,11 +21,16 @@
       
       <div id="registrationForm">
         <div class="input-group mb-2" style="width: 95%;">
-            <input style="padding-left: 3%;" type="text" id="patientID" class="form-control" placeholder="Search with Id" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input style="padding-left: 1%;" type="text" id="patientID" class="form-control" placeholder="Search with Id" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" style="height: 97%;border-top-left-radius:0; border-bottom-left-radius: 0;" onclick="searchById()">Search</button>
             </div>
-          </div>
+            <input style="padding-left: 1%;margin-left: 2%;" value="Dr Navin Soni" type="text" id="doctorName" class="form-control" placeholder="Doctor" aria-label="Recipient's username" aria-describedby="basic-addon2" list="docLists">
+            <datalist id="docLists">
+              <option value="Dr Navin Soni"></option>
+              <option value="Dr Alka Soni"></option>
+            </datalist>
+        </div>
         
         <div class="form-floating mb-2">
             <input type="text" class="form-control" id="Name" placeholder="name@example.com">

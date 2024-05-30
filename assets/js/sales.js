@@ -64,7 +64,12 @@ function getSalesHistoryRange(){
                 document.getElementById('pagination').innerHTML=``
                 return
             }
-            setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
+            if(BillType == 'Medical Bill Ext'){
+                setHistoryOnUiExtMed(data.sales)
+            }else{
+                setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
+            }
+            
         },
         error:function(err){
             document.getElementById('loader').style.display='none'
@@ -105,7 +110,12 @@ function getSalesHistoryDate(){
                 document.getElementById('pagination').innerHTML=``
                 return
             }
-            setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
+            if(BillType == 'Medical Bill Ext'){
+                setHistoryOnUiExtMed(data.sales)
+            }else{
+                setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
+            }
+            
         },
         error:function(err){
             document.getElementById('loader').style.display='none'
@@ -166,6 +176,39 @@ function setHistoryOnUi(history,host,port,protocol){
         container.appendChild(rowItem)
     }
     totalAmount = Math.floor(totalAmount)
-    document.getElementById('tvalue').innerText='Total Amount : '+totalAmount
-    
+    document.getElementById('tvalue').innerText='Total Amount : '+totalAmount   
+}
+
+function setHistoryOnUiExtMed(history){
+    let totalAmount = 0
+    let container = document.getElementById('historyBody');
+    container.innerHTML=``
+    for(let i=0;i<history.length;i++){
+        let rowItem = document.createElement('tr');
+        if(history[i] && history[i].PatientName){
+            rowItem.innerHTML=
+            `
+                <td>${i+1}</td>
+                <td>${history[i].PatientName}</td>
+                <td>${history[i].BillType}</td>
+                <td>${history[i].BillAmount}</td>
+                <td>${history[i].SaleDate}</td>
+                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+            `
+        }else{
+            rowItem.innerHTML=
+        `
+            <td>${i+1}</td>
+            <td>Not Available</td>
+            <td>${history[i].BillType}</td>
+            <td>${history[i].BillAmount}</td>
+            <td>${history[i].SaleDate}</td>
+            <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+        `
+        }
+        totalAmount = totalAmount + Number(history[i].BillAmount)
+        container.appendChild(rowItem)
+    }
+    totalAmount = Math.floor(totalAmount)
+    document.getElementById('tvalue').innerText='Total Amount : '+totalAmount 
 }
