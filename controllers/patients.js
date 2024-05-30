@@ -414,6 +414,7 @@ module.exports.savePrescriptions = async function(req,res){
                         }
       
                   }
+
                   try{
                         await Sales.create({
                               PatientId:req.params.patientId,
@@ -428,7 +429,7 @@ module.exports.savePrescriptions = async function(req,res){
             }catch(err){
                   console.log("Unable to update inventoreis")
             }
-            await savedData.updateOne({Prescriptions:preparedPres});
+            await savedData.updateOne({Prescriptions:preparedPres, medDiscount:req.body.discount});
             return res.status(200).json({
                   message:'Prescriptions added',
                   visitId : savedData._id

@@ -62,6 +62,7 @@ function getInventories(){
                 </tr>
                 `
                 document.getElementById('pagination').innerHTML=``
+                document.getElementById('tprice').innerText='Total Amount : 0'
                 pdata=[]
                 return
             }
@@ -76,8 +77,15 @@ function getInventories(){
 
 
 function showInventoriesOnUI(pdata) {
-    let totalValue = 0
     var tableBody = document.getElementById("medicines");
+    if(pdata.length == 0){
+        tableBody.innerHTML=`
+    <tr>
+        <td rowspan="3" colspan="9" style="text-align: center;">No Data found</td>
+    </tr>
+    `
+    }
+    let totalValue = 0
     tableBody.innerHTML = ``;
 
     for (var i = 0; i < pdata.length ;i++) {

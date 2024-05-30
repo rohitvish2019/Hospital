@@ -63,6 +63,7 @@ function getPurchaseHistory(){
                 `
                 document.getElementById('pagination').innerHTML=``
                 pdata=[]
+                document.getElementById('tvalue').innerText='Total Amount : 0'
                 return
             }
             

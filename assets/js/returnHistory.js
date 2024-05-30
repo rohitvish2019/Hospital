@@ -62,6 +62,7 @@ function getReturnsHistory(){
                 `
                 document.getElementById('pagination').innerHTML=``
                 pdata=[]
+                document.getElementById('tvalue').innerText='Total Amount : 0'
                 return
             }
             for(let i=0;i<data.returnsData.length;i++){
@@ -90,8 +91,8 @@ function showReturnsOnUI(pdata) {
             <td>${pdata[i].Batch}</td>
             <td>${pdata[i].Qty}</td>
             <td>${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].ExpiryDate)).substring(4,15).split(' ')[2]}</td>
-            <td>${pdata[i].Qty * pdata[i].Price}</td>
             <td>${pdata[i].Price}</td>
+            <td>${pdata[i].Qty * pdata[i].Price}</td>
             <td>${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[1]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[0]} ${String(new Date(pdata[i].createdAt)).substring(4,15).split(' ')[2]}</td>
             
         `;

@@ -6,6 +6,7 @@ const Inventory = new mongoose.Schema({
     ExpiryDate:Date,
     Batch:String,
     Price:Number,
+    PurchasePrice:Number
 },
 {
     timestamps:true

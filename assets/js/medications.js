@@ -142,6 +142,7 @@ function savePrescriptions(){
         url:'/patients/add/Prescriptions/'+patientId,
         data:{
             prescriptions,
+            discount:document.getElementById('discount').value
         },
         type:'POST',
         success:function(data){

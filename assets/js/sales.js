@@ -95,12 +95,13 @@ function getSalesHistoryDate(){
         success:function(data){
             document.getElementById('loader').style.display='none'
             if(data.sales.length < 1){
-                document.getElementById("medicines").innerHTML=
+                document.getElementById("historyBody").innerHTML=
                 `
                 <tr>
                     <td rowspan="3" colspan="9" style="text-align: center;">No Data found</td>
                 </tr>
                 `
+                document.getElementById('tvalue').innerText='Total Amount : 0'
                 document.getElementById('pagination').innerHTML=``
                 return
             }
@@ -148,7 +149,7 @@ function setHistoryOnUi(history,host,port,protocol){
                 <td>${history[i].BillType}</td>
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
-                <td><a target='_blank' href='${protocol+'://'+host+':'+port+history[i].BillLink}'>View</a></td>
+                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
             `
         }else{
             rowItem.innerHTML=
@@ -158,7 +159,7 @@ function setHistoryOnUi(history,host,port,protocol){
             <td>${history[i].BillType}</td>
             <td>${history[i].BillAmount}</td>
             <td>${history[i].SaleDate}</td>
-            <td><a target='_blank' href='${protocol+'://'+host+':'+port+history[i].BillLink}'>View</a></td>
+            <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
         `
         }
         totalAmount = totalAmount + Number(history[i].BillAmount)

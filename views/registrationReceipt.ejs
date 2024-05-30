@@ -51,7 +51,6 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Purchase Date</th>
-                            <th>Expiry Date</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -61,18 +60,20 @@
                             <td>₹ <%=appointment.Fees%></td>
                             <td>1</td>
                             <td><%= String(new Date().getDate()).padStart(2,'0')+'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+new Date().getFullYear() %></td>
-                            <td><%= String(new Date().getDate()).padStart(2,'0')+'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+new Date().getFullYear() %></td>
                             <td>₹ <%=appointment.Fees%></td>
                         </tr>                       
                     <!-- Add more rows for additional items if needed -->
                     </tbody>
                     <tfoot>
                         <tr class="subtotal">
-                            <td colspan="5">Subtotal</td>
+                            <td colspan="4">Subtotal</td>
                             <td>₹ <%=appointment.Fees%></td>
                         </tr>
                     </tfoot>
                 </table>
+                <div style="margin-left: 1%;margin-top: .5%;">
+                    This receipt is valid upto 10 days from the generated date.
+                </div>
             </div>
         </div>
     </div>

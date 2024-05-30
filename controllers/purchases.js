@@ -33,7 +33,8 @@ module.exports.addPurchases = async function(req, res){
                         CurrentQty:Number(item[5]) * Number(item[6]),
                         AlertQty:30,
                         ExpiryDate:item[4],
-                        Price:Number(item[3])
+                        Price:Number(item[3]),
+                        PurchasePrice:Number(item[2])
                     })
                 }catch(err){
                     console.log('DB error : Unable to update inventories');

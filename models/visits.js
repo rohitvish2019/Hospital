@@ -25,6 +25,10 @@ const Visit = new mongoose.Schema({
     },
     Date:{
         type:String
+    },
+    medDiscount:{
+        type:Number,
+        default:0
     }
 },
 {

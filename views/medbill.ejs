@@ -63,9 +63,9 @@
                   <th>#</th>
                   <th>Description</th>
                   <th>Batch No</th>
-                  <th>Rate * Qty</th>
+                  <th>Rate</th>
+                  <th>Qty</th>
                   <th>Exp. Date</th>
-                  <th>Usage</th>
                   <th>Duration</th>
                   <th>Total</th>
                </tr>
@@ -78,9 +78,9 @@
                      <td><%=i+1%></td>
                      <td><%=drugs[0]%></td>
                      <td><%=drugs[8]%></td>
-                     <td><%=drugs[6]%> * <%=drugs[7]%></td>
+                     <td><%=drugs[6]%></td>
+                     <td><%=drugs[7]%></td>
                      <td><%=drugs[9]%></td>
-                     <td><%=drugs[2]%> <%=drugs[4]%>, <%=drugs[1]%></td>
                      <td><%=drugs[3]%></td>
                      <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
                      <td><%=Number(drugs[6])*Number(drugs[7])%></td>
@@ -95,6 +95,7 @@
         </div>
         
       </div>
+      <!--
       <div class="main-body-1" style="display: none;">
          <div class="medical-name">
             <div style="width: 25%; padding-top: 2.3%; margin-left: 1%;">
@@ -147,10 +148,11 @@
          <table style="width: 100%;">
             <thead>
                <tr>
-                  <th>#</th>
+                  <th>###</th>
                   <th>Description</th>
                   <th>Batch No</th>
-                  <th>Rate * Qty</th>
+                  <th>Rate</th>
+                  <th>Qty</th>
                   <th>Exp. Date</th>
                   <th>Usage</th>
                   <th>Duration</th>
@@ -165,7 +167,8 @@
                      <td><%=i+1%></td>
                      <td><%=drugs[0]%></td>
                      <td><%=drugs[8]%></td>
-                     <td><%=drugs[6]%> * <%=drugs[7]%></td>
+                     <td><%=drugs[6]%></td>
+                     <td><%=drugs[7]%></td>
                      <td><%=drugs[9]%></td>
                      <td><%=drugs[2]%> <%=drugs[4]%>, <%=drugs[1]%></td>
                      <td><%=drugs[3]%></td>
@@ -173,13 +176,13 @@
                   </tr>
                <%}%>
                <tr>
-                  <td colspan="5">Total Payable amount</td>
-                  <td colspan="3" style="font-size: medium; font-weight: bold;"><%=amount%></td>
+                  <td colspan="4">Total Payable amount</td>
+                  <td colspan="4" style="font-size: medium; font-weight: bold;"><%=amount%></td>
                </tr>
             </tbody>
          </table>
         </div>
-        
+        -->
       </div>
       <div style="margin-left: 1%;">
          <div style="font-size: small;">
