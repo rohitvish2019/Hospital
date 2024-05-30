@@ -67,7 +67,8 @@
                             <td>Appointment</td>
                             <td>₹ <%=appointment.Fees%></td>
                             <td>1</td>
-                            <td><%= String(new Date().getDate()).padStart(2,'0')+'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+new Date().getFullYear() %></td>
+                            <%let d =appointment.Date.split('-') %>
+                            <td><%=String(d[2]).padStart(2,'0')+'-'+String(d[1]).padStart(2,'0')+'-'+String(d[0])%></td>
                             <td>₹ <%=appointment.Fees%></td>
                         </tr>                       
                     <!-- Add more rows for additional items if needed -->
