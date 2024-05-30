@@ -58,7 +58,7 @@ module.exports.addPurchases = async function(req, res){
 
 
 module.exports.getMedInfoPrescriptions = async function(req, res){
-    if(req.user.role == 'Admin'){
+    if(true){
         let medInfo, returnableInfo, isReturnValueSet, totalQty
         try{
             medInfo = await Inventories.find({Medicine:req.query.Medicine}).sort('ExpiryDate');

@@ -17,20 +17,46 @@ module.exports.addNewReceipt = async function(req, res){
     }
     
     try{
-        let receipt = await Receipts.create({
-            ReceiptNo: ReceiptNo,
-            Name:req.body.patient.Name,
-            Age:req.body.patient.Age,
-            Gender:req.body.patient.Gender,
-            Address:req.body.patient.Address,
-            Mobile:req.body.patient.Mobile,
-            Items:req.body.items,
-            PatientId:req.body.patient.id
-        })
+        let patient = await patients.findOne({PatientId:req.body.patient.id})
+        let receipt;
+        if(patient){
+            receipt = await Receipts.create({
+                ReceiptNo: ReceiptNo,
+                Name:req.body.patient.Name,
+                Age:req.body.patient.Age,
+                Gender:req.body.patient.Gender,
+                Address:req.body.patient.Address,
+                Mobile:req.body.patient.Mobile,
+                Items:req.body.items,
+                PatientId:req.body.patient.id
+            })
+        }else{
+            let newPid = Number(pd.PatientId) + 1
+            patient = await patients.create({
+                Name:req.body.patient.Name,
+                Age:req.body.patient.Age,
+                Gender:req.body.patient.Gender,
+                Address:req.body.patient.Address,
+                Mobile:req.body.patient.Mobile,
+                PatientId:newPid
+            })
+            receipt = await Receipts.create({
+                ReceiptNo: ReceiptNo,
+                Name:req.body.patient.Name,
+                Age:req.body.patient.Age,
+                Gender:req.body.patient.Gender,
+                Address:req.body.patient.Address,
+                Mobile:req.body.patient.Mobile,
+                Items:req.body.items,
+                PatientId:newPid
+            })
+            await pd.updateOne({PatientId:newPid})
+
+        }
         await pd.updateOne({ReceiptNo:ReceiptNo})
         let itemsList = req.body.items
         console.log(req.body)
-        let patient = await patients.findOne({PatientId:req.body.patient.id});
+        
         let billAmount = 0
         for(let i=0;i<itemsList.length;i++){
             let splittedArray = itemsList[i].split(':');
@@ -39,10 +65,10 @@ module.exports.addNewReceipt = async function(req, res){
         await Sales.create({
             BillAmount:billAmount,
             BillType:'Generated Receipt',
-            PatientId:patient._id,
+            PatientId:patient._id, 
             BillLink:'/receipts/gerenate/'+receipt._id,
             SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
-      })
+        })
         return res.status(200).json({
             message:'Receipt created',
             receipt:receipt._id

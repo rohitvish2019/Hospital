@@ -178,6 +178,7 @@ function saveReceiptData(){
         }).show();
         return
     }
+    document.getElementById('loader').style.display='block'
     $.ajax({
         url:'/receipts/save',
         type:'Post',
@@ -193,9 +194,11 @@ function saveReceiptData(){
             items
         },
         success:function(data){
+            document.getElementById('loader').style.display='none'
             console.log(data)
             setTimeout(function(err){
-                window.location.href='/receipts/gerenate/'+data.receipt
+                window.open('/receipts/gerenate/'+data.receipt)
+                window.location.href='/receipts/home'
             }, 1000)
 
         },
