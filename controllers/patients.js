@@ -4,7 +4,8 @@ const Appointments = require('../models/appointments');
 const Visits = require('../models/visits');
 const Tracker = require('../models/tracker');
 const Inventories = require('../models/inventory');
-const Sales = require('../models/sales')
+const Sales = require('../models/sales');
+const AdmittedPatients = require('../models/admittedPatients')
 module.exports.addNewPatient = async function(req, res){
       let bookedAppointment = null;
       try{
@@ -112,6 +113,10 @@ module.exports.patientRegistration = function(req, res){
       return res.render('patientRegistration',{role:req.user.role});
 }
 
+module.exports.IPDpatientRegistration = function(req, res){
+      return res.render('IPDRegistration',{role:req.user.role});
+}
+
 module.exports.addExaminations = async function(req, res){
       if(req.user.role == 'Admin'){
             try{
@@ -170,8 +175,6 @@ module.exports.addExaminations = async function(req, res){
       }else{
             return res.render('Error_403')
       }
-      
-      
 }
 
 module.exports.addTests = async function(req, res){
@@ -231,8 +234,6 @@ module.exports.addTests = async function(req, res){
       }else{
             return res.render('Error_403')
       }
-      
-
 }
 
 module.exports.addComplaint = async function(req, res){
@@ -518,5 +519,86 @@ module.exports.getRegistrationReceipt = async function(req, res){
       }catch(err){
             return res.redirect('back')
       }
+}
+
+module.exports.admitPatient = async function(req, res){
+      let id;
+      try{
+            id = await Tracker.findOne({});
+      }catch(err){
+            return res.status(500).json({
+                  message:'Unable to generate patient ID'
+            })
+      }
+      try{
+            let patient = await AdmittedPatients.create(req.body);
+            let newId = Number(id.AdmittedPatientId) + 1
+            await id.updateOne({AdmittedPatientId:newId})
+            await patient.updateOne({PatientId:newId})
+            return res.status(200).json({
+                  message:'Patient Admitted'
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to admit patient'
+            })
+      }
+}
+
+module.exports.showAdmitted = async function(req, res){
+      try{
+            let patients = await AdmittedPatients.find({}).sort([['createdAt',-1]]);
+            return res.render('showAdmittedPatients',{patients,role:req.user.role})
+      }catch(err){
+            console.log(err)
+            return res.render('showAdmittedPatients',{patients:null,role:req.user.role})
+      }
       
+}
+
+module.exports.saveOperationsData = async function(req, res){
+      try{
+            let patient = await AdmittedPatients.findById(req.body.id);
+            await patient.updateOne({OperationDate:req.body.opdate, OperationDescription:req.body.opdesc, Remarks:req.body.remarks, Complaint:req.body.cnh})
+            return res.status(200).json({
+                  message:'Admission Details Updated'
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to save data'
+            })
+      }
+}
+
+module.exports.dischargePatient = async function(req, res){
+      try{
+            if(req.user.role == 'Admin'){
+                  await AdmittedPatients.findByIdAndUpdate(req.body.id, {isDischarged:true, DischargeDate:new Date()});
+                  return res.status(200).json({
+                        message:'Patient discharge completed'
+                  })
+            }else{
+                  return res.status(403).json({
+                        message:'You are not authorized to perform this action'
+                  })
+            }
+            
+      }catch(err){
+            console.log(err);
+            return res.status(500).json({
+                  message:'Unable to discharge patient'
+            })
+      }
+}
+
+module.exports.dischargeSheet = async function(req, res){
+      try{
+            let patient = await AdmittedPatients.findById(req.params.id);
+            return res.render('dischargeSheet', {patient})
+      }catch(err){
+            console.log(err)
+            return res.render('Error_500')
+      }
 }

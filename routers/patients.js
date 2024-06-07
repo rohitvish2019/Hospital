@@ -5,6 +5,7 @@ const patientsController = require('../controllers/patients')
 router.get('/newVisit/:id', passport.checkAuthentication,  patientsController.newVisit);
 router.get('/history/:id', passport.checkAuthentication, patientsController.patientHistoryHome);
 router.get('/new', passport.checkAuthentication, patientsController.patientRegistration);
+router.get('/IPD/new', passport.checkAuthentication, patientsController.IPDpatientRegistration);
 router.post('/register', passport.checkAuthentication, patientsController.addNewPatient);
 router.post('/add/Examinations/:patientId', passport.checkAuthentication, patientsController.addExaminations);
 router.post('/add/Tests/:patientId', passport.checkAuthentication, patientsController.addTests);
@@ -18,4 +19,9 @@ router.get('/getPrescriptions', passport.checkAuthentication, patientsController
 router.get('/getOldPrescription/:patientId', passport.checkAuthentication, patientsController.getOldPrescriptionForm);
 router.get('/getHistory/:id', passport.checkAuthentication, patientsController.getPatientHistory)
 router.get('/receipt/:id', passport.checkAuthentication, patientsController.getRegistrationReceipt)
+router.post('/admit', passport.checkAuthentication, patientsController.admitPatient);
+router.get('/admitted/active', passport.checkAuthentication, patientsController.showAdmitted);
+router.post('/save/admissionData', passport.checkAuthentication, patientsController.saveOperationsData);
+router.post('/discharge', passport.checkAuthentication, patientsController.dischargePatient)
+router.get('/dischargeSheet/:id', passport.checkAuthentication, patientsController.dischargeSheet)
 module.exports = router;

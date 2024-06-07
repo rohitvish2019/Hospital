@@ -1,5 +1,7 @@
 const Tracker = require('../models/tracker');
-const Sales = require('../models/sales')
+const Sales = require('../models/sales');
+const Visits = require('../models/visits')
+const Appointments = require('../models/appointments')
 const Receipts = require('../models/receipts');
 const patients = require('../models/patients');
 const Inventories = require('../models/inventory')
@@ -230,4 +232,44 @@ module.exports.addMedBill = async function(req, res){
             message:'Unable to create Receipt'
         })
     }
+}
+
+
+module.exports.getMedsByLink = async function(req, res){
+    try{
+        let linkItems = String(req.query.link).split('/');
+        let items, items2
+        console.log(linkItems)
+        console.log("id is "+linkItems[2])
+        if(linkItems[2] == 'getMedicalBill'){
+            console.log(1)
+            items = await Visits.findById(linkItems[3]);
+            items2 = items.Prescriptions
+        }else if(linkItems[2] == 'receipt'){
+            //items = await Appointments.findById(req.params.id).populate('PatientId');
+            items2 = null
+            console.log(2)
+        }else if(linkItems[2] == 'gerenate'){
+            items = await Receipts.findById(linkItems[3])
+            items2 = items.Items
+            console.log(3)
+        }else if(linkItems[2] == 'extMedBill'){
+            items = await Receipts.findById(linkItems[3])
+            items2 = items.Items
+            console.log(4)
+        }else{
+            items = null
+            console.log(5)
+        }
+        return res.status(200).json({
+            items:items2
+        })
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({
+            message:'Unable to fetch items'
+        })
+    }
+
+
 }

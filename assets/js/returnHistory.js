@@ -2,6 +2,7 @@ let pdata=[]
 function getReturnsHistory(){
     let startDate = document.getElementById('startDate').value
     let endDate = document.getElementById('endDate').value
+    let returnType = document.getElementById('returnType').value
     if(!startDate || startDate == null || startDate == ''){
         new Noty({
             theme: 'relax',
@@ -49,7 +50,8 @@ function getReturnsHistory(){
         type:'Get',
         data:{
             startDate,
-            endDate
+            endDate,
+            returnType
         },
         success:function(data){
             document.getElementById('loader').style.display='none'

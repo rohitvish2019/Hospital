@@ -80,7 +80,7 @@
                     <td><%=drugs[8]%></td>
                     <td><%=drugs[6]%></td>
                     <td><%=drugs[7]%></td>
-                    <td><%=drugs[9]%></td>
+                    <td><%=drugs[9].split('-')[2]%>-<%=drugs[9].split('-')[1]%>-<%=drugs[9].split('-')[0]%></td>
                     <td><%=drugs[3]%></td>
                     <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
                     <td><%=(Number(drugs[6])*Number(drugs[7])).toFixed(2)%></td>

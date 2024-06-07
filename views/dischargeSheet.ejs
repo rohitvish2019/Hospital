@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discharge Sheet</title>
+    <link rel="stylesheet" href="/css/dischargeSheet.css">
+</head>
+<body>
+    <div class="main-body">
+        <div class="header">
+            <div class="logo" style="padding: 1%;">
+                <img src="/images/logo-og-wbg.png" alt="" srcset="" height="130%" width="130%">
+            </div>
+            <div class="name">
+                <label style="font-size: 35px;font-weight: bolder; color: rgb(201, 8, 8);">ओम &nbsp;&nbsp;फ्रैक्चर  &nbsp;&nbsp;एवं  &nbsp; ट्रामा   &nbsp;&nbsp;हॉस्पिटल</label>
+                <label  style="font-size: 20px; font-weight: 500;margin-top: 0.3%;">तीन गुल्ली स्टेशन रोड, दमोह</label>
+                <label style="font-size: 17px;">Mob: 8103242475</label>
+            </div>
+            <div class="logo" style="padding: 1%;">
+                <img src="/images/logo.jpg" alt="" srcset="" height="100%" width="100%">
+            </div>
+        </div>
+        <div class="doctors-info">
+            <div class="doc-info-left">
+                <label class="doc-name">Dr. Navin Soni</label>
+                <label style="font-weight: bold;margin-bottom: 2%;">हड्डी एवं जोड़ रोग विशेषज्ञ</label>
+                <label class="old-info">भूतपूर्व रजिस्ट्रार हिंदुजा हॉस्पिटल, मुंबई</label>
+                <label class="old-info">भूतपूर्व होलिस्प्रिट हॉस्पिटल मुंबई</label>
+                <label class="old-info">भूतपूर्व रजिस्ट्रार सिदार्थ म्युनिसिपल हॉस्पिटल मुंबई</label>
+                <label class="old-info">मेंबर ऑफ इंडियन आर्थोस्कोपी</label>
+                <label class="old-info">बॉम्बे ऑर्थोपेडिक सोसाइटी एवं ट्रामा सोसाइटी ऑफ इंडिया</label>
+            </div>
+            <div class="hospital-photo"></div>
+            <div class="doc-info-right">
+                <label class="doc-name">Dr. Alka Soni</label>
+                <label style="font-weight: bold;margin-bottom: 2%;">निश्चेतना विशेषज्ञ</label>
+
+                <label class="old-info">पेन क्लिनिक एवं जनरल फिजिशियन</label>
+                <label class="old-info">भूतपूर्व रजिस्ट्रार के. ई. एम. मेडीकल कॉलेज मुंबई</label>
+                <label class="old-info">भूतपूर्व रजिस्ट्रार मिशन मेडिकल कॉलेज, मिरज</label>
+                <label class="old-info">हॉस्पिटल : दमोह हॉस्पिटल के बाजू में</label>
+                
+            </div>
+        </div>
+        <div class="patient-info">
+            <label hidden for="" id="patientId"><%=patient._id%></label>
+            <div class="patient-data" style="width: 8%;">
+                <small for=""><b>ID</b></small>
+                <label for="" id=""><%=patient.PatientId%></label>
+            </div>
+            <div class="patient-data" style="width: 25%;">
+                <small for=""><b>Name</b></small>
+                <label for=""><%=patient.Name%></label>
+            </div>
+            <div class="patient-data" style="width: 13%;">
+                <small for=""><b>Gender</b></small>
+                <label for="">Female</label>
+            </div>
+            <div class="patient-data" style="width: 8%;">
+                <small for=""><b>Age</b></small>
+                <label for=""><%=patient.Age%></label>
+            </div>
+            <div class="patient-address" style="width: 28%;">
+                <small for=""><b>Address</b></small>
+                <label for=""><%=patient.Address%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Admission Date</b></small>
+                <%let months= ['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']%>
+                <label for=""><%=String(patient.AdmissionDate).slice(3,15)%></label>
+            </div>
+            <div class="patient-data">
+                <small for=""><b>Discharge Date</b></small>
+                <label for=""><%=String(patient.DischargeDate).slice(3,15)%></label>
+            </div>
+        </div>
+        <div class="data-body">
+            <div class="special-services">
+                <h6 style="text-align: center; border-bottom: 2px dotted black; font-weight: bold; padding-bottom: 2%; padding-top: 2%;">विशेष सुविधाएं</h6>
+                <ul class="special-services-list">
+                    <li>कमर एवं घुटने के दर्द का इलाज</li>
+                    <li>हैंड इंज्यूरी</li>
+                    <li>बच्चों की सभी प्रकार की टूटी हड्डियों का इलाज</li>
+                    <li>प्लास्टर सुविधा</li>
+                    <li>विकृत हड्डियों को सीधा करना</li>
+                    <li>स्पोर्ट्स इंज्यूरी</li>
+                    <li>कूल्हे के जोड़ बदलना</li>
+                    <li>पैरो में रॉड डालना</li>
+                    <li>पेन क्लिनिक</li>
+                    <li>डिजिटल एक्स रे</li>
+                    <li>ECG सुविधा</li>
+                    <li>फिजियोथेरेपी सुविधा</li>
+                    <li>हड्डियों के ऑपरेशन और भर्ती सुविधा</li>
+                    <li>टीवी स्क्रीन में देखकर हड्डियां बिठाने की सुविधा</li>
+                </ul>
+                <p>
+                    प्लास्टर के बाद यदि सूजन, शून्यपन, गीलापन अथवा टूटता है तो तुरंत डॉक्टर से संपर्क करें
+                </p>
+                <p>
+                    नोट: कृपया पुरानी पर्ची, जांच, एक्स रे साथ लाए
+                </p>
+                <p>
+                    समय : प्रतिदिन सुबह 11 से 7:30 बजे तक (रविवार अवकाश)
+                </p>
+            </div>
+            <div class="info-right">
+                <div class="op-info" style="height: 5%; display: flex;">
+                    <section class="op-info" style="width: 20%;text-align: left;">
+                        <div style="padding-top: 0.3%;padding-left: 3%;padding-bottom: 0.3%;">
+                            <label style="font-size: small;display: block;"><b>Operation Date : </b></label>
+                            <%let d=String(patient.OperationDate).split('-')%>
+                            <label style="font-size: small;" for=""><%=d[2]%>-<%=d[1]%>-<%=d[0]%></label>
+                        </div>
+                    </section>
+                    <section class="op-info" style="width: 60%; text-align: center;padding-top: 0%;margin-top: 0%;">
+                        <label style="font-size: 20px;font-weight: bold;">Patient Discharge Sheet</label>
+                    </section>
+                    <section class="op-info" style="width: 20%;">
+                        
+                    </section>
+                </div>
+                <div class="op-info" style="height: 35%; text-align: left;padding: 0.7%;">
+                    <label style="font-size: medium;display: block;font-weight: bold;margin-bottom: 0.3%;">Complaint & History :</label>
+                    <%=patient.Complaint%>
+                </div>
+                <div class="op-info" style="height: 35%; text-align: left;padding: 0.7%;">
+                    <label style="font-size: medium;display: block;font-weight: bold;margin-bottom: 0.3%;">Operation/Admission Description :</label>
+                    <%=patient.OperationDescription%>
+                </div>
+                <div class="op-info" style="height: 18%; text-align: left;padding: 0.7%;">
+                    <label style="font-size: medium;display: block;font-weight: bold;margin-bottom: 0.3%;">Remarks :</label>
+                    <%=patient.Remarks%>
+                </div>
+            </div>
+            
+        </div>
+        <div class="footer" style="padding-left: 1%;">
+            <label>
+                <p style="font-size: 12px;padding:0;margin: 0;">यह पर्चा वैधानिक कार्यवाही हेतु मान्य नहीं है</p>
+                <p style="font-size: 12px;padding:0;margin: 0;">Prognosis & Complications Explained</p>
+            </label>
+        </div>
+    </div>
+</body>
+</html>

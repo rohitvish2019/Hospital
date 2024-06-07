@@ -1,5 +1,6 @@
 let itemsCount = 0
 let prescriptions = []
+let total = 0
 async function addMedications(isComingFromServer, data){
     let medicine,when,frequency,duration,notes,dosage,price,qty,batch,exp, CurrentQty;
     let medInfo;
@@ -117,20 +118,24 @@ async function addMedications(isComingFromServer, data){
         <td>${batch}</td>
         <td>${exp}</td>
         <td>${notes}</td>
-        <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount})" alt=""></td>
+        <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick="deleteMed(${itemsCount},${price},${qty})" alt=""></td>
     `
     child.id='medRow_'+itemsCount
     console.log('Current quantity is '+CurrentQty+ ' and ordered is '+qty)
     if(CurrentQty < qty){
         child.style.backgroundColor='#f3cdcdde'
     }
+    total = total + (price * qty);
+    document.getElementById('total').innerText=total
     parent.appendChild(child);
     prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes+':'+price+':'+qty+':'+batch+':'+exp);
 }
  
-function deleteMed(id){
+function deleteMed(id, price, qty){
     document.getElementById('medRow_'+id).remove();
     prescriptions[id-1]=''
+    total = total - (price * qty)
+    document.getElementById('total').innerText=total
 }
 
 function savePrescriptions(){

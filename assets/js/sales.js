@@ -55,7 +55,7 @@ function getSalesHistoryRange(){
         success:function(data){
             document.getElementById('loader').style.display='none'
             if(data.sales.length < 1){
-                document.getElementById("medicines").innerHTML=
+                document.getElementById("historyBody").innerHTML=
                 `
                 <tr>
                     <td rowspan="3" colspan="9" style="text-align: center;">No Data found</td>
@@ -66,10 +66,12 @@ function getSalesHistoryRange(){
             }
             if(BillType == 'Medical Bill Ext'){
                 setHistoryOnUiExtMed(data.sales)
-            }else{
+            }else if(BillType == 'Medical Bill'){
+                setHistoryOnUiIntMed(data.sales,data.hostname, data.port, data.protocol)
+            }
+            else{
                 setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
             }
-            
         },
         error:function(err){
             document.getElementById('loader').style.display='none'
@@ -112,7 +114,10 @@ function getSalesHistoryDate(){
             }
             if(BillType == 'Medical Bill Ext'){
                 setHistoryOnUiExtMed(data.sales)
-            }else{
+            }else if(BillType == 'Medical Bill'){
+                setHistoryOnUiIntMed(data.sales,data.hostname, data.port, data.protocol)
+            }
+            else{
                 setHistoryOnUi(data.sales,data.hostname, data.port, data.protocol)
             }
             
@@ -143,6 +148,42 @@ function changeInputs(){
 }
 changeInputs()
 
+function setHistoryOnUiIntMed(history,host,port,protocol){
+    console.log(host, port)
+    let totalAmount = 0
+    let container = document.getElementById('historyBody');
+    container.innerHTML=``
+    for(let i=0;i<history.length;i++){
+        let rowItem = document.createElement('tr');
+        if(history[i] && history[i].PatientId){
+            rowItem.innerHTML=
+            `
+                <td>${i+1}</td>
+                <td>${history[i].PatientId.Name}</td>
+                <td>${history[i].BillType}</td>
+                <td>${history[i].BillAmount}</td>
+                <td>${history[i].SaleDate}</td>
+                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
+            `
+        }else{
+            rowItem.innerHTML=
+        `
+            <td>${i+1}</td>
+            <td>Not Available</td>
+            <td>${history[i].BillType}</td>
+            <td>${history[i].BillAmount}</td>
+            <td>${history[i].SaleDate}</td>
+            <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+            <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
+        `
+        }
+        totalAmount = totalAmount + Number(history[i].BillAmount)
+        container.appendChild(rowItem)
+    }
+    totalAmount = Math.floor(totalAmount)
+    document.getElementById('tvalue').innerText='Total Amount : '+totalAmount 
+}
 
 function setHistoryOnUi(history,host,port,protocol){
     console.log(host, port)
@@ -194,6 +235,7 @@ function setHistoryOnUiExtMed(history){
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
                 <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
             `
         }else{
             rowItem.innerHTML=
@@ -204,6 +246,7 @@ function setHistoryOnUiExtMed(history){
             <td>${history[i].BillAmount}</td>
             <td>${history[i].SaleDate}</td>
             <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+            <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
         `
         }
         totalAmount = totalAmount + Number(history[i].BillAmount)
@@ -211,4 +254,39 @@ function setHistoryOnUiExtMed(history){
     }
     totalAmount = Math.floor(totalAmount)
     document.getElementById('tvalue').innerText='Total Amount : '+totalAmount 
+}
+
+function openPopup(link){
+    console.log(link)
+    getmedsbylink(link)
+    document.getElementById('returnsPopup').style.display='block'
+}
+
+function closePopup(){
+    document.getElementById('returnsPopup').style.display='none'
+}
+
+function getmedsbylink(link){
+    $.ajax({
+        url:'/receipts/getMedsListLink',
+        data:{link},
+        type:'Get',
+        success:function(data){
+            let container = document.getElementById('returnsTable');
+            container.innerHTML=``
+            for(let i=0;i<data.items.length;i++){
+                let rowItem = document.createElement('tr');
+                let item = data.items[i].split(':')
+                rowItem.innerHTML=
+                `
+                    <td>${item[0]}</td>
+                    <td>${item[6]}</td>
+                    <td>${item[7]}</td>
+                    <td><input type='number'></td>
+                `
+                container.appendChild(rowItem)
+            }
+        },
+        error:function(err){console.log(err.responseText)}
+    })
 }

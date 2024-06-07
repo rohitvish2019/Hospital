@@ -6,6 +6,9 @@ const Tracker = new mongoose.Schema({
     ReceiptNo:{
         type:Number,
         default:1
+    },
+    AdmittedPatientId:{
+        type:Number
     }
 },
 {

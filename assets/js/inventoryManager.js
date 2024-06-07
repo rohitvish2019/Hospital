@@ -26,7 +26,8 @@ function setInventoryOnUi(data){
         rowItem.innerHTML=
         `
             <td>${data[i].Medicine}</td>
-            <td><input id='${data[i]._id}_qty' type="number" name="" id="" value="${data[i].CurrentQty}"></td>
+            <td><input id='${data[i]._id}_qty' type="number" name="" id="" disabled value="${data[i].CurrentQty}"></td>
+            <td><input id='${data[i]._id}_addqty' type='number'></td>
             <td>${data[i].AlertQty}</td>
             <td>${String(new Date(data[i].ExpiryDate)).substring(4,15).split(' ')[1]} ${String(new Date(data[i].ExpiryDate)).substring(4,15).split(' ')[0]} ${String(new Date(data[i].ExpiryDate)).substring(4,15).split(' ')[2]}</td>
             <td>${data[i].Batch}</td>
@@ -40,14 +41,19 @@ function setInventoryOnUi(data){
 
 function updateInventoryStock(id){
     let qty = document.getElementById(id+'_qty').value;
+    let addQty = document.getElementById(id+'_addqty').value;
     $.ajax({
         url:'/purchases/updateInventory',
         data:{
-            id,qty
+            id,
+            qty,
+            addQty
         },
         type:'Post',
         success:function(data){
             console.log(data)
+            document.getElementById(id+'_addqty').value=''
+            document.getElementById(id+'_qty').value = +qty + +addQty
             new Noty({
                 theme: 'relax',
                 text: 'Inventory Updated',

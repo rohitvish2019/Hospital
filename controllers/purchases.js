@@ -1,6 +1,7 @@
 const Purchases = require('../models/purchases')
 const Inventories = require('../models/inventory')
 const Returns = require('../models/returns')
+const PatientReturns = require('../models/patientReturns')
 module.exports.purchaseHome =async function(req, res){
     if(req.user.role == 'Admin'){
         let inventory = await Inventories.find({}).distinct('Medicine');
@@ -144,23 +145,44 @@ module.exports.getPurchaseHistory = async function (req, res){
     
 }
 module.exports.getReturnsHistory = async function (req, res){
+    console.log(req.query)
     if(req.user.role == 'Admin'){
-        try{
-            let returnsData = await Returns.find({
-                $and: [
-                    {createdAt:{$gte :new Date(req.query.startDate)}},
-                    {createdAt: {$lte : new Date(req.query.endDate)}}
-                ]
-            }).sort('createdAt');
-            return res.status(200).json({
-                returnsData
-            })
-        }catch(err){
-            console.log(err)
-            return res.status(500).json({
-                message:'Unable to fetch returns history'
-            })
+        if(req.query.returnType == 'vendor'){
+            try{
+                let returnsData = await Returns.find({
+                    $and: [
+                        {createdAt:{$gte :new Date(req.query.startDate)}},
+                        {createdAt: {$lte : new Date(req.query.endDate)}}
+                    ]
+                }).sort('createdAt');
+                return res.status(200).json({
+                    returnsData
+                })
+            }catch(err){
+                console.log(err)
+                return res.status(500).json({
+                    message:'Unable to fetch returns history'
+                })
+            }
+        }else{
+            try{
+                let returnsData = await PatientReturns.find({
+                    $and: [
+                        {createdAt:{$gte :new Date(req.query.startDate)}},
+                        {createdAt: {$lte : new Date(req.query.endDate)}}
+                    ]
+                }).sort('createdAt');
+                return res.status(200).json({
+                    returnsData
+                })
+            }catch(err){
+                console.log(err)
+                return res.status(500).json({
+                    message:'Unable to fetch returns history'
+                })
+            }
         }
+        
     }else{
         return res.render('Error_403')
     }
@@ -228,7 +250,17 @@ module.exports.getMedInfo = async function(req, res){
 module.exports.updateInventory = async function(req, res){
     if(req.user.role == 'Admin'){
         try{
-            await Inventories.findByIdAndUpdate(req.body.id, {CurrentQty:req.body.qty});
+            let newQty = Number(req.body.qty) + Number(req.body.addQty)
+            let inventory = await Inventories.findById(req.body.id);
+            await inventory.updateOne( {CurrentQty:newQty});
+            await PatientReturns.create({
+                Medicine:inventory.Medicine,
+                Price:inventory.Price,
+                Qty:req.body.addQty,
+                ExpiryDate:inventory.ExpiryDate,
+                Batch:inventory.Batch,
+                AddedBy:req.user.full_name
+            })
             return res.status(200).json({
                 message:'Updated inventories'
             })
