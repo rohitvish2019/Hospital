@@ -21,7 +21,7 @@ function getSavedData(){
 function setSavedDataOnUI(data){
     let OEs = data.OEs
     let Tests = data.Tests
-    let prescriptions = data.Prescriptions
+    let prescriptions = data.WrittenPrescriptions
     console.log("lengt is "+prescriptions.length)
     let Oescontainer = document.getElementById('OEs');
     Oescontainer.innerHTML = `<h6 style="border-bottom:1px dotted blue;margin-bottom:2%;padding-bottom:2%">O/Es</h6>`;
@@ -61,11 +61,10 @@ function setSavedDataOnUI(data){
     prescriptionsContainer.style.marginRight='2%'
     prescriptionsContainer.innerHTML=`<h4 style="text-align: center; border-bottom: 2px dotted black; font-weight: bold;">Prescriptions</h4>`
     for(let i=0;i<prescriptions.length;i++){
-        let item = prescriptions[i].split(':');
         let child = document.createElement('label');
         child.style.fontSize='small'
         child.style.marginBottom='2%'
-        child.innerHTML=`${i+1} .<b>  ${item[0]} </b> ${item[4]} ${item[2]} for next ${item[3]}`;
+        child.innerHTML=`${i+1} .<b>  ${prescriptions[i]} </b>`;
         prescriptionsContainer.appendChild(child)
     }
     

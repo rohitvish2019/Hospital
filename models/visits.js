@@ -17,6 +17,9 @@ const Visit = new mongoose.Schema({
     Prescriptions :{
         type:Array,
     },
+    WrittenPrescriptions:{
+        type:Array
+    },
     Tests:{
         type:Array,
     },

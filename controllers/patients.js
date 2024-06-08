@@ -69,6 +69,7 @@ module.exports.updatePatientData = function(req, res){
 
 module.exports.newVisit = async function(req, res){
       if(req.user.role == 'Admin'){
+            let inventory = await Inventories.find({}).distinct('Medicine');
             let patient, properties, date, modifiedDate
             try{
                   properties = propertiesReader('./properties/UIdata.properties');
@@ -103,7 +104,7 @@ module.exports.newVisit = async function(req, res){
                   console.log(err)
             }
             let OE = properties.get('OnExaminations').split(',');
-            return res.render('visitPad',{OE, patient, SavedData,role:req.user.role});
+            return res.render('visitPad',{OE, patient, SavedData,role:req.user.role,inventory});
       }else{
             return res.render('Error_403')
       }     
@@ -601,4 +602,25 @@ module.exports.dischargeSheet = async function(req, res){
             console.log(err)
             return res.render('Error_500')
       }
+}
+
+
+module.exports.savePrescriptionsDoctor = async function(req, res){
+      console.log(req.body)
+      try{
+            let savedData;
+            savedData = await Visits.findOne({
+                  PatientId:req.params.patientId,
+                  Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
+            }); 
+            await savedData.updateOne({WrittenPrescriptions:req.body.items})
+            return res.status(200).json({
+                  message:'Prescriptions Saved'
+            })
+      }catch(err){
+            return res.status(500).json({
+                  message:'Unable to add prescriptions'
+            })
+      }
+
 }

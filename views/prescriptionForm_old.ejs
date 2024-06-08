@@ -136,11 +136,11 @@
             </div>
             <div class="prescriptions" id="prescriptions" style="padding-left: 1%;">
                 <h4 style="text-align: center; border-bottom: 2px dotted black; font-weight: bold;">Prescriptions</h4>
-                <%let pres = visit.Prescriptions%>
+                <%let pres = visit.WrittenPrescriptions%>
                 <%for(let i=0;i<pres.length;i++){%>
-                    <%let item = pres[i].split(':')%>
+                    
                     <label style="font-size: small;margin-bottom: 2%;">
-                        <%=i+1%>. <b><%=item[0]%></b> <%=item[4]%> <%=item[2]%> for next <%=item[3]%>
+                        <%=i+1%>. <b><%=pres[i]%></b>
                     </label>
                 <%}%>
             </div>

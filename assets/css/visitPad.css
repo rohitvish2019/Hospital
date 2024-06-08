@@ -30,16 +30,21 @@ header{
 }
 
 .left-panel{
-    width:25%;
+    width:20%;
     border: 1px solid gray;
 }
 .mid-panel{
-    width: 35%;
+    width: 20%;
     border: 1px solid gray;
 }
 .right-panel{
-    width: 30%;
+    width: 20%;
     border: 1px solid gray;
+}
+.right-most-panel{
+    width: 35%;
+    border: 1px solid gray;
+    height: 100%;
 }
 .panel{
     margin-top: 2%;

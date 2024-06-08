@@ -257,3 +257,65 @@ async function saveAll(patientId){
     setTimeout(function(){window.location.href='/patients/getPrescriptionForm/'+patientId;}, 2000)
     
 }
+let prescriptions=[]
+let medIds = 15
+function addPrescriptions(){
+    let medname = document.getElementById('medname').value;
+    let container = document.getElementById('medsList');
+    let item = document.createElement('tr');
+    item.id=medIds+'_row'
+    item.style.marginTop='1%'
+    item.innerHTML=
+    `
+        <td style="width: 47%;"><label id=${medIds} style="width: 100%;" type="text" value=''>${medname}</label></td>
+        <td style="width: 47%;"><input id ='${medIds}_dosage'></td>
+        <td><img src='/images/delete.png' height='100%' width='100%' onclick='deletePres("${medIds}")'></td>
+    `
+    prescriptions.push(String(medIds))
+    medIds++
+    container.appendChild(item)
+}
+
+function deletePres(id){
+    document.getElementById(id+'_row').remove();
+    console.log("Id is "+id)
+    let index = prescriptions.indexOf(id,0);
+    console.log("Index is  "+index)
+    prescriptions.splice(index,1)
+}
+
+function savePres(){
+    let items=[]
+    for(let i=0;i<prescriptions.length;i++){
+        console.log("Id is "+prescriptions[i])
+        let item = document.getElementById(prescriptions[i]).innerText +" "+ document.getElementById(prescriptions[i]+'_dosage').value;
+        items.push(item)
+    }
+    let pid = document.getElementById('patientId').innerText;
+    console.log("Almost here")
+    $.ajax({
+        url:'/patients/save/Prescriptions/'+pid,
+        data:{items},
+        type:'Post',
+        success:function(data){
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        },
+        error:function(err){
+            new Noty({
+                theme: 'relax',
+                text: 'Unable to update prescriptions',
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
+    })
+    console.log("Saveing below items");
+    console.log(items)
+}

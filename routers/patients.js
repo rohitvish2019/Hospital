@@ -24,4 +24,5 @@ router.get('/admitted/active', passport.checkAuthentication, patientsController.
 router.post('/save/admissionData', passport.checkAuthentication, patientsController.saveOperationsData);
 router.post('/discharge', passport.checkAuthentication, patientsController.dischargePatient)
 router.get('/dischargeSheet/:id', passport.checkAuthentication, patientsController.dischargeSheet)
+router.post('/save/Prescriptions/:patientId', passport.checkAuthentication, patientsController.savePrescriptionsDoctor)
 module.exports = router;
