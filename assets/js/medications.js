@@ -53,7 +53,28 @@ async function addMedications(isComingFromServer, data){
     }
     let child = document.createElement('tr');
     let parent = document.getElementById('prescriptionTableBody');
-    
+    let pname = document.getElementById('name').value
+    let page = document.getElementById('age').value
+    if(!pname || pname == ''){
+        new Noty({
+            theme: 'relax',
+            text: ' Patient name is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return;
+    }
+    if(!page || [page] == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Patinet age is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return;
+    }
     if(!medicine || medicine == ''){
         new Noty({
             theme: 'relax',
@@ -64,40 +85,21 @@ async function addMedications(isComingFromServer, data){
         }).show();
         return;
     }
-    if(!dosage || dosage == ''){
-        new Noty({
-            theme: 'relax',
-            text: 'Medicine dosage is mandatory',
-            type: 'error',
-            layout: 'topRight',
-            timeout: 1500
-        }).show();
-        return;
-    }
-    if(!when || when == ''){
-        new Noty({
-            theme: 'relax',
-            text: 'Medicine time is mandatory',
-            type: 'error',
-            layout: 'topRight',
-            timeout: 1500
-        }).show();
-        return;
-    }
-    if(!frequency || frequency == ''){
-        new Noty({
-            theme: 'relax',
-            text: 'Frequency is mandatory',
-            type: 'error',
-            layout: 'topRight',
-            timeout: 1500
-        }).show();
-        return;
-    }
+    
     if(!duration || duration == ''){
         new Noty({
             theme: 'relax',
             text: 'Duration is mandatory',
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+        return;
+    }
+    if(!qty || qty == ''){
+        new Noty({
+            theme: 'relax',
+            text: 'Quantity is mandatory',
             type: 'error',
             layout: 'topRight',
             timeout: 1500
