@@ -62,7 +62,7 @@
                                 <td><%=thisItem[2]%></td>
                                 <td><%=thisItem[3]%></td>
                                 <td><%=thisItem[4]%></td>
-                                <td>₹ <%=thisItem[1]*thisItem[2]%></td>
+                                <td>₹ <%=Number(thisItem[1]*thisItem[2]).toFixed(2)%></td>
                                 <% subtotal = subtotal + (thisItem[1]*thisItem[2])%>
                             </tr>
                         <%}%>
@@ -73,7 +73,7 @@
                     <tfoot>
                         <tr class="subtotal">
                             <td colspan="5">Subtotal</td>
-                            <td>₹ <%=subtotal%></td>
+                            <td>₹ <%=Number(subtotal).toFixed(2)%></td>
                         </tr>
                     </tfoot>
                 </table>
