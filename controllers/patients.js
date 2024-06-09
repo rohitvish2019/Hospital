@@ -368,7 +368,8 @@ module.exports.medicationsPage = async function(req, res){
 module.exports.savePrescriptions = async function(req,res){
       try{
             let savedData
-            try{
+            try{  
+                  console.log("Creating new data")
                   savedData = await Visits.findOne({
                         PatientId:req.params.patientId,
                         Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate()
@@ -385,6 +386,7 @@ module.exports.savePrescriptions = async function(req,res){
             let preparedPres = []
             let totalAmount = 0
             try{
+                  console.log("deducting quantity now")
                   for(let i=0;i<receivedPres.length;i++){
                         if(receivedPres[i].length > 0){
                               preparedPres.push(receivedPres[i])
@@ -396,6 +398,7 @@ module.exports.savePrescriptions = async function(req,res){
                               for(let i=0;i<inventory.length;i++){
                                     totalAvailableQty = totalAvailableQty + Number(inventory[i].CurrentQty);
                               }
+                              console.log("checking avaiablity")
                               if(totalAvailableQty >= deductableQty){
                                     for(let i=0;i<inventory.length;i++){
                                           if(inventory[i].CurrentQty >= deductableQty){
@@ -414,10 +417,9 @@ module.exports.savePrescriptions = async function(req,res){
                                     })
                               }
                         }
-      
                   }
-
                   try{
+                        console.log('Creating sales')
                         await Sales.create({
                               PatientId:req.params.patientId,
                               BillAmount:totalAmount,
@@ -431,7 +433,14 @@ module.exports.savePrescriptions = async function(req,res){
             }catch(err){
                   console.log("Unable to update inventoreis")
             }
-            await savedData.updateOne({Prescriptions:preparedPres, medDiscount:req.body.discount});
+            try{
+                  console.log("Updating prescriptions in visit")
+                  await savedData.updateOne({Prescriptions:preparedPres, medDiscount:req.body.discount});
+            }catch(err){
+                  console.log(err)
+                  console.log('unable to update visitt')
+            }
+            
             return res.status(200).json({
                   message:'Prescriptions added',
                   visitId : savedData._id

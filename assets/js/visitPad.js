@@ -274,6 +274,7 @@ function addPrescriptions(){
     prescriptions.push(String(medIds))
     medIds++
     container.appendChild(item)
+    document.getElementById('medname').value=''
 }
 
 function deletePres(id){

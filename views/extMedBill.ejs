@@ -66,7 +66,6 @@
                  <th>Rate</th>
                  <th>Qty</th>
                  <th>Exp. Date</th>
-                 <th>Duration</th>
                  <th>Total</th>
               </tr>
            </thead>
@@ -74,17 +73,30 @@
               <%let amount = 0%>
               <%for(let i=0;i<receipt.Items.length;i++){%>
                  <%let drugs = receipt.Items[i].split(':')%>
-                 <tr>
-                    <td><%=i+1%></td>
-                    <td><%=drugs[0]%></td>
-                    <td><%=drugs[8]%></td>
-                    <td><%=drugs[6]%></td>
-                    <td><%=drugs[7]%></td>
-                    <td><%=drugs[9].split('-')[2]%>-<%=drugs[9].split('-')[1]%>-<%=drugs[9].split('-')[0]%></td>
-                    <td><%=drugs[3]%></td>
-                    <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
-                    <td><%=(Number(drugs[6])*Number(drugs[7])).toFixed(2)%></td>
-                 </tr>
+                 <% if(drugs[0] != null && drugs[0] != ''){%>
+                  <tr>
+                     <td><%=i+1%></td>
+                     <td><%=drugs[0]%></td>
+                     <td><%=drugs[8]%></td>
+                     <td><%=drugs[6]%></td>
+                     <td><%=drugs[7]%></td>
+                     
+                      <%if(drugs[9] != null && drugs[9] != undefined){%>
+                         <td>
+                            <%=drugs[9].split('-')[2]%>-<%=drugs[9].split('-')[1]%>-<%=drugs[9].split('-')[0]%>
+                         </td>
+                         
+                      <%}else{%>
+                         <td></td>
+                      <%}%>
+                      
+                     
+                     
+                     <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
+                     <td><%=(Number(drugs[6])*Number(drugs[7])).toFixed(2)%></td>
+                  </tr>
+                 <%}%>
+                 
               <%}%>
               <tr>
                  <td colspan="5">Total Payable amount</td>

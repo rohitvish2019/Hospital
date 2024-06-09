@@ -64,6 +64,7 @@ function setSavedDataOnUI(data){
         let child = document.createElement('label');
         child.style.fontSize='small'
         child.style.marginBottom='2%'
+        child.style.display='block'
         child.innerHTML=`${i+1} .<b>  ${prescriptions[i]} </b>`;
         prescriptionsContainer.appendChild(child)
     }
