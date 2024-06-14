@@ -225,7 +225,7 @@ function savePrescriptionsExternal(){
             document.getElementById('loader').style.display='none'
             document.getElementById('savePrescriptions').removeAttribute('disabled')
             window.open('/receipts/extMedBill/'+data.receipt)
-            //window.location.href='/appointments/show/today'
+            window.location.href='/receipts/newMedBill'
         },
         error:function(err){
             console.log(err.responseText);

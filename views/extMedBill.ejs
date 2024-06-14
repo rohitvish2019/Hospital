@@ -71,11 +71,12 @@
            </thead>
            <tbody>
               <%let amount = 0%>
+              <%let count = 1%>
               <%for(let i=0;i<receipt.Items.length;i++){%>
                  <%let drugs = receipt.Items[i].split(':')%>
                  <% if(drugs[0] != null && drugs[0] != ''){%>
                   <tr>
-                     <td><%=i+1%></td>
+                     <td><%=count%></td>
                      <td><%=drugs[0]%></td>
                      <td><%=drugs[8]%></td>
                      <td><%=drugs[6]%></td>
@@ -91,6 +92,7 @@
                       <%}%>
                      <% amount = amount + Number(drugs[6])*Number(drugs[7])%>
                      <td><%=(Number(drugs[6])*Number(drugs[7])).toFixed(2)%></td>
+                     <%count++%>
                   </tr>
                  <%}%>
                  
