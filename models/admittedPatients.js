@@ -18,19 +18,30 @@ const AdmittedPatients = new mongoose.Schema({
     Address: {
         type:String
     },
-    Fees:{
-        type:Number
+    BroughtBy:{
+        type:String
     },
     AdmissionDate:{
+        type:Date
+    },
+    OperationDate:{
         type:Date
     },
     DischargeDate:{
         type:Date
     },
-    OperationDescription:String,
-    OperationDate:String,
-    DaysAdmitted:Number,
-    Remarks:String,
+    OEs:{
+        type:Object
+    },
+    AllegedHistory:String,
+    PrimaryTreatment:String,
+    XrayFindings:String,
+    AdmissionNotes:String,
+    Complications:String,
+    TreatmentOnAdmission:String,
+    TreatmentOnDischarge:{
+        type:Array
+    },
     isDischarged:{
         type:Boolean,
         default:false

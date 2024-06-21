@@ -605,8 +605,9 @@ module.exports.dischargePatient = async function(req, res){
 
 module.exports.dischargeSheet = async function(req, res){
       try{
+            let inventory = await Inventories.find({}).distinct('Medicine');
             let patient = await AdmittedPatients.findById(req.params.id);
-            return res.render('dischargeSheet', {patient})
+            return res.render('dischargeSheet', {patient, inventory})
       }catch(err){
             console.log(err)
             return res.render('Error_500')
@@ -640,5 +641,53 @@ module.exports.savePrescriptionsDoctor = async function(req, res){
                   message:'Unable to add prescriptions'
             })
       }
+}
 
+module.exports.savePatientsDischargeData = async function(req, res){
+      console.log(req.body)
+      let record;
+      try{
+            record = await AdmittedPatients.findById(req.body.id);
+      }catch(err){
+            console.log(err);
+            return res.status(410).json({
+                  message:'Patient deleted or does not exists'
+            })
+      }
+      try{
+            
+            if(req.body.element == 'AdmissionDate'){
+                  await record.updateOne({AdmissionDate:req.body.AdmissionDate})
+            }else if(req.body.element == 'OperationDate'){
+                  await record.updateOne({OperationDate:req.body.OperationDate})
+            }else if(req.body.element == 'DischargeDate'){
+                  await record.updateOne({DischargeDate:req.body.DischargeDate})
+            }else if(req.body.element == 'AllegedHistory'){
+                  await record.updateOne({AllegedHistory:req.body.AllegedHistory})
+            }else if(req.body.element == 'PrimaryTreatment'){
+                  await record.updateOne({PrimaryTreatment:req.body.PrimaryTreatment})
+            }else if(req.body.element == 'XrayFindings'){
+                  await record.updateOne({XrayFindings:req.body.XrayFindings})
+            }else if(req.body.element == 'AdmissionNotes'){
+                  await record.updateOne({AdmissionNotes:req.body.AdmissionNotes})
+            }else if(req.body.element == 'Complications'){
+                  await record.updateOne({Complications:req.body.Complications})
+            }else if(req.body.element == 'others'){
+                  await record.updateOne({OEs:req.body.OEs, TreatmentOnDischarge:req.body.prescriptions})
+            }
+            else{
+                  return res.status(417).json({
+                        message:'Invalid data identifier'
+                  }) 
+            }
+            return res.status(200).json({
+                  message:'Patient data updated'
+            })
+      }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                  message:'Unable to save patient information'
+            })
+      }
+      
 }
