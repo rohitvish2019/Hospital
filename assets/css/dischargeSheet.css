@@ -38,6 +38,7 @@ body{
 
 .input-group-text{
     width: 40% !important;
+    font-size: small !important;
 }
 
 .data-body{
@@ -75,6 +76,7 @@ li{
     width: 77%;
     text-align: right;
     height: 100%;
+    font-size: small !important;
 }
 .doc-info-left label, .doc-info-right label{
     display: block;
@@ -107,6 +109,7 @@ li{
 
 textarea{
     margin-top: 2%;
+    font-size: small !important;
 }
 .logo{
     width: 12%;

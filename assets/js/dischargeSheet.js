@@ -146,7 +146,7 @@ function saveOtherData(){
     let OEs={
         "Swelling":document.getElementById("Swelling").value,
         "Tenderness":document.getElementById("Tenderness").value,
-        "BodyCrepts":document.getElementById("Body-Crepts").value,
+        "BodyCrepts":document.getElementById("BodyCrepts").value,
         "DNV":document.getElementById("DNV").value,
         "ROM":document.getElementById("ROM").value,
         "PO2":document.getElementById("PO2").value,
@@ -172,6 +172,10 @@ function saveOtherData(){
         error:function(err){console.log(err.responseText)}
     })
     disableEditing()
+    setTimeout(function(e){
+        window.location.reload()
+    }, 1000)
+    
 }
 
 function enableEditing(){
@@ -186,25 +190,25 @@ function enableEditing(){
     document.getElementById('DischargeDateLabel').style.display='none'
     document.getElementById('OperationDateLabel').style.display='none'
     
-    document.getElementById('AllegedHistory').style.height='100px'
+    document.getElementById('AllegedHistory').style.height='140px'
     document.getElementById('AllegedHistory').removeAttribute('readonly')
-    document.getElementById('PrimaryTreatment').style.height='100px'
+    document.getElementById('PrimaryTreatment').style.height='140px'
     document.getElementById('PrimaryTreatment').removeAttribute('readonly')
 
-    document.getElementById('XrayFindings').style.height='100px'
+    document.getElementById('XrayFindings').style.height='140px'
     document.getElementById('XrayFindings').removeAttribute('readonly')
 
-    document.getElementById('PrimaryTreatment').style.height='90px'
+    document.getElementById('PrimaryTreatment').style.height='120px'
     document.getElementById('PrimaryTreatment').removeAttribute('readonly')
 
-    document.getElementById('AdmissionNotes').style.height='90px'
+    document.getElementById('AdmissionNotes').style.height='120px'
     document.getElementById('AdmissionNotes').removeAttribute('readonly')
 
-    document.getElementById('Complications').style.height='90px'
+    document.getElementById('Complications').style.height='120px'
     document.getElementById('Complications').removeAttribute('readonly')
 
     document.getElementById('medInputs').style.display='flex'
-    
+    document.getElementById('medsList').innerHTML=``
 }
 
 function disableEditing(){
@@ -219,19 +223,19 @@ function disableEditing(){
     document.getElementById('DischargeDateLabel').style.display='inline'
     document.getElementById('OperationDateLabel').style.display='inline'
 
-    document.getElementById('AllegedHistory').style.height='160px'
+    document.getElementById('AllegedHistory').style.height='190px'
     document.getElementById('AllegedHistory').setAttribute('readonly','readonly')
 
-    document.getElementById('PrimaryTreatment').style.height='160px'
+    document.getElementById('PrimaryTreatment').style.height='190px'
     document.getElementById('PrimaryTreatment').setAttribute('readonly','readonly')
 
-    document.getElementById('XrayFindings').style.height='160px'
+    document.getElementById('XrayFindings').style.height='190px'
     document.getElementById('XrayFindings').setAttribute('readonly','readonly')
 
-    document.getElementById('AdmissionNotes').style.height='160px'
+    document.getElementById('AdmissionNotes').style.height='190px'
     document.getElementById('AdmissionNotes').setAttribute('readonly','readonly')
 
-    document.getElementById('Complications').style.height='160px'
+    document.getElementById('Complications').style.height='190px'
     document.getElementById('Complications').setAttribute('readonly','readonly')
 
     document.getElementById('medInputs').style.display='none'

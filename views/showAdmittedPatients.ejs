@@ -40,17 +40,16 @@
             <th class="bg" scope="col">Age</th>
             <th class="bg" scope="col">Gender</th>
             <th class="bg" scope="col">Address</th>
-            <th class="bg">Operation Date</th>
-            <th class="bg">Complaint & History</th>
-            <th class="bg">Operation Description</th>
-            <th class="bg">Remarks</th>
+            <th class="bg">Mobile</th>
+            <th class="bg">Brought By</th>
+            <th class="bg">Admission date</th>
             <th class="bg">Action</th>
           </tr>
         </thead>
         <tbody>
             <%for(let i=0;i<patients.length;i++){%>
                 <tr id="<%=patients[i]._id%>">
-                  <%if(patients[i].isDischarged == true){%>
+                  <%if(false){%>
                     <th style="width: 2%;background-color: #1bdf7359;" scope="row"><%=i+1%></th>
                     <td style="width: 9%;background-color: #1bdf7359;"><%=patients[i].Name%></td>
                     <td style="width: 2%;background-color: #1bdf7359;"><%=patients[i].Age%></td>
@@ -70,13 +69,12 @@
                       <td style="width: 2%;"><%=patients[i].Age%></td>
                       <td style="width: 3%;"><%=patients[i].Gender%></td>
                       <td style="width: 10%;"><%=patients[i].Address%></td>
-                      <td style="width: 10%;"><input type="date" name="" id="opdate_<%=patients[i]._id%>" value="<%=patients[i].OperationDate%>"></td>
-                      <td style="padding: 0.2% !important;margin: 0;width: 20%;"><textarea style="border: none;" name="" id="cnh_<%=patients[i]._id%>" rows="8" cols="30"><%=patients[i].Complaint%></textarea></td>
-                      <td style="padding: 0.2% !important;margin: 0;width: 20%;"><textarea style="border: none;" name="" id="opdesc_<%=patients[i]._id%>" rows="8" cols="30"><%=patients[i].OperationDescription%></textarea></td>
-                      <td style="padding: 0.2% !important;margin: 0;width:15% ;"><textarea style="border: none;" name="" id="remarks_<%=patients[i]._id%>" rows="8" cols="18"><%=patients[i].Remarks%></textarea></td>
+                      <td style="width: 10%;"><%=patients[i].Mobile%></td>
+                      <td style="width: 10%;"><%=patients[i].BroughtBy%></td>
+                      <td style="width: 10%;"><%=String(patients[i].AdmissionDate).substr(4,11)%></td>
+                      
                       <td style="width: 9%;" id="<%=patients[i]._id%>">
-                        <button class="btn btn-success" style="margin-top: 3%;" onclick="Save('<%=patients[i]._id%>')">Save</button>
-                        <button class="btn btn-primary" style="margin-top: 3%;margin-bottom: 31%;" onclick="Discharge('<%=patients[i]._id%>')">Discharge</button>
+                        <button class="btn btn-primary" style="margin-top: 3%;margin-bottom: 31%;display: none;" onclick="Discharge('<%=patients[i]._id%>')">Discharge</button>
                         <a href="/patients/dischargeSheet/<%=patients[i]._id%>" style="margin-top: 5% !important;font-size: small;font-weight: bold;">Discharge Sheet</a>
                       </td>
                     <%}%>

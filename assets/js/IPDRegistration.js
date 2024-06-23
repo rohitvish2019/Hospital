@@ -1,4 +1,4 @@
-let inputData = ['Name','Gender','Age','Address','AdmissionDate','DoctorName'];
+let inputData = ['Name','Gender','Age','Address','AdmissionDate','DoctorName','BroughtBy','Mobile'];
 function admitPatient(){
     console.log("Registering patient 123");
     let data = {}

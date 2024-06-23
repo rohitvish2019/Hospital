@@ -52,7 +52,7 @@
         <div class="patient-info">
             <label hidden for="" id="patientId"><%=patient._id%></label>
             <div class="patient-data" style="width: 8%;">
-                <small for=""><b>ID</b></small>
+                <small for=""><b>IPD No</b></small>
                 <label for="" id=""><%=patient.PatientId%></label>
             </div>
             <div class="patient-data" style="width: 25%;">
@@ -67,13 +67,17 @@
                 <small for=""><b>Age</b></small>
                 <label for=""><%=patient.Age%></label>
             </div>
+            <div class="patient-data" style="width: 8%;">
+                <small for=""><b>Mobile</b></small>
+                <label for=""><%=patient.Mobile%></label>
+            </div>
             <div class="patient-address" style="width: 28%;">
                 <small for=""><b>Address</b></small>
                 <label for=""><%=patient.Address%></label>
             </div>
             
         </div>
-        <div class="data-body">
+        <div class="data-body" style="border-bottom: 1px solid black;">
             <div class="special-services">
                 <h6 style="text-align: center; border-bottom: 2px dotted black; font-weight: bold; padding-bottom: 2%; padding-top: 2%;">विशेष सुविधाएं</h6>
                 <ul class="special-services-list">
@@ -131,39 +135,71 @@
                         <label for="" id="DischargeDateLabel"><%=String(patient.DischargeDate).substr(4,11)%></label>
                     </div>
                 </div>
-                <div style="height: 50%; width: 100%;display: flex;border-top:1px dotted black ;">
-                    <div style="width: 50%;border-right: 1px solid black;">
+                <div style="height: 50%; width: 100%;display: flex;">
+                    <div style="width: 50%;border-right: 1px solid black;font-size: small !important;">
                         <div class="input-group  ">
-                            <span class="input-group-text" id="basic-addon1">Swelling</span>
-                            <input type="text" id="Swelling" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Swelling%>">
+                            <span class="input-group-text" id="basic-addon1" style="font-size: small !important;">Swelling</span>
+                            <%if(patient.OEs){%>
+                                <input type="text" id="Swelling" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Swelling%>">
+                            <%}else{%>
+                                <input type="text" id="Swelling" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">Tenderness</span>
-                            <input type="text" id="Tenderness" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Tenderness%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="Tenderness" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Tenderness%>">
+                            <%}else{%>
+                                <input type="text" id="Tenderness" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">Body-Crepts</span>
-                            <input type="text" id="Body-Crepts" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.BodyCrepts%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="BodyCrepts" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.BodyCrepts%>">
+                            <%}else{%>
+                                <input type="text" id="BodyCrepts" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">DNV</span>
-                            <input type="text" id="DNV" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.DNV%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="DNV" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.DNV%>">
+                            <%}else{%>
+                                <input type="text" id="DNV" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">ROM</span>
-                            <input type="text" id="ROM" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.ROM%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="ROM" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.ROM%>">
+                            <%}else{%>
+                                <input type="text" id="ROM" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">PO2%</span>
-                            <input type="text" id="PO2" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.PO2%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="PO2" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.PO2%>">
+                            <%}else{%>
+                                <input type="text" id="PO2" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">BP</span>
-                            <input type="text" id="BP" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.BP%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="BP" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.BP%>">
+                            <%}else{%>
+                                <input type="text" id="BP" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         <div class="input-group  ">
                             <span class="input-group-text" id="basic-addon1">Others</span>
-                            <input type="text" id="Others" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Others%>">
+                            <%if(patient.OEs){%>
+                                <input type="text" id="Others" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="<%=patient.OEs.Others%>">
+                            <%}else{%>
+                                <input type="text" id="Others" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="">
+                            <%}%>
                         </div>
                         
                     </div>
@@ -199,7 +235,7 @@
 
         </div>
         <div class="data-body-2">
-            <div class="form-floating">
+            <div class="form-floating" style="border-top: 1px solid black;">
                 <textarea readonly class="form-control" placeholder="Leave a comment here" onchange="savePrimaryTreatment()" id="PrimaryTreatment" style="height: 160px;"><%=patient.PrimaryTreatment%></textarea>
                 <label for="floatingTextarea2">Primary Treatment</label>
             </div>
@@ -213,17 +249,18 @@
                 <label for="floatingTextarea2">Complications explained on/before Surgery</label>
             </div>
             <div style="height: 40%;width: 100%;display: flex">
-                <div style="width: 50%;border: 1px dotted black;border-collapse: collapse;">
-                    <h4 style="margin-bottom: 4%;margin-left: 2%;">Treatment given on admission</h4>
+                <div style="width: 50%;border: 1px dotted black;border-left: none;">
+                    <h5 style="margin-bottom: 4%;margin-left: 2%;">Treatment given on admission</h5>
                     <ul>
                         <li>Antibiotic</li>
                         <li>Fluids</li>
                         <li>MV   /   BC  / Ca / Fe</li>
                         <li>Pain Killer</li>
+                        <li style="border-bottom: none;">Others</li>
                     </ul>
                 </div>
-                <div style="width: 50%;border: 1px dotted black;border-collapse: collapse;">
-                    <h4 style="margin-bottom: 2%;margin-left: 2%;">Treatment given on discharge</h4>
+                <div style="width: 50%;border: 1px dotted black;border-right: none;">
+                    <h5 style="margin-bottom: 2%;margin-left: 2%;">Treatment given on discharge</h5>
                     <div id="medInputs" class="input-group mb-3" style="height: 7%;display: none;">
                         <input style="margin-left: 2%;" type="text" class="form-control" placeholder="Search Medicine" aria-label="Recipient's " aria-describedby="basic-addon2" list="meds" id="medname">
                         <div class="input-group-append">
@@ -237,17 +274,23 @@
                     </div>
                     
                     <div style="height: 90% !important;overflow: auto;padding-left: .6%;padding-right: .6%;">
-                        <table style="width: 100%;">
-                            <tbody id="medsList">
+                        <table style="width: 97%;margin-left: 2%;">
+                            <tbody id="medsList" style="font-size: small;">
+                                <%for(let i=0;i<patient.TreatmentOnDischarge.length;i++){%>
+                                    <tr>
+                                        <td><%=patient.TreatmentOnDischarge[i]%></td>
+                                    </tr>
+                                <%}%>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div>
-                <h3>Point 1</h3>
-                <h3>Point 2</h3>
-                <h3>Point 3</h3>
+            <div style="margin-left: 2%;margin-top: 1%;">
+                <h6 style="font-size: 14px !important;">1. किसी भी दवाई से Reaction हो सकता है, ऐसी स्थिति में दवाई का प्रयोग बंद करके डॉक्टर को दिखाएं</h6>
+                <h6 style="font-size: 14px !important;">2. प्लास्टर कराने के बाद समय समय पर निर्देशानुसार दिखाएं</h6>
+                <h6 style="font-size: 14px !important;">3. प्लास्टर या ऑपरेशन के बाद भी हड्डी जुड़ने में समस्या हो सकती है या Non Union अथवा इंफेक्शन हो सकता है, क्योंकि हड्डी का जुड़ना natural process है,  डॉक्टर के वश में नहीं है</h6>
+                
             </div>
         </div>
         <div class="footer" style="padding-left: 1%;">
