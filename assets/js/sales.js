@@ -193,6 +193,7 @@ function setHistoryOnUi(history,host,port,protocol){
     for(let i=0;i<history.length;i++){
         let rowItem = document.createElement('tr');
         if(history[i] && history[i].PatientId){
+            rowItem.id=history[i]._id;
             rowItem.innerHTML=
             `
                 <td>${i+1}</td>
@@ -201,6 +202,7 @@ function setHistoryOnUi(history,host,port,protocol){
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
                 <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><button class='btn btn-danger' onclick='openCancellationPopup("${history[i].PatientId.Name},${history[i].BillAmount},${history[i].BillType},${history[i]._id}")'>Cancel</button></td>
             `
         }else{
             rowItem.innerHTML=
@@ -288,5 +290,54 @@ function getmedsbylink(link){
             }
         },
         error:function(err){console.log(err.responseText)}
+    })
+}
+
+
+function openCancellationPopup(data){
+    let info = data.split(',')
+    document.getElementById('cancellationPopup').style.display='block'
+    document.getElementById('cancelInfo').innerText='Cancelling '+info[2]+' of '+info[0]+' worth '+info[1];
+    document.getElementById('cancellationID').value=info[3]
+}
+
+function closeCancellationPopup(){
+    document.getElementById('cancellationPopup').style.display='none'
+    document.getElementById('cancellationID').value=''
+}
+
+function cancelSales(){
+    let id = document.getElementById('cancellationID').value
+    let reason = document.getElementById('cancellationReason').value
+    $.ajax({
+        url:'/sales/cancelSales',
+        type:'POST',
+        data:{
+            id,
+            reason
+        },
+        success:function(data){
+            document.getElementById('cancellationPopup').style.display='none'
+            document.getElementById('cancellationID').value=''
+            document.getElementById(id).style.display='none'
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            
+        },
+        error:function(err){
+            new Noty({
+                theme: 'relax',
+                text: 'Unable to cancel',
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+            
+        }
     })
 }

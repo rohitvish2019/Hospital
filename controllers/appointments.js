@@ -64,7 +64,7 @@ module.exports.showTodaysAppointments = async function(req, res){
         if(dateSelected == null || dateSelected == ''){
             dateSelected = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate();
         }
-        let appointments = await Appointments.find({Date:dateSelected}).populate('PatientId').sort({createdAt: 1});
+        let appointments = await Appointments.find({Date:dateSelected,isCancelled:false}).populate('PatientId').sort({createdAt: 1});
         return res.render('showAppointments',{appointments, role:req.user.role});
     }catch(err){
         console.log(err)

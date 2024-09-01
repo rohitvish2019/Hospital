@@ -168,7 +168,6 @@ module.exports.addMedBill = async function(req, res){
         })
         await pd.updateOne({ReceiptNo:ReceiptNo})
         let itemsList = req.body.prescriptions
-        console.log(req.body)
         let patient = 'NA'
         try{
             patient = await patients.findOne({PatientId:req.body.patient.id});
@@ -184,30 +183,13 @@ module.exports.addMedBill = async function(req, res){
                     splittedArray = itemsList[i].split(':');
                     totalAmount = totalAmount + (Number(splittedArray[6]) * Number(splittedArray[7]));
                     let deductableQty = Number(splittedArray[7]);
-                    let inventory = await Inventories.find({Medicine:splittedArray[0]}).sort('ExpiryDate');
-                    let totalAvailableQty = 0
-                    for(let i=0;i<inventory.length;i++){
-                        totalAvailableQty = totalAvailableQty + Number(inventory[i].CurrentQty);
-                    }
-                    if(totalAvailableQty >= deductableQty){
-                        for(let i=0;i<inventory.length;i++){
-                            if(inventory[i].CurrentQty >= deductableQty){
-                                    let newQty = inventory[i].CurrentQty - deductableQty
-                                    await inventory[i].updateOne({CurrentQty:newQty})
-                                    break
-                            }else{
-                                    deductableQty = deductableQty - inventory[i].CurrentQty
-                                    await inventory[i].updateOne({CurrentQty:0});
-                            }
-                        }
-                    }else{
-                        return res.status(200).json({
-                            message:'Quantity over',
-                        })
-                    }
+                    let inventory = await Inventories.findOne({Medicine:splittedArray[0], Batch:splittedArray[8]}).sort('ExpiryDate');
+                    let totalAvailableQty = inventory.CurrentQty;
+                    await inventory.updateOne({CurrentQty:totalAvailableQty-deductableQty})
                 }
             }
             try{
+                console.log("Creating sales")
                 await Sales.create({
                     BillAmount:totalAmount,
                     BillType:'Medical Bill Ext',
@@ -220,6 +202,7 @@ module.exports.addMedBill = async function(req, res){
                 console.log("Unable to add in sales")
             }
         }catch(err){
+            console.log(err);
             console.log("Unable to update inventoreis")
         }
         return res.status(200).json({
@@ -270,6 +253,4 @@ module.exports.getMedsByLink = async function(req, res){
             message:'Unable to fetch items'
         })
     }
-
-
 }

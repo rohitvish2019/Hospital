@@ -2,7 +2,11 @@ let itemsCount = 0
 let prescriptions = []
 let total = 0
 async function addMedications(isComingFromServer, data){
-    let medicine,when,frequency,duration,notes,dosage,price,qty,batch,exp, CurrentQty;
+    let medicine,when,frequency,duration,notes,dosage,qty, CurrentQty;
+    let price = new Array()
+    let batch = new Array()
+    let exp = new Array();
+    let quantity = new Array();
     let medInfo;
     if(isComingFromServer == true){
         let thisPrescription = data.split(':');
@@ -12,10 +16,11 @@ async function addMedications(isComingFromServer, data){
         duration = thisPrescription[3]
         dosage = thisPrescription[4]
         notes = thisPrescription[5]
-        price = thisPrescription[6]
         qty = thisPrescription[7]
-        batch = thisPrescription[8]
-        exp = thisPrescription[9]
+        price.push(thisPrescription[6])
+        batch.push(thisPrescription[8])
+        exp.push(thisPrescription[9])
+
     }else{
         medicine = document.getElementById('Medicine').value
         when = document.getElementById('When').value
@@ -23,8 +28,8 @@ async function addMedications(isComingFromServer, data){
         duration = document.getElementById('Duration').value
         notes = document.getElementById('Notes').value
         dosage = document.getElementById('Dosage').value
-        //price = document.getElementById('Price').value
         qty = document.getElementById('Qty').value
+        //price = document.getElementById('Price').value
         //batch = document.getElementById('Batch').value
         //exp = document.getElementById('Exp').value
         console.log('Getting q info')
@@ -35,14 +40,34 @@ async function addMedications(isComingFromServer, data){
             },
             type:'GET',
             success:function(data){
+                if(data.totalQty < qty){
+                    new Noty({
+                        theme: 'relax',
+                        text: 'Stock unavailable',
+                        type: 'error',
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
+                    return;
+                }
                 if(!data.medInfo || data.medInfo == null){
                     price = 'NA',
                     batch = 'NA'
                     exp = 'NA'
                 }else{
-                    price = data.medInfo.Price,
-                    batch = data.medInfo.Batch
-                    exp = data.medInfo.ExpiryDate.split('T')[0]
+                    for(let i=0;i<data.medInfo.length;i++){
+                        price.push(data.medInfo[i].Price);
+                        batch.push(data.medInfo[i].Batch);
+                        exp.push(data.medInfo[i].ExpiryDate.split('T')[0]);
+                        if(qty > data.medInfo[i].CurrentQty && qty > 0){
+                            quantity.push(data.medInfo[i].CurrentQty)
+                            qty = qty - data.medInfo[i].CurrentQty
+                        }else{
+                            quantity.push(qty)
+                            break;
+                        }
+                        
+                    }
                 }
                 
                 CurrentQty = Number(data.totalQty);
@@ -51,13 +76,11 @@ async function addMedications(isComingFromServer, data){
         })
 
     }
+    let pname = document.getElementById('name').value
+    let page = document.getElementById('age').value
     if(!duration || duration == '' ){
         duration = 'NA'
     }
-    let child = document.createElement('tr');
-    let parent = document.getElementById('prescriptionTableBody');
-    let pname = document.getElementById('name').value
-    let page = document.getElementById('age').value
     if(!pname || pname == ''){
         new Noty({
             theme: 'relax',
@@ -99,35 +122,44 @@ async function addMedications(isComingFromServer, data){
         }).show();
         return;
     }
-    
-    child.innerHTML=
-    `
-        <td>${++itemsCount}</td>
-        <td>${medicine}</td>
-        <td>${dosage}</td>
-        <td>${when}</td>
-        <td>${frequency}</td>
-        <td>${duration}</td>
-        <td>${price}</td>
-        <td>${qty}</td>
-        <td>${batch}</td>
-        <td>${exp}</td>
-        <td>${notes}</td>
-        <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick='deleteMed(${itemsCount},"${price}",${qty})' alt=""></td>
-    `
-    child.id='medRow_'+itemsCount
-    console.log('Current quantity is '+CurrentQty+ ' and ordered is '+qty)
-    if(CurrentQty < qty){
-        child.style.backgroundColor='#f3cdcdde'
+    for(let i=0;i<price.length;i++){
+        let child = document.createElement('tr');
+        let parent = document.getElementById('prescriptionTableBody');
+        
+        child.innerHTML=
+        `
+            <td>${++itemsCount}</td>
+            <td>${medicine}</td>
+            <td>${dosage}</td>
+            <td>${when}</td>
+            <td>${frequency}</td>
+            <td>${duration}</td>
+            <td>${price[i]}</td>
+            <td>${quantity[i]}</td>
+            <td>${batch[i]}</td>
+            <td>${exp[i]}</td>
+            <td>${notes}</td>
+            <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick='deleteMed(${itemsCount},"${price[i]}",${quantity[i]})' alt=""></td>
+        `
+        child.id='medRow_'+itemsCount
+        console.log('Current quantity is '+CurrentQty+ ' and ordered is '+qty)
+        if(CurrentQty < qty){
+            child.style.backgroundColor='#f3cdcdde'
+        }
+        if(price[i] && price[i] != '' && price[i] != 'NA'){
+            total = total + (price[i] * quantity[i]);
+            
+        }
+        
+        document.getElementById('total').innerText=total
+        parent.appendChild(child);
+        prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes+':'+price[i]+':'+quantity[i]+':'+batch[i]+':'+exp[i]);
+        document.getElementById('Medicine').value=''
     }
-    if(price && price != '' && price != 'NA'){
-        total = total + (price * qty);
-    }
     
-    document.getElementById('total').innerText=total
-    parent.appendChild(child);
-    prescriptions.push(medicine+':'+when+':'+frequency+':'+duration+':'+dosage+':'+notes+':'+price+':'+qty+':'+batch+':'+exp);
-    document.getElementById('Medicine').value=''
+    
+    
+    
     //document.getElementById('Qty').value=''
 }
  

@@ -7,5 +7,6 @@ router.use('/purchases', require('./purchases'));
 router.use('/receipts', require('./receipt'))
 router.use('/user', require('./user'))
 router.use('/sales', require('./sales'))
+router.use('/ai', require('./genai'))
 router.get('/',require('../controllers/user').createSession)
 module.exports = router;

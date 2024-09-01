@@ -17,6 +17,10 @@ const Appointment = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    isCancelled:{
+        type:Boolean,
+        default:false
+    },
     DRName:String,
     Fees:Number
 },

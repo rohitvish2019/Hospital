@@ -70,14 +70,13 @@ module.exports.getMedInfoPrescriptions = async function(req, res){
         }
         try{
             totalQty = 0;
-            returnableInfo;
+            returnableInfo = new Array();
             isReturnValueSet = false;
             for(let i=0;i<medInfo.length;i++){
-                if(medInfo[i].CurrentQty > 0 && isReturnValueSet == false){
-                    returnableInfo = medInfo[i];
-                    isReturnValueSet = true
+                if(medInfo[i].CurrentQty > 0){
+                    returnableInfo.push(medInfo[i])
+                    totalQty = totalQty + Number(medInfo[i].CurrentQty);
                 }
-                totalQty = totalQty + Number(medInfo[i].CurrentQty);
             }
         }catch(err){
             console.log(err)

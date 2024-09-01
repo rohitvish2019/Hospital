@@ -4,5 +4,6 @@ const salesController = require('../controllers/sales');
 const passport = require('passport')
 router.get('/History/home', passport.checkAuthentication, salesController.salesHistoryHome);
 router.get('/getHistoryByDate', passport.checkAuthentication, salesController.getSalesHistoryDate);
-router.get('/getHistoryByRange', passport.checkAuthentication, salesController.getSalesHistoryRange)
+router.get('/getHistoryByRange', passport.checkAuthentication, salesController.getSalesHistoryRange);
+router.post('/cancelSales', passport.checkAuthentication, salesController.cancelSalesB);
 module.exports = router

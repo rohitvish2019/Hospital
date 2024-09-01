@@ -63,7 +63,7 @@
                         <th>Amount</th>
                         <th>Entry Date</th>
                         <th>Open Bill</th>
-                        <th>Return</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <%-include('_loader')%>
@@ -105,6 +105,22 @@
             <div class="popup-foot" style="height: 8%;display: flex;justify-content: center;">
                 <button class="btn btn-danger" style="margin-left: 5%; margin-right: 5%;width: 15%;" onclick="closePopup()">Cancel</button>
                 <button class="btn btn-success" style="margin-left: 5%; margin-right: 5%; width: 15%;">Save</button>
+            </div>
+        </div>
+        <div id="cancellationPopup" style="padding-left: 1%;padding-right: 1%;">
+            <div style="height: 15%;width: 100%;display: flex;justify-content: flex-end;">
+                <button class="btn" style="background-color: transparent;" onclick="closeCancellationPopup()">
+                    <img src="/images/cross.svg" height="100%" width="100%" alt="">
+                </button>
+            </div>
+            <div>
+                <label for="" style="margin-top: .5%;" id="cancelInfo">Cancelling amount 300 for Karuna</label>
+                <label for="" style="margin-top: 2%;">Please enter cancellation reason below</label>
+                <input hidden type="text" id="cancellationID">
+                <textarea style="margin-top: 5%;" rows="2" cols="43" name="" id="cancellationReason"></textarea>
+            </div>
+            <div>
+                <button class="btn btn-danger" style="width: 95%;margin-top: 2%;" onclick="cancelSales()">Cancel Now</button>
             </div>
         </div>
         <div class="pagination-box">
