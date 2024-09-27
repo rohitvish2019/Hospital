@@ -277,16 +277,19 @@ function getmedsbylink(link){
             let container = document.getElementById('returnsTable');
             container.innerHTML=``
             for(let i=0;i<data.items.length;i++){
-                let rowItem = document.createElement('tr');
-                let item = data.items[i].split(':')
-                rowItem.innerHTML=
-                `
-                    <td>${item[0]}</td>
-                    <td>${item[6]}</td>
-                    <td>${item[7]}</td>
-                    <td><input type='number'></td>
-                `
-                container.appendChild(rowItem)
+                if(data.items[i].length > 0){
+                    let rowItem = document.createElement('tr');
+                    let item = data.items[i].split(':')
+                    rowItem.innerHTML=
+                    `
+                        <td>${item[0]}</td>
+                        <td>${item[6]}</td>
+                        <td>${item[7]}</td>
+                        <td><input type='number'></td>
+                    `
+                    container.appendChild(rowItem)
+                }
+                
             }
         },
         error:function(err){console.log(err.responseText)}

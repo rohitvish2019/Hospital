@@ -5,7 +5,7 @@ const Visits = require('../models/visits');
 const Tracker = require('../models/tracker');
 const Inventories = require('../models/inventory');
 const Sales = require('../models/sales');
-const AdmittedPatients = require('../models/admittedPatients')
+const AdmittedPatients = require('../models/admittedPatients');
 module.exports.addNewPatient = async function(req, res){
       let bookedAppointment = null;
       try{
@@ -27,7 +27,9 @@ module.exports.addNewPatient = async function(req, res){
                               PatientId:patient._id,
                               Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                               isVisited:false,
-                              Fees: req.body.Fees
+                              Fees: req.body.Fees,
+                              ReceiptNo:(+pd.ReceiptNo)+1,
+                              NumericPatientId:+pd.PatientId+1
                         })
                         await Sales.create({
                               BillAmount:req.body.Fees,
@@ -36,6 +38,7 @@ module.exports.addNewPatient = async function(req, res){
                               PatientId:patient._id,
                               SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
                         })
+                        await pd.updateOne({ReceiptNo:+pd.ReceiptNo+1, NumericPatientId:+pd.PatientId+1})
                   }
                   
             }catch(err){
@@ -290,8 +293,8 @@ module.exports.addComplaint = async function(req, res){
 }
 module.exports.getPatientById = async function(req, res){
       try{
-            let patient = await Patients.findOne({PatientId:req.params.PatientId});
-            if(patient){
+            let patient = await Appointments.find({NumericPatientId:req.params.PatientId}).sort({"createdAt": -1}).limit(1).populate('PatientId');
+            if(patient.length > 0){
                   return res.status(200).json({
                         patient
                   })
@@ -302,6 +305,7 @@ module.exports.getPatientById = async function(req, res){
             }
             
       }catch(err){
+            console.log(err);
             return res.status(500).json({
                   message:'Error 500 : Unable to find patient'
             })

@@ -6,4 +6,5 @@ router.get('/History/home', passport.checkAuthentication, salesController.salesH
 router.get('/getHistoryByDate', passport.checkAuthentication, salesController.getSalesHistoryDate);
 router.get('/getHistoryByRange', passport.checkAuthentication, salesController.getSalesHistoryRange);
 router.post('/cancelSales', passport.checkAuthentication, salesController.cancelSalesB);
+router.delete('/clearEmptyInventories', passport.checkAuthentication, salesController.deleteEmptyInventories);
 module.exports = router

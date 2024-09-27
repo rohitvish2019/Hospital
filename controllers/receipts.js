@@ -176,6 +176,7 @@ module.exports.addMedBill = async function(req, res){
         }
         let totalAmount = 0
         let preparedPres = []
+        console.log("Total prescriptions count: "+itemsList.length)
         try{
             for(let i=0;i<itemsList.length;i++){
                 if(itemsList[i].length > 0){
@@ -183,7 +184,7 @@ module.exports.addMedBill = async function(req, res){
                     splittedArray = itemsList[i].split(':');
                     totalAmount = totalAmount + (Number(splittedArray[6]) * Number(splittedArray[7]));
                     let deductableQty = Number(splittedArray[7]);
-                    let inventory = await Inventories.findOne({Medicine:splittedArray[0], Batch:splittedArray[8]}).sort('ExpiryDate');
+                    let inventory = await Inventories.findOne({Medicine:splittedArray[0], Batch:splittedArray[8], CurrentQty:{$gt:0}}).sort('ExpiryDate');
                     let totalAvailableQty = inventory.CurrentQty;
                     await inventory.updateOne({CurrentQty:totalAvailableQty-deductableQty})
                 }

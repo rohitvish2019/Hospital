@@ -14,9 +14,11 @@
 </head>
 
 <body>
+  
     <header>
         <%-include('_header')%>
     </header>
+    
     <section class="main-content">
       
       <div id="registrationForm">
@@ -73,8 +75,16 @@
         <button id="bookAppointment" disabled class="btn btn-success" style="width: 47.5%;" type="submit" onclick="bookAppointmentWithId()">Book Appointment</button>
       </div>
     </section>
+    <div style="display: block;position: fixed;top: 15%; left: 80%;">
+      Last visit date : <span id="lastVisitDate">NA</span>
+      <br>
+      Last fees paid : <span id="lastFeesPaid">NA</span>
+    </div>
+    <div style="display: block;position: fixed;top: 15%; left: 80%;"></div>
+      
+    </div>
     <footer>
-
+      
     </footer>
 </body>
 </html>

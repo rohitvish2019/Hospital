@@ -21,6 +21,9 @@ const Appointment = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    ReceiptNo:{
+        type:Number,
+    },
     DRName:String,
     Fees:Number
 },

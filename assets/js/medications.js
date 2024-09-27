@@ -2,7 +2,7 @@ let itemsCount = 0
 let prescriptions = []
 let total = 0
 async function addMedications(isComingFromServer, data){
-    let medicine,when,frequency,duration,notes,dosage,qty, CurrentQty;
+    let medicine,when,frequency,duration,notes,dosage,qty, CurrentQty, totalQty;
     let price = new Array()
     let batch = new Array()
     let exp = new Array();
@@ -55,6 +55,7 @@ async function addMedications(isComingFromServer, data){
                     batch = 'NA'
                     exp = 'NA'
                 }else{
+                    totalQty = data.totalQty;
                     for(let i=0;i<data.medInfo.length;i++){
                         price.push(data.medInfo[i].Price);
                         batch.push(data.medInfo[i].Batch);
@@ -91,16 +92,7 @@ async function addMedications(isComingFromServer, data){
         }).show();
         return;
     }
-    if(!page || [page] == ''){
-        new Noty({
-            theme: 'relax',
-            text: 'Patinet age is mandatory',
-            type: 'error',
-            layout: 'topRight',
-            timeout: 1500
-        }).show();
-        return;
-    }
+    
     if(!medicine || medicine == ''){
         new Noty({
             theme: 'relax',
@@ -130,15 +122,13 @@ async function addMedications(isComingFromServer, data){
         `
             <td>${++itemsCount}</td>
             <td>${medicine}</td>
-            <td>${dosage}</td>
-            <td>${when}</td>
-            <td>${frequency}</td>
             <td>${duration}</td>
             <td>${price[i]}</td>
             <td>${quantity[i]}</td>
             <td>${batch[i]}</td>
             <td>${exp[i]}</td>
             <td>${notes}</td>
+            <td>${totalQty}</td>
             <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick='deleteMed(${itemsCount},"${price[i]}",${quantity[i]})' alt=""></td>
         `
         child.id='medRow_'+itemsCount

@@ -55,9 +55,13 @@ function searchById(){
             }).show();
             for(let i=0;i<inputData.length;i++){
                 if(document.getElementById(inputData[i])){
-                    document.getElementById(inputData[i]).value = data.patient[inputData[i]];
+                    document.getElementById(inputData[i]).value = data.patient[0].PatientId[inputData[i]];
                 }
             }
+            let visitDate = data.patient[0].createdAt.toString().split('T')[0].split('-');
+            
+            document.getElementById('lastFeesPaid').innerText=data.patient[0].Fees
+            document.getElementById('lastVisitDate').innerText=visitDate[2]+'-'+visitDate[1]+'-'+visitDate[0]
             document.getElementById('register').setAttribute('disabled','true');
             document.getElementById('bookAppointment').removeAttribute('disabled')
         },
@@ -74,6 +78,9 @@ function searchById(){
                     document.getElementById(inputData[i]).value = '';
                 }
             }
+            document.getElementById('lastFeesPaid').innerText='NA'
+            document.getElementById('lastVisitDate').innerText='NA'
+            
             document.getElementById('bookAppointment').setAttribute('disabled','true');
             document.getElementById('register').removeAttribute('disabled');
         }

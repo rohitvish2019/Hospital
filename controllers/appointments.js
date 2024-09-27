@@ -1,9 +1,11 @@
 const Appointments = require('../models/appointments');
 const Patients = require('../models/patients');
-const Sales = require('../models/sales')
+const Sales = require('../models/sales');
+const Tracker = require('../models/tracker');
 module.exports.addAppointment = async function(req, res){
     try{
         let patient, oldAppointment, appointment
+        let pd = await Tracker.findOne({});
         let today = new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate();
         try{
             patient = await Patients.findOne({PatientId:req.body.PatientId});
@@ -30,7 +32,8 @@ module.exports.addAppointment = async function(req, res){
                 PatientId:patient._id,
                 Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                 isVisited:false,
-                Fees:req.body.Fees
+                Fees:req.body.Fees,
+                ReceiptNo:+pd.ReceiptNo+1
             });
             await Sales.create({
                 BillAmount:req.body.Fees,
@@ -39,6 +42,7 @@ module.exports.addAppointment = async function(req, res){
                 PatientId:patient._id,
                 SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
           })
+          await pd.updateOne({ReceiptNo:+pd.ReceiptNo+1})
         }catch(err){
             console.log(err)
             return res.status(500).json({
@@ -52,6 +56,7 @@ module.exports.addAppointment = async function(req, res){
             message:'Appointment added'
         })
     }catch(err){
+        console.log(err)
         return res.status(500).json({
             message:'Unable to add appointment'
         })
