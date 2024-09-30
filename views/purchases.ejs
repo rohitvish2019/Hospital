@@ -88,14 +88,14 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Purchase Price</span>
                 </div>
-                <input type="text" id="pprice" class="form-control">
+                <input type="number" id="pprice" class="form-control">
             </div>
             
             <div class="input-group input-group-sm mb-1">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Selling Price</span>
                 </div>
-                <input type="text" id="sprice" class="form-control">
+                <input type="number" id="sprice" class="form-control">
             </div>
 
             <div class="input-group input-group-sm mb-1">
@@ -108,14 +108,22 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Box Size</span>
                 </div>
-                <input type="text" id="boxSize" class="form-control" >
+                <input type="number" id="boxSize" class="form-control" >
             </div>
             <div class="input-group input-group-sm mb-1">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Box Count</span>
                 </div>
-                <input type="text" id="boxCount" class="form-control" >
+                <input type="number" id="boxCount" class="form-control" >
             </div>
+
+            <div class="input-group input-group-sm mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Alert Quantity</span>
+                </div>
+                <input type="number" id="AlertQty" class="form-control" >
+            </div>
+            
             <div style="width: 100%; margin-top: 10%;">
                 <button style="width: 60%; margin-left: 21%; margin-right: 19%;" class="btn btn-success" onclick="addMedications(false,null)">Add</button>
             </div>

@@ -269,6 +269,8 @@ function closePopup(){
 }
 
 function getmedsbylink(link){
+    let meds = new Array();
+
     $.ajax({
         url:'/receipts/getMedsListLink',
         data:{link},
@@ -280,6 +282,11 @@ function getmedsbylink(link){
                 if(data.items[i].length > 0){
                     let rowItem = document.createElement('tr');
                     let item = data.items[i].split(':')
+                    let objItem = new Object();
+                    objItem['Medicine'] = item[0];
+                    objItem['Price'] = item[6]
+                    objItem['Qty'] = item[7]
+                    meds.push(objItem);
                     rowItem.innerHTML=
                     `
                         <td>${item[0]}</td>
@@ -287,6 +294,7 @@ function getmedsbylink(link){
                         <td>${item[7]}</td>
                         <td><input type='number'></td>
                     `
+                    
                     container.appendChild(rowItem)
                 }
                 

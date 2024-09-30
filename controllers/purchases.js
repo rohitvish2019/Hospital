@@ -32,10 +32,10 @@ module.exports.addPurchases = async function(req, res){
                         Medicine:item[0],
                         Batch:item[1],
                         CurrentQty:Number(item[5]) * Number(item[6]),
-                        AlertQty:30,
+                        AlertQty:item[7],
                         ExpiryDate:item[4],
                         Price:Number(item[3]),
-                        PurchasePrice:Number(item[2])
+                        PurchasePrice:Number(item[2]),
                     })
                 }catch(err){
                     console.log('DB error : Unable to update inventories');
@@ -60,7 +60,8 @@ module.exports.addPurchases = async function(req, res){
 
 module.exports.getMedInfoPrescriptions = async function(req, res){
     if(true){
-        let medInfo, returnableInfo, isReturnValueSet, totalQty
+        let medInfo, returnableInfo, isReturnValueSet, totalQty;
+        let alertQty=0;
         try{
             medInfo = await Inventories.find({Medicine:req.query.Medicine}).sort('ExpiryDate');
         }catch(err){
@@ -72,10 +73,14 @@ module.exports.getMedInfoPrescriptions = async function(req, res){
             totalQty = 0;
             returnableInfo = new Array();
             isReturnValueSet = false;
+
             for(let i=0;i<medInfo.length;i++){
                 if(medInfo[i].CurrentQty > 0){
                     returnableInfo.push(medInfo[i])
                     totalQty = totalQty + Number(medInfo[i].CurrentQty);
+                    if (medInfo[i].AlertQty > alertQty){
+                        alertQty = medInfo[i].AlertQty
+                    }
                 }
             }
         }catch(err){
@@ -86,7 +91,8 @@ module.exports.getMedInfoPrescriptions = async function(req, res){
         }
         return res.status(200).json({
             medInfo:returnableInfo,
-            totalQty
+            totalQty,
+            alertQty
         })
     }else{
         return res.render('Error_403')

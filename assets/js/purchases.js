@@ -11,7 +11,7 @@ function addMedications(isComingFromServer, data){
         }).show();
         return;
     }
-    let medicine,batch,pprice,sprice,expDate,boxSize,boxCount;
+    let medicine,batch,pprice,sprice,expDate,boxSize,boxCount,alertQty;
     medicine = document.getElementById('Medicine').value
     batch = document.getElementById('Batch').value
     pprice = document.getElementById('pprice').value
@@ -19,6 +19,7 @@ function addMedications(isComingFromServer, data){
     expDate = document.getElementById('ExpDate').value
     boxSize = document.getElementById('boxSize').value
     boxCount = document.getElementById('boxCount').value
+    alertQty = document.getElementById('AlertQty').value
     
     
     let child = document.createElement('tr');
@@ -58,7 +59,7 @@ function addMedications(isComingFromServer, data){
     `
     child.id='medRow_'+itemsCount
     parent.appendChild(child);
-    let thisItem = String(medicine).toUpperCase()+':'+batch+':'+pprice+':'+sprice+':'+expDate+':'+boxSize+':'+boxCount
+    let thisItem = String(medicine).toUpperCase()+':'+batch+':'+pprice+':'+sprice+':'+expDate+':'+boxSize+':'+boxCount+':'+alertQty
     items.push(thisItem);
     clearMedForm();
 }

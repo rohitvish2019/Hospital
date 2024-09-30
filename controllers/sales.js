@@ -98,7 +98,7 @@ module.exports.deleteEmptyInventories = async function(req,res){
     try{
         if(req.user.role =='Admin'){
             try{
-                await Inventories.deleteMany({CurrentQty:{$lt:0}});
+                await Inventories.deleteMany({CurrentQty:{$lt:1}});
                 return res.status(200).json({
                     message:'Deleted empty inventories'
                 });

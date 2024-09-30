@@ -40,9 +40,9 @@ th {
         <%-include('_header')%>
     </header>
     <h2 style="text-align: center;">Inventory Management</h2>
-    <div style="width: 40%; display: flex; justify-content: space-between;">
+    <div style="width: 60%; display: flex; justify-content: space-between;">
         
-        <div class="input-group input-group-sm mb-1" style="width: 85%;">
+        <div class="input-group input-group-sm mb-1" style="width: 65%;">
             <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-sm">Medicine</span>
             </div>
@@ -55,6 +55,9 @@ th {
         </div>
         <div>
             <button class="btn btn-success" onclick="getMedInventoryInfo()">Search</button>
+        </div>
+        <div>
+            <button class="btn btn-success" onclick="clearInventoreis()">Clear empty inventories</button>
         </div>
     </div>
 

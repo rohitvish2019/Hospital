@@ -2,11 +2,12 @@ let itemsCount = 0
 let prescriptions = []
 let total = 0
 async function addMedications(isComingFromServer, data){
-    let medicine,when,frequency,duration,notes,dosage,qty, CurrentQty, totalQty;
+    let medicine,when,frequency,duration,notes,dosage,qty, CurrentQty, totalQty, alertQty=0;
     let price = new Array()
     let batch = new Array()
     let exp = new Array();
     let quantity = new Array();
+    
     let medInfo;
     if(isComingFromServer == true){
         let thisPrescription = data.split(':');
@@ -56,13 +57,17 @@ async function addMedications(isComingFromServer, data){
                     exp = 'NA'
                 }else{
                     totalQty = data.totalQty;
+                    alertQty = data.alertQty
+                    console.log("Medinfo length is "+data.medInfo.length)
                     for(let i=0;i<data.medInfo.length;i++){
+                        console.log("Running loop for "+i)
                         price.push(data.medInfo[i].Price);
                         batch.push(data.medInfo[i].Batch);
                         exp.push(data.medInfo[i].ExpiryDate.split('T')[0]);
                         if(qty > data.medInfo[i].CurrentQty && qty > 0){
                             quantity.push(data.medInfo[i].CurrentQty)
                             qty = qty - data.medInfo[i].CurrentQty
+                            
                         }else{
                             quantity.push(qty)
                             break;
@@ -117,8 +122,8 @@ async function addMedications(isComingFromServer, data){
     for(let i=0;i<price.length;i++){
         let child = document.createElement('tr');
         let parent = document.getElementById('prescriptionTableBody');
-        
-        child.innerHTML=
+        if(totalQty <= alertQty){
+            child.innerHTML=
         `
             <td>${++itemsCount}</td>
             <td>${medicine}</td>
@@ -128,9 +133,25 @@ async function addMedications(isComingFromServer, data){
             <td>${batch[i]}</td>
             <td>${exp[i]}</td>
             <td>${notes}</td>
-            <td>${totalQty}</td>
+            <td style='background-color: red;width:10%;color:white;font-weight:bold'>${totalQty}</td>
             <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick='deleteMed(${itemsCount},"${price[i]}",${quantity[i]})' alt=""></td>
         `
+        }
+        else{
+            child.innerHTML=
+        `
+            <td>${++itemsCount}</td>
+            <td>${medicine}</td>
+            <td>${duration}</td>
+            <td>${price[i]}</td>
+            <td>${quantity[i]}</td>
+            <td>${batch[i]}</td>
+            <td>${exp[i]}</td>
+            <td>${notes}</td>
+            <td style='width:10%'>${totalQty}</td>
+            <td class='delButton'><img width='25px' height='25px' src="/images/delete.png" onclick='deleteMed(${itemsCount},"${price[i]}",${quantity[i]})' alt=""></td>
+        `
+        }
         child.id='medRow_'+itemsCount
         console.log('Current quantity is '+CurrentQty+ ' and ordered is '+qty)
         if(CurrentQty < qty){

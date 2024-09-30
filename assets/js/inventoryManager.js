@@ -74,3 +74,28 @@ function updateInventoryStock(id){
         }
     })
 }
+
+function clearInventoreis(){
+    $.ajax({
+        url:'/sales/clearEmptyInventories',
+        type:'delete',
+        success:function(data){
+            new Noty({
+                theme: 'relax',
+                text: 'Successfully cleared empty inventories',
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        },
+        error:function(err){
+            new Noty({
+                theme: 'relax',
+                text: 'Unable to clear Inventories',
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        }
+    })
+}
