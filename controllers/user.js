@@ -68,13 +68,15 @@ module.exports.home = async function(req, res){
 }
 */
 
-module.exports.createSession = function(req, res){
+module.exports.createSession = async function(req, res){
+    let rm = Math.floor(Math.random() * 10000) + 1;
+    await UserSchema.findOneAndUpdate({email:req.user.email},{updater:rm})
     return res.redirect('/patients/new')
 }
 
-module.exports.logout = function(req, res){
+module.exports.logout = async function(req, res){
     try{
-        req.logout(function(err){
+        let destroyedSession = req.session.destroy(function(err){
             if(err){
                 console.log(err)
                 console.log("failed Logging out");
@@ -84,6 +86,8 @@ module.exports.logout = function(req, res){
             }
             return res.redirect('/user/login');
         });
+        let rm = Math.floor(Math.random() * 10000) + 1;
+        await UserSchema.findOneAndUpdate({email:req.user.email},{updater:rm})
     }catch(err){
         console.log(err);
         return res.redirect('back')

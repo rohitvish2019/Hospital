@@ -47,7 +47,7 @@ app.use(session({
     resave: false,
     rolling:true,
     cookie: {
-        maxAge: (1000 * 60 * 100)
+        maxAge: (1000 * 60 * 30)
     },
     store:MongoStore.create(
         {
@@ -57,7 +57,11 @@ app.use(session({
         
         },
         function(err){
-            console.log(err ||  'connect-mongodb setup ok');
+            if(err){
+                console.log(err)
+            }else{
+                console.log('connect-mongodb setup ok')
+            }
         }
     )
 }));

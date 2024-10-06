@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
     },
     mobile_number:{
         type:String
-    }
+    },
+    updater:Number,
 },
 {
     timestamps: true
