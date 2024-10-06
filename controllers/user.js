@@ -25,8 +25,13 @@ module.exports.login = function(req, res){
     if(req.isAuthenticated()){
         return res.redirect('/patients/new')
     }
-    return res.render('login');
+    else{
+        console.log('Unable to authenticate')
+        return res.render('login');
+    }
+    
 }
+
 /*
 module.exports.signUp = function(req, res){
     return res.render('SchoolRegistration');
@@ -71,10 +76,12 @@ module.exports.logout = function(req, res){
     try{
         req.logout(function(err){
             if(err){
+                console.log(err)
                 console.log("failed Logging out");
                 return res.redirect('/user/login');
+            }else{
+                console.log('Logged out')
             }
-            req.flash('success', 'Logged out successfully')
             return res.redirect('/user/login');
         });
     }catch(err){

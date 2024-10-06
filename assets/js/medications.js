@@ -243,7 +243,7 @@ function setSavedPrescriptionsOnUI(data){
     }
 }
 
-getPrescriptions()
+//getPrescriptions()
 
 
 

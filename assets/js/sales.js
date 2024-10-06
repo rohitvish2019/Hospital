@@ -163,7 +163,7 @@ function setHistoryOnUiIntMed(history,host,port,protocol){
                 <td>${history[i].BillType}</td>
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
-                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><a target='_blank' href='${history[i].BillLink}'>${history[i].ReceiptNo}</a></td>
                 <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
             `
         }else{
@@ -201,7 +201,7 @@ function setHistoryOnUi(history,host,port,protocol){
                 <td>${history[i].BillType}</td>
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
-                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><a target='_blank' href='${history[i].BillLink}'>${history[i].ReceiptNo}</a></td>
                 <td><button class='btn btn-danger' onclick='openCancellationPopup("${history[i].PatientId.Name},${history[i].BillAmount},${history[i].BillType},${history[i]._id}")'>Cancel</button></td>
             `
         }else{
@@ -236,7 +236,7 @@ function setHistoryOnUiExtMed(history){
                 <td>${history[i].BillType}</td>
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>
-                <td><a target='_blank' href='${history[i].BillLink}'>View</a></td>
+                <td><a target='_blank' href='${history[i].BillLink}'>${history[i].ReceiptNo}</a></td>
                 <td><button onclick='openPopup("${history[i].BillLink}")'>Return</button></td>
             `
         }else{

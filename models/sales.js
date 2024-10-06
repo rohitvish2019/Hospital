@@ -10,6 +10,7 @@ const Sale = new mongoose.Schema({
     BillLink:String,
     SaleDate:String,
     cancellationReason:String,
+    ReceiptNo:String,
     isValid:{
         type:Boolean,
         default:true

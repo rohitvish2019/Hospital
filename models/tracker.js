@@ -9,7 +9,9 @@ const Tracker = new mongoose.Schema({
     },
     AdmittedPatientId:{
         type:Number
-    }
+    },
+    MedicalBillNo:Number,
+    RegistrationBillNo:Number
 },
 {
     timestamps:true

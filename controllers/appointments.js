@@ -33,16 +33,17 @@ module.exports.addAppointment = async function(req, res){
                 Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                 isVisited:false,
                 Fees:req.body.Fees,
-                ReceiptNo:+pd.ReceiptNo+1
+                ReceiptNo:"REG" + (+pd.RegistrationBillNo+1),
             });
             await Sales.create({
                 BillAmount:req.body.Fees,
                 BillLink:'/appointments/receipt/'+appointment._id,
                 BillType:'Registration Fees',
                 PatientId:patient._id,
+                ReceiptNo:"REG" + (+pd.RegistrationBillNo+1),
                 SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
           })
-          await pd.updateOne({ReceiptNo:+pd.ReceiptNo+1})
+          await pd.updateOne({RegistrationBillNo:+pd.RegistrationBillNo+1})
         }catch(err){
             console.log(err)
             return res.status(500).json({

@@ -23,7 +23,7 @@ module.exports.addNewReceipt = async function(req, res){
         let receipt;
         if(patient){
             receipt = await Receipts.create({
-                ReceiptNo: ReceiptNo,
+                ReceiptNo: "OFTH"+ReceiptNo,
                 Name:req.body.patient.Name,
                 Age:req.body.patient.Age,
                 Gender:req.body.patient.Gender,
@@ -43,7 +43,7 @@ module.exports.addNewReceipt = async function(req, res){
                 PatientId:newPid
             })
             receipt = await Receipts.create({
-                ReceiptNo: ReceiptNo,
+                ReceiptNo: "OFTH"+ReceiptNo,
                 Name:req.body.patient.Name,
                 Age:req.body.patient.Age,
                 Gender:req.body.patient.Gender,
@@ -65,6 +65,7 @@ module.exports.addNewReceipt = async function(req, res){
             billAmount = billAmount + Number(splittedArray[1] * splittedArray[2])
         }
         await Sales.create({
+            ReceiptNo: "OFTH"+ReceiptNo,
             BillAmount:billAmount,
             BillType:'Generated Receipt',
             PatientId:patient._id, 
@@ -148,17 +149,16 @@ module.exports.newMedSales = async function(req, res){
 }
 
 module.exports.addMedBill = async function(req, res){
-    console.log('We are here...')
-    let pd, ReceiptNo;
+    let pd, MedicalBillNo;
     try{
         pd = await Tracker.findOne({});
-        ReceiptNo = Number(pd.ReceiptNo) + 1
+        MedicalBillNo = Number(pd.MedicalBillNo) + 1
     }catch(err){
         console.log(err);
     }
     try{
         let receipt = await Receipts.create({
-            ReceiptNo: ReceiptNo,
+            ReceiptNo: "SBM"+MedicalBillNo,
             Name:req.body.patient.Name,
             Age:req.body.patient.Age,
             Gender:req.body.patient.Gender,
@@ -166,7 +166,7 @@ module.exports.addMedBill = async function(req, res){
             Mobile:req.body.patient.Mobile,
             Items:req.body.prescriptions,
         })
-        await pd.updateOne({ReceiptNo:ReceiptNo})
+        await pd.updateOne({MedicalBillNo:MedicalBillNo})
         let itemsList = req.body.prescriptions
         let patient = 'NA'
         try{
@@ -192,6 +192,7 @@ module.exports.addMedBill = async function(req, res){
             try{
                 console.log("Creating sales")
                 await Sales.create({
+                    ReceiptNo: "SBM"+MedicalBillNo,
                     BillAmount:totalAmount,
                     BillType:'Medical Bill Ext',
                     PatientName:req.body.patient.Name,

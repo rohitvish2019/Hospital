@@ -28,17 +28,18 @@ module.exports.addNewPatient = async function(req, res){
                               Date:new Date().getFullYear() +'-'+ (Number(new Date().getMonth()) + 1) +'-'+ new Date().getDate(),
                               isVisited:false,
                               Fees: req.body.Fees,
-                              ReceiptNo:(+pd.ReceiptNo)+1,
+                              ReceiptNo:"REG" + (+pd.RegistrationBillNo+1),
                               NumericPatientId:+pd.PatientId+1
                         })
                         await Sales.create({
+                              ReceiptNo:"REG" + (+pd.RegistrationBillNo+1),
                               BillAmount:req.body.Fees,
                               BillLink:'/appointments/receipt/'+bookedAppointment._id,
                               BillType:'Registration Fees',
                               PatientId:patient._id,
                               SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
                         })
-                        await pd.updateOne({ReceiptNo:+pd.ReceiptNo+1, NumericPatientId:+pd.PatientId+1})
+                        await pd.updateOne({RegistrationBillNo:+pd.RegistrationBillNo+1, NumericPatientId:+pd.PatientId+1})
                   }
                   
             }catch(err){
@@ -370,6 +371,7 @@ module.exports.medicationsPage = async function(req, res){
 }
 
 module.exports.savePrescriptions = async function(req,res){
+      let ReceiptNo
       try{
             let savedData
             try{  
@@ -389,6 +391,9 @@ module.exports.savePrescriptions = async function(req,res){
             let receivedPres = req.body.prescriptions;
             let preparedPres = []
             let totalAmount = 0
+            let tracker = await Tracker.findOne({});
+            ReceiptNo = +tracker.MedicalBillNo + 1;
+            console.log("tracker data No is "+tracker.MedicalBillNo);
             try{
                   console.log("deducting quantity now")
                   for(let i=0;i<receivedPres.length;i++){
@@ -425,6 +430,7 @@ module.exports.savePrescriptions = async function(req,res){
                   try{
                         console.log('Creating sales')
                         await Sales.create({
+                              ReceiptNo:"SBM"+ReceiptNo,
                               PatientId:req.params.patientId,
                               BillAmount:totalAmount,
                               BillType:'Medical Bill',
@@ -444,7 +450,7 @@ module.exports.savePrescriptions = async function(req,res){
                   console.log(err)
                   console.log('unable to update visitt')
             }
-            
+            await tracker.updateOne({MedicalBillNo:ReceiptNo});
             return res.status(200).json({
                   message:'Prescriptions added',
                   visitId : savedData._id

@@ -96,6 +96,7 @@ function searchById(){
         url:'/patients/get/'+id,
         type:'Get',
         success:function(data){
+            console.log(data.patient[0].PatientId.Name);
             new Noty({
                 theme: 'relax',
                 text: 'Patient data setup done',
@@ -103,11 +104,11 @@ function searchById(){
                 layout: 'topRight',
                 timeout: 1500
             }).show();
-            document.getElementById('Pname').value=data.patient.Name
-            document.getElementById('Age').value = data.patient.Age
-            document.getElementById('Gender').value = data.patient.Gender
-            document.getElementById('Address').value = data.patient.Address
-            document.getElementById('mob').value = data.patient.Mobile
+            document.getElementById('Pname').value=data.patient[0].PatientId.Name
+            document.getElementById('Age').value = data.patient[0].PatientId.Age
+            document.getElementById('Gender').value = data.patient[0].PatientId.Gender
+            document.getElementById('Address').value = data.patient[0].PatientId.Address
+            document.getElementById('mob').value = data.patient[0].PatientId.Mobile
             
         },
         error:function(err){
