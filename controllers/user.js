@@ -1,4 +1,5 @@
 const UserSchema = require('../models/Users');
+const db = require('../configs/dbConnection');
 /*
 const winston = require("winston");
 const User = require('../modals/userSchema');
@@ -69,9 +70,14 @@ module.exports.home = async function(req, res){
 */
 
 module.exports.createSession = async function(req, res){
-    let rm = Math.floor(Math.random() * 10000) + 1;
-    await UserSchema.findOneAndUpdate({email:req.user.email},{updater:rm})
-    return res.redirect('/patients/new')
+    try{
+        let rm = Math.floor(Math.random() * 10000) + 1;
+        await UserSchema.findOneAndUpdate({email:req.user.email},{updater:rm});
+        return res.redirect('/patients/new');
+    }catch(err){
+        console.log(err)
+        return res.redirect('/user/login')
+    }
 }
 
 module.exports.logout = async function(req, res){

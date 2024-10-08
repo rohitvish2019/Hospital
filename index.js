@@ -44,17 +44,16 @@ app.use(session({
     // TODO change the secret before deployment in production mode
     secret: session_seceret_key,
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     rolling:true,
     cookie: {
-        maxAge: (1000 * 60 * 30)
+        maxAge: (1000 * 60 * 5)
     },
     store:MongoStore.create(
         {
             mongoUrl: db_url+session_db_name,
-            autoRemove: 'disabled',
-            rolling:true
-        
+            autoRemove: 'interval',
+            autoRemoveInterval:2
         },
         function(err){
             if(err){
