@@ -3,30 +3,24 @@ body{
     padding: 0;
     overflow: auto;
     width: 99%;
+    height: 1040px;
+    width: 750px;
 }
 
-.main-body{
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(7, 6, 6);
-    width: 99.5%;
-    height: 2080px;
-    overflow-x: hidden;
-}
 
 .header{
-    height: 4.5%;
+    height: 7%;
     width: 99.9%;
     display: flex;
 }
 
 .doctors-info{
-    height: 8.5%;
+    height: 17%;
     width: 99.9%;
     display: flex;
 }
 .patient-info{
-    height: 3%;
+    height: 5%;
     border-top: 2px dotted rgb(20, 19, 19);
     border-bottom: 2px dotted rgb(20, 19, 19);
     width: 100%;
@@ -42,9 +36,14 @@ body{
 }
 
 .data-body{
-    height: 34.3%;
+    height: 60%;
     width: 99.9%;
     display: flex;
+}
+.tbitem{
+    min-width: 12.5%;
+    border: 1px solid black;
+    text-align: center;
 }
 li{
     margin-bottom: 1%;
@@ -63,7 +62,7 @@ li{
     width: 100%;
     text-align: left;
     margin-left: 1%;
-    height: 20%;
+    height: 19%;
 }
 
 .doc-info-right{
@@ -82,7 +81,7 @@ li{
     display: block;
 }
 .hospital-photo{
-    width: 34%;
+    width: 100%;
 }
 
 .old-info{
@@ -112,8 +111,8 @@ textarea{
     font-size: small !important;
 }
 .logo{
-    width: 12%;
-    height: 70%;
+    width: 65px;
+    height: 65px;
 }
 
 .name{
@@ -121,13 +120,15 @@ textarea{
 }
 
 .footer{
+    margin-top: 10px;
     height: 2%;
     width: 99.9%;
 }
 
 
 .patient-data{
-    width: 16%;
+    border-right: .5px solid black;
+    padding-left: 3px;
 }
 .patient-data label{
     display: block;
@@ -154,7 +155,15 @@ textarea{
 }
 .special-services-list li{
     margin-bottom: 2%;
-    font-size: 12px;
+    font-size: 11px;
+    padding:0;
+}
+.special-services-list {
+    padding: 0;
+}
+.special-services-para{
+    font-size: 11px;
+    padding: 0;
 }
 p{
     font-size: 12px;
@@ -164,4 +173,17 @@ p{
 
 .op-info{
     border-bottom: 1px dashed black;
+}
+
+
+.horizontal-list {
+  display: flex;        /* makes items line up in a row */
+  list-style: none;     /* removes bullets */
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.horizontal-list li {
+  margin-right: 20px;   /* spacing between items */
 }
