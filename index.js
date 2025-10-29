@@ -47,7 +47,7 @@ app.use(session({
     resave: true,
     rolling:true,
     cookie: {
-        maxAge: (1000 * 60 * 5)
+        maxAge: (1000 * 60 * 30)
     },
     store:MongoStore.create(
         {

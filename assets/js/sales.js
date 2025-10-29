@@ -237,7 +237,7 @@ function setHistoryOnUiExtMed(history){
             `
                 <td>${i+1}</td>
                 <td>${history[i].PatientName}</td>
-                <td>${history[i].PatientId.Mobile}</td>
+                <td>NA</td>
                 <td>${history[i].BillType}</td>
                 <td>${history[i].BillAmount}</td>
                 <td>${history[i].SaleDate}</td>

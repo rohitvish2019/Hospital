@@ -4,7 +4,8 @@ const Visits = require('../models/visits')
 const Appointments = require('../models/appointments')
 const Receipts = require('../models/receipts');
 const patients = require('../models/patients');
-const Inventories = require('../models/inventory')
+const Inventories = require('../models/inventory');
+const { default: mongoose } = require('mongoose');
 module.exports.receiptHome = function(req, res){
     return res.render('receiptHome',{role:req.user.role})
 }
@@ -17,10 +18,11 @@ module.exports.addNewReceipt = async function(req, res){
     }catch(err){
         console.log(err);
     }
-    
+    const session = await mongoose.startSession();
     try{
         let patient = await patients.findOne({PatientId:req.body.patient.id})
         let receipt;
+        session.startTransaction();
         if(patient){
             receipt = await Receipts.create({
                 ReceiptNo: "OFTH"+ReceiptNo,
@@ -72,11 +74,13 @@ module.exports.addNewReceipt = async function(req, res){
             BillLink:'/receipts/gerenate/'+receipt._id,
             SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
         })
+        await session.commitTransaction();
         return res.status(200).json({
             message:'Receipt created',
             receipt:receipt._id
         })
     }catch(err){
+        await session.abortTransaction();
         console.log(err)
         return res.status(500).json({
             message:'Unable to create Receipt'
@@ -156,6 +160,8 @@ module.exports.addMedBill = async function(req, res){
     }catch(err){
         console.log(err);
     }
+    const session = await mongoose.startSession();
+    session.startTransaction();
     try{
         let receipt = await Receipts.create({
             ReceiptNo: "SBM"+MedicalBillNo,
@@ -200,18 +206,28 @@ module.exports.addMedBill = async function(req, res){
                     SaleDate:new Date().getFullYear() +'-'+ String((Number(new Date().getMonth()) + 1)).padStart(2,'0') +'-'+ String(new Date().getDate()).padStart(2,'0'),
                 })
             }catch(err){
+                session.abortTransaction();
                 console.log(err)
                 console.log("Unable to add in sales")
+                return res.status(500).json({
+                    message:'Unable to add sales'
+                })
             }
         }catch(err){
+            session.abortTransaction()
             console.log(err);
             console.log("Unable to update inventoreis")
+            return res.status(500).json({
+                message:'Unable to update inventoreis'
+            })
         }
+        session.commitTransaction();
         return res.status(200).json({
             message:'Receipt created',
             receipt:receipt._id
         })
     }catch(err){
+        session.abortTransaction();
         console.log(err)
         return res.status(500).json({
             message:'Unable to create Receipt'

@@ -11,6 +11,13 @@ const Sale = new mongoose.Schema({
     SaleDate:String,
     cancellationReason:String,
     ReceiptNo:String,
+    Age:String,
+    Gender:String,
+    Address:String,
+    Mobile:String,
+    Items:{
+        type:Array
+    },
     isValid:{
         type:Boolean,
         default:true
