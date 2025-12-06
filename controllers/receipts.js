@@ -272,3 +272,11 @@ module.exports.getMedsByLink = async function(req, res){
         })
     }
 }
+
+module.exports.getCMLetter = async function (req, res) {
+    try{
+        return res.render('cm_letter')
+    }catch(err){
+        return res.render('Error_500')
+    }
+}

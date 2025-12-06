@@ -59,19 +59,30 @@
         </div>
         <div class="patient-data" style="width: 32%;">
             <small for=""><b style="font-size: smaller;">Name</b></small>
-            <label for=""><%=patient.Name%></label>
+            <label for="" id="">
+                <input type="text" value="<%=patient.Name%>" style="border: none;">
+            </label>
+            
         </div>
         <div class="patient-data" style="width: 10%;">
             <small for=""><b style="font-size: smaller;">Age/Sex</b></small>
-            <label for=""><%=patient.Age%></label>
+            
+            <label for="">
+                <input type="text" value="<%=patient.Age%>" style="border: none;width: 60px;">
+            </label>
         </div>
-        <div class="patient-data" style="width: 17%;">
-            <small for=""><b style="font-size: smaller;">Mobile</b></small>
-            <label for=""><%=patient.Mobile%></label>
+        <div class="patient-data" style="width: 19%;">
+            <small for=""><b style="font-size: smaller;" >Mobile</b></small>
+            <label for="">
+                <input type="text" value="<%=patient.Mobile%>" style="border: none;width: 110px !important;">
+            </label>
         </div>
         <div class="patient-address" style="width: 32%;">
             <small for=""><b style="font-size: smaller;">Address</b></small>
-            <label for=""><%=patient.Address%></label>
+
+            <label for="">
+                <input type="text" value="<%=patient.Address%>" style="border: none;width: 240px;font-size: small;">
+            </label>
         </div>
         
     </div>
@@ -108,18 +119,27 @@
             <div style="display: flex;">
                 <div style="width: 33.34%;text-align: left;border-right: 1px solid black;padding-left: 2px;">
                     <label style="margin-right: 1%;font-weight: 600;font-size: small;">Admission Date :</label>
-                    <input style="display: none;" type="date" value="<%=patient.AdmissionDate%>" name="" id="AdmissionDate" onchange="saveAdmissionDate()">
+                    <input type="text" value="<%=patient.AdmissionDate%>" name="" id="AdmissionDate" onchange="saveAdmissionDate()" style="width: 90px;">
+                    <!--
                     <label for="" id="AdmissionDateLabel"><%=String(patient.AdmissionDate).substr(4,11)%></label>
+                    -->
                 </div>
                 <div style="width: 33.34%;text-align: left;border-right: 1px solid black;padding-left: 2px;">
                     <label style="margin-right: 1%;font-weight: 600;font-size: small;">Operation Date :</label>
-                    <input style="display: none;" type="date" name="" id="OperationDate" onchange="saveOperationDate()">
+                    <input type="text" name="" id="OperationDate" onchange="saveOperationDate()" style="width: 90px;">
+                    <!--
                     <label for="" id="OperationDateLabel"><%=String(patient.OperationDate).substr(4,11)%></label>
+                    -->
                 </div>
                 <div style="width: 33.33%;text-align: left;border-right: 1px solid black;padding-left: 2px;">
-                    <label style="margin-right: 1%;font-weight: 600;font-size: small;">Discharge Date :</label>
-                    <input style="display: none;" type="date" name="" id="DischargeDate" onchange="saveDischargeDate()">
+                    <label style="margin-right: 1%;font-weight: 600;font-size: small;">Discharge Date :
+                        <input type="text" name="" id="DischargeDate" onchange="saveDischargeDate()" style="width: 90px;">
+                    </label>
+                    
+
+                    <!--
                     <label for="" id="DischargeDateLabel"><%=String(patient.DischargeDate).substr(4,11)%></label>
+                    -->
                 </div>
             </div>
             <div style="width: 100%;">
@@ -181,12 +201,12 @@
                     </li>
                 </ul>
                 <ul style="font-size: smaller;width: 30%;">
-                    <li>ESR</li>
-                    <li>Blood Group</li>
-                    <li>Blood Sugar</li>
-                    <li>HIV</li>
-                    <li>Serum Creatinine</li>
-                    <li>HBS Ag</li>
+                    <li>ESR. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="text" style="width: 45px;"></li>
+                    <li>Blood Group &nbsp; &nbsp; &nbsp;&nbsp;<input type="text" style="width: 45px;"></li>
+                    <li>Blood Sugar &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<input type="text" style="width: 45px;"></li>
+                    <li>HIV&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;<input type="text" style="width: 45px;"></li>
+                    <li>Serum creatinine <input type="text" style="width: 45px;"></li>
+                    <li>HBS Ag &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input type="text" style="width: 45px;"></li>
                 </ul>
             </div>
             <div style="display: flex;justify-content: space-between;">

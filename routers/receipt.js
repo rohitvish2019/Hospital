@@ -11,5 +11,6 @@ router.get('/findById', receiptsController.findReceiptById);
 router.get('/findByName', receiptsController.findReceiptByName);
 router.get('/newMedBill', receiptsController.newMedSales);
 router.post('/medbill/ext', receiptsController.addMedBill);
-router.get('/getMedsListLink', receiptsController.getMedsByLink)
+router.get('/getMedsListLink', receiptsController.getMedsByLink);
+router.get('/cm_letter', receiptsController.getCMLetter);
 module.exports = router
