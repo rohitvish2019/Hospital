@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Printable A4 Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4; margin: 20mm; }
+    html,body{height:100%;}
+    body{
+      font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      color:#000;
+      background:white;
+      -webkit-print-color-adjust: exact;
+    }
+    .page{
+      width:210mm;
+      min-height:297mm;
+      padding:15mm 18mm;
+      margin:0 auto;
+      box-sizing:border-box;
+      position:relative;
+    }
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:6mm;
+      font-size: 11pt;
+    }
+    .left-header{
+      width:60%;
+      line-height:1.1;
+      font-size:14px;
+    }
+    .seal{
+      width:28%;
+      text-align:center;
+      font-size:12px;
+    }
+    .seal .logo{
+      display:inline-block;
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      border:1px solid #000;
+      line-height:80px;
+      vertical-align:middle;
+      margin-bottom:6px;
+    }
+    .meta{
+      margin-bottom:6mm;
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+    }
+    .subject{
+      margin-bottom:6mm;
+      font-weight:700;
+      font-size:11pt;
+    }
+
+    .body-text{
+      font-size:13px;
+      margin-bottom:6mm;
+      text-align:justify;
+    }
+
+    table.form-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-bottom:8mm;
+      font-size:11pt;
+    }
+    table.form-table td, table.form-table th{
+      border:1px solid #000;
+      padding:6px 8px;
+      vertical-align:top;
+    }
+    table.form-table .label{
+      width:18%;
+      font-weight:600;
+    }
+    input[type="text"], textarea{
+      width:100%;
+      box-sizing:border-box;
+      border:none;
+      outline:none;
+      font-size:13px;
+      font-family:inherit;
+    }
+    textarea{min-height:36px}
+
+    .signature{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin-top:20mm;
+    }
+    .sig-left{width:60%;}
+    .sig-right{width:35%; text-align:center;}
+    .sig-right .name{display:block; margin-top:18mm; font-weight:700}
+
+    /* Print helpers */
+    @media print{
+      body{margin:0}
+      .page{padding:10mm}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header style="height:80px;"></header>
+
+    <div class="meta">
+      <div>क्रमांक: <input type="text" value="" /></div>
+      <div>दिनांक: <input type="text" value="" /></div>
+    </div>
+
+    <div>
+      श्रीमान्,
+    </div>
+
+    <div class="subject">प्रति,<br>माननीय मुख्यमंत्री महोदय,<br>मध्य प्रदेश शासन, भोपाल।</div>
+
+    <div class="body-text">
+      विषय: "मुख्यमंत्री सहायता कोष" से उपचार हेतु सहायता प्रदान करने के संबंध में।
+      <br><br>
+      उपर्युक्त विषय में निवेदन है कि मेरे निर्वाचन क्षेत्र 'आठवा (157) जिला-सीहोर' के कारण स्वर्गीय अथवा वास्तविक व्यक्ति आर्थिक रूप से असमर्थ है अतः उसकी चिकित्सा के लिये सहायता की आवश्यकता है। अनुरोध है कि 'मुख्यमंत्री सहायता कोष' से राशि स्वीकृत की जाए।
+    </div>
+
+    <table class="form-table">
+      <tr>
+        <th style="width:6%">क्रम</th>
+        <th>विवरण</th>
+        <th>मूल्य / विवरण</th>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td class="label">नाम</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td class="label">पिता/पति का नाम</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td class="label">ग्राम/शहर</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td class="label">मोबाइल नंबर</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td class="label">आधार नंबर</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>06</td>
+        <td class="label">बीमारी का नाम</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>07</td>
+        <td class="label">अस्पताल का नाम</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <td>08</td>
+        <td class="label">चिकित्सीय अनुमानित लागत</td>
+        <td><input type="text" value="" /></td>
+      </tr>
+    </table>
+
+    <div class="body-text">
+      अत: अनुरोध है कि उपर्युक्त रोगी (विवरण) व्यक्ति के उपचार हेतु आवश्यक राशि "मुख्यमंत्री सहायता कोष" से स्वीकृत करने की कृपा करें।
+    </div>
+
+    
+
+  </div>
+</body>
+</html>

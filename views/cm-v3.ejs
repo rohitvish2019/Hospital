@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>फॉर्म - पेज 2 (A4)</title>
+  <style>
+    :root{--pad:12mm;--line-height:1.5}
+    html,body{height:100%;margin:0;font-family: 'Noto Sans Devanagari', Arial, sans-serif;color:#111}
+    /* A4 sheet */
+    .sheet{
+      box-sizing:border-box;
+      width:210mm; height:297mm;
+      padding:10mm 6mm;
+      margin:6mm auto;
+      background:white;
+      box-shadow:0 0 0.5cm rgba(0,0,0,0.1);
+    }
+    h1{font-size:10pt;margin:0 0 8px}
+    label{display:inline-block;font-size:11pt;margin-top:6px;min-width:300px;}
+    .small{font-size:8pt;color:#222}
+    input[type=text], textarea{width:300px; box-sizing:border-box; font-size:11pt;border:0;border-bottom:1px dotted #444; padding:4px 4px; background:transparent;}
+    textarea{min-height:42px;resize:vertical}
+    .two-col{display:flex;gap:12px}
+    .col{flex:1}
+    .inline{display:inline-block}
+    .signature{height:60px;border-bottom:1px dotted #444;width:60%}
+    .attachments{font-size:8pt;margin-top:12px}
+    .notebox{padding:6px;margin-top:6px;font-size:10pt;border:0;}
+    /* page break when printing */
+    @media print{
+      body{margin:0}
+      .sheet{box-shadow:none;margin:0;page-break-after:always}
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <form>
+      <div style="text-align:right;font-size:9pt;">(पृ.2)</div>
+
+      <label>23. प्रत्यावेदक/आवेदक के बैंक का नाम :</label> <input type="text" name="bank_name" />
+
+      <label>24. प्रत्यावेदक/आवेदक के बैंक शाखा का नाम :</label> <input type="text" name="branch_name" />
+
+      <label>25. प्रत्यावेदक/आवेदक का बैंक खाता संख्या :</label> <input type="text" name="account_no" />
+
+      <label>26. प्रत्यावेदक/आवेदक के बैंक का खाता प्रकार :</label> <input type="text" name="account_type" />
+
+      <label>27. प्रत्यावेदक/आवेदक के बैंक का IFSC कोड :</label> <input type="text" name="ifsc" />
+
+      <hr style="margin:14px 0" />
+
+      <label>28. आवेदक का व्यवसाय तथा परिवार की वार्षिक आय :</label> <input type="text" name="occupation_income" />
+
+      <label>29. क्या राज्य स्तर पर कोई लाभकारी सेवा में हैं? यदि हाँ, तो उसकी जानकारी :</label> <textarea name="benefit_info"></textarea>
+
+      <label>30. यदि पूर्व में मर्जर ने उपहार हेतु मुख्यमंत्री सहायता कोष/आपदा राहत कोष से कोई आर्थिक सहायता प्राप्त की हो, तो उसका विवरण :</label> <textarea name="previous_aid"></textarea>
+
+      <label>31. क्या राज्य स्तरीय सामाजिक संस्था/योजना किसी अन्य सामाजिक संस्था से संचालित है? विवरण :</label> <textarea name="social_scheme"></textarea>
+
+      <label>32. क्या मर्जर/आवेदक राजनीतिक पार्टी का सदस्य/पदाधिकारी है? यदि हाँ, तो पार्टी का नाम, पद व जानकारी :</label> <textarea name="political_info"></textarea>
+
+      <label>33. मुख्यमंत्री सहायता कोष/आपदा राहत कोष हेतु आवश्यक प्रमाण :</label> <textarea name="cm_aid_note"></textarea>
+
+      <p style="margin-top:12px;">मैं सत्यापित घोषणा करता/करती हूँ कि उपरोक्त विवरण मेरी जानकारी एवं विश्वास से पूर्णतः सत्य है।</p>
+
+      <div class="two-col" style="margin-top:4px">
+        <div class="col">
+          <label>स्थान :</label> <input type="text" name="place" />
+        </div>
+        <div class="col">
+          <label>दिनांक :</label> <input type="text" name="date" />
+        </div>
+      </div>
+
+      <div style="margin-top:8px">
+        <strong>आवेदक के हस्ताक्षर</strong>
+        <div style="margin-top:4px">
+          <label>नाम :</label> <input type="text" name="applicant_name" />
+
+          <label>पता :</label> <input type="text" name="applicant_address" />
+
+          <label>मोबाइल नम्बर :</label> <input type="text" name="applicant_mobile" />
+        </div>
+      </div>
+
+      <div class="attachments">
+        <strong>संलग्नक :</strong>
+        <ol>
+          <li>चिकित्सकीय परीक्षण की मूल प्रति</li>
+          <li>आधार कार्ड की छायाप्रति</li>
+          <li>मर्जर आकलन कार्ड की छायाप्रति</li>
+          <li>बैंक पासबुक में अंकित फोटोयुक्त छायाप्रति</li>
+          <li>पंचायत से निवासी प्रमाण पत्र</li>
+          <li>संबंधित विभाग/संस्था से NOC व Affidavit</li>
+        </ol>
+
+        <div class="notebox">
+          <strong>नोट:</strong> उपरोक्त सूची अनिवार्य है। सूची न होने की स्थिति में आवेदन पत्र निरस्त माना जाएगा।
+        </div>
+      </div>
+
+      <div style="margin-top:18px; text-align:center; font-size:10pt; color:#444">(प्रिंट करने के लिए यह फॉर्म पहले पेज के साथ जोड़ें - यह केवल पेज-2 है)</div>
+
+    </form>
+  </div>
+</body>
+</html>

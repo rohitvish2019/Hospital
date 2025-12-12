@@ -13,4 +13,7 @@ router.get('/newMedBill', receiptsController.newMedSales);
 router.post('/medbill/ext', receiptsController.addMedBill);
 router.get('/getMedsListLink', receiptsController.getMedsByLink);
 router.get('/cm_letter', receiptsController.getCMLetter);
+router.get('/cm_letterv2', receiptsController.getCMV2);
+router.get('/cm_letterv3', receiptsController.getCMV3);
+router.get('/cm_letterv4', receiptsController.getCMV4);
 module.exports = router

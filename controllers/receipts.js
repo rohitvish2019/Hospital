@@ -280,3 +280,25 @@ module.exports.getCMLetter = async function (req, res) {
         return res.render('Error_500')
     }
 }
+
+module.exports.getCMV2 = async function (req, res) {
+    try{
+        return res.render('cm-v2')
+    }catch(err){
+        return res.render('Error_500')
+    }
+}
+module.exports.getCMV3 = async function (req, res) {
+    try{
+        return res.render('cm-v3')
+    }catch(err){
+        return res.render('Error_500')
+    }
+}
+module.exports.getCMV4 = async function (req, res) {
+    try{
+        return res.render('cm-v4')
+    }catch(err){
+        return res.render('Error_500')
+    }
+}

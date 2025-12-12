@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>आवेदन पत्र (प्रिंट/ऑनलाइन भरने योग्य)</title>
+  <style>
+    @page { size: A4 portrait; margin: 12mm 15mm; }
+    html,body{height:100%;}
+    body{
+      font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+      font-size:11pt;
+      line-height:1.2;
+      color:#111;
+      -webkit-print-color-adjust:exact;
+      padding:0; margin:0;
+    }
+    .sheet{
+      box-sizing: border-box;
+      width:210mm; /* A4 width */
+      min-height:297mm;
+      padding:18mm 18mm;
+    }
+    h1{
+      text-align:center;
+      font-size:16px;
+      margin:0 0 12px 0;
+    }
+    p.subtitle{ text-align:center; margin:0 0 18px 0; font-size:12px }
+    form{width:100%;}
+    ol.form-list{list-style:none; padding:0; margin:0}
+    ol.form-list li{margin:8px 0; display:flex; align-items:center}
+    .qnum{width:30px; flex:0 0 30px}
+    label{flex:0 0 220px; padding-right:8px}
+    input[type=text], input[type=tel], input[type=email], select{border:none; border-bottom:1px dotted #333; padding:4px 6px; font-size:13px; width:100%; background:transparent}
+    textarea{width:100%; min-height:60px; border:1px dotted #333; padding:6px; resize:vertical}
+    .short{max-width:120px}
+    .two-cols{display:flex; gap:12px}
+    .right-small{flex:0 0 160px}
+    .full{flex:1}
+    .row{display:flex; gap:12px; width:100%}
+    .spaced{margin-top:10px}
+    .note{font-size:11px; color:#444}
+    @media print{
+      body{margin:0}
+      .sheet{box-shadow:none}
+      input, textarea{border-bottom:1px dotted #000}
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <h1>मुख्यमंत्री सहायता / आर्थिक सहायता आवेदन पत्र</h1>
+    <p class="subtitle">(कृपया रिक्त स्थान स्पष्ट अक्षरों में भरें — फॉर्म A4 साइज के अनुरूप)</p>
+
+    <form>
+      <ol class="form-list">
+	  <li><span class="qnum">1.</span><label>आवेदक का समग्र क्रमांक / आई डी :</label><input type="text" name="applicant_name" /></li>
+        <li><span class="qnum">2.</span><label>आवेदक का नाम :</label><input type="text" name="applicant_name" /></li>
+        <li><span class="qnum">3.</span><label>आवेदक का पिता/पति का नाम :</label><input type="text" name="applicant_father_husband" /></li>
+        <li><span class="qnum">4.</span><label>आवेदक का पता :</label><input type="text" name="applicant_address" /></li>
+        <li><span class="qnum">5.</span><label>आवेदक का जिला :</label><div class="row full"><input type="text" name="applicant_district" class="full" /><input type="text" name="applicant_state" class="short" placeholder="राज्य" style="max-width:160px" /></div></li>
+        <li><span class="qnum">6.</span><label>आवेदक का मोबाइल नं. :</label><input type="tel" name="applicant_mobile" /></li>
+
+        <li><span class="qnum">7.</span><label>मरीज/लाभार्थी का समग्र क्रमांक / आई डी :</label><input type="text" name="patient_id" /></li>
+        <li><span class="qnum">8.</span><label>मरीज/लाभार्थी का नाम :</label><input type="text" name="patient_name" /></li>
+        <li><span class="qnum">9.</span><label>मरीज/लाभार्थी के पिता/पति का नाम :</label><input type="text" name="patient_parent_name" /></li>
+        <li><span class="qnum">10.</span><label>मरीज/लाभार्थी का पता :</label><input type="text" name="patient_address" /></li>
+        <li><span class="qnum">11.</span><label>मरीज/लाभार्थी का जिला :</label><div class="row full"><input type="text" name="patient_district" class="full" /><input type="text" name="patient_state" class="short" placeholder="राज्य" style="max-width:160px" /></div></li>
+        <li><span class="qnum">12.</span><label>मरीज/लाभार्थी का मोबाइल नं. :</label><input type="tel" name="patient_mobile" /></li>
+
+        <li><span class="qnum">13.</span><label>आवेदक का मरीज/लाभार्थी से संबंध :</label><input type="text" name="relation_with_patient" /></li>
+        <li><span class="qnum">14.</span><label>अस्पताल का नाम :</label><input type="text" name="hospital_name" /></li>
+        <li><span class="qnum">15.</span><label>अस्पताल का राज्य :</label><input type="text" name="hospital_state" /></li>
+        <li><span class="qnum">16.</span><label>अस्पताल का जिला :</label><input type="text" name="hospital_district" /></li>
+        
+
+        <li><span class="qnum">17.</span><label>बीमार/रोग का नाम / निदान :</label><input type="text" name="disease_name" /></li>
+        <li><span class="qnum">18.</span><label>चिकित्सकीय उपचार की राशि (अनुमानित) :</label><input type="text" name="treatment_amount" /></li>
+        <li><span class="qnum">19.</span><label>क्या मरीज अस्पताल में भर्ती है? :</label>
+          <div style="display:flex; gap:12px; align-items:center; margin-left:8px">
+            <label style="flex:0 0 auto"><input type="radio" name="admitted" value="yes"/> हाँ</label>
+            <label style="flex:0 0 auto"><input type="radio" name="admitted" value="no"/> नहीं</label>
+            <input type="text" name="admission_date" placeholder="भर्ती की तिथि (यदि हाँ)" style="flex:1" />
+          </div>
+        </li>
+
+        <li><span class="qnum">20.</span><label>यदि डिस्चार्ज किया गया — डिस्चार्ज तिथि :</label><input type="text" name="discharge_date" /></li>
+        <li><span class="qnum">21.</span><label>मरीज/लाभार्थी का आधार कार्ड नंबर :</label><input type="text" name="id_proof" /></li>
+		<li><span class="qnum">22.</span><label>क्या मरीज बी पी एल के अंतर्गत आता है? :</label>
+          <div style="display:flex; gap:12px; align-items:center; margin-left:8px">
+            <label style="flex:0 0 auto"><input type="radio" name="admitted" value="yes"/> हाँ</label>
+            <label style="flex:0 0 auto"><input type="radio" name="admitted" value="no"/> नहीं</label>
+          </div>
+        </li>
+
+      </ol>
+
+</form>
+  </div>
+</body>
+</html>
